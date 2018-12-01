@@ -15,4 +15,6 @@ open class RPGElement(
     protected var description = ArrayList<String>()
     protected val metadata = Data()
     protected val conditions = ArrayList<LevelCondition>()
+
+
 }

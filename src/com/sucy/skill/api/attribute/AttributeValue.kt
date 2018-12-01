@@ -16,6 +16,15 @@ class AttributeValue {
         private set
 
     /**
+     * Adjusts the external [value] based on the added bonuses.
+     * The [value] is added onto the [base] value and otherwise follows
+     * the normal [total] calculation.
+     */
+    fun adjust(value: Double): Double {
+        return Math.max(0.0, ((base + value) * multiplier + bonus))
+    }
+
+    /**
      * Adds extra points to the attribute value. This is applied before
      * any other bonuses and only allows one [bonus] per source, with the
      * latest application overwriting older bonuses.
