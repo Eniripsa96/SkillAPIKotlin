@@ -1,6 +1,5 @@
 package com.sucy.skill.dynamic
 
-import com.sucy.skill.SkillAPI
 import com.sucy.skill.api.Icon
 import com.sucy.skill.api.RPGElement
 import com.sucy.skill.dynamic.trigger.TriggerEffect
@@ -33,8 +32,6 @@ class DynamicSkill(name: String, icon: Icon, maxLevel: Int)
     }
 
     fun registerEvents() {
-        triggers.forEach {
-            SkillAPI.eventBus
-        }
+
     }
 }

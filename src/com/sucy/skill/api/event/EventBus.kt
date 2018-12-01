@@ -13,7 +13,7 @@ import kotlin.reflect.full.starProjectedType
  * SkillAPIKotlin © 2018
  */
 class EventBus(private val proxy: EventBusProxy<*>) {
-    private val registry = HashMap<KType, MutableCollection<HandlerContext<*>>>()
+    private val registry = HashMap<KType, HashMap<Step, MutableCollection<HandlerContext<*>>>>()
 
     /**
      * Registers all event handlers in [listener] denoted with [Listen] annotations
@@ -41,8 +41,8 @@ class EventBus(private val proxy: EventBusProxy<*>) {
      * Handlers will continue to receive events until [unregister] is called for the same [source].
      */
     fun <T : Event> register(source: Any, event: KType, handler: Consumer<T>, step: Step = Step.NORMAL, ignoreCancelled: Boolean = true) {
-        if (!proxy.register())
-        val handlers = registry.computeIfAbsent(event) { TreeSet() }
+        val byStep = registry.computeIfAbsent(event) { HashMap() }
+        val handlers = byStep.computeIfAbsent(step) { ArrayList() }
         handlers.add(HandlerContext(source, handler, step, ignoreCancelled))
     }
 
@@ -50,7 +50,11 @@ class EventBus(private val proxy: EventBusProxy<*>) {
      * Triggers the [event] for all registered handlers.
      */
     fun trigger(event: Event) {
-        val handlers = registry[event::class.starProjectedType]
+        proxy.invoke(event)
+    }
+
+    fun trigger(event: Event, step: Step) {
+        val handlers = registry[event::class.starProjectedType]?.get(step)
         handlers?.forEach { it.apply(event) }
     }
 
@@ -58,8 +62,10 @@ class EventBus(private val proxy: EventBusProxy<*>) {
      * Unregisters all handlers that were registered with the [source]
      */
     fun unregister(source: Any) {
-        registry.keys.forEach { type ->
-            registry.compute(type) { _, v -> v?.filterTo(ArrayList()) { it.source == source } }
+        registry.values.forEach { byType ->
+            byType.values.forEach { handlers ->
+                handlers.removeIf { it.source == source }
+            }
         }
     }
 
@@ -68,12 +74,7 @@ class EventBus(private val proxy: EventBusProxy<*>) {
             private val handler: Consumer<T>,
             private val step: Step,
             private val ignoreCancelled: Boolean
-    ) : Comparable<HandlerContext<T>> {
-
-        override fun compareTo(other: HandlerContext<T>): Int {
-            return Integer.compare(step.ordinal, other.step.ordinal)
-        }
-
+    ) {
         fun apply(event: Event) {
             if (!(ignoreCancelled && event is Cancellable && event.cancelled)) {
                 @Suppress("UNCHECKED_CAST")
