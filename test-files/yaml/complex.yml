@@ -1,0 +1,31 @@
+
+# Section A
+a:
+
+  b:
+  - 1
+  - 2
+  - 3
+
+# Section C
+c:
+  d:
+  - 1
+  - 2
+  - 3
+
+  # Some other category
+  e:
+
+    f: 5
+    g: "yup"
+
+    h:
+    - "a"
+    - 2
+    - 3
+
+# Section I - in the works
+i: {}
+
+j: 7
