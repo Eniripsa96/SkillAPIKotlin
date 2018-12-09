@@ -14,4 +14,8 @@ open class BukkitActor(private val entity: LivingEntity) : BukkitEntity(entity),
     override fun hasPermission(permission: String): Boolean {
         return entity.hasPermission(permission)
     }
+
+    override fun getBukkitEntity(): LivingEntity {
+        return entity
+    }
 }

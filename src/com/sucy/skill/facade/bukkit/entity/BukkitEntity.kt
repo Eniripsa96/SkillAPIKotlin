@@ -16,4 +16,8 @@ open class BukkitEntity(private val entity: Entity) : com.sucy.skill.facade.api.
         get() = BukkitLocation(entity.location)
     override val velocity: Vector3
         get() = BukkitVector3(entity.velocity)
+
+    open fun getBukkitEntity(): Entity {
+        return entity
+    }
 }

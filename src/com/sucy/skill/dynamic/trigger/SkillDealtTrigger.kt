@@ -1,7 +1,7 @@
 package com.sucy.skill.dynamic.trigger
 
 import com.sucy.skill.facade.api.entity.Actor
-import com.sucy.skill.facade.api.event.actor.ActorDamagedEvent
+import com.sucy.skill.facade.api.event.actor.ActorDamagedByActorEvent
 import com.sucy.skill.util.io.Data
 
 /**
@@ -15,12 +15,12 @@ class SkillDealtTrigger : BaseDamageTrigger() {
         get() = "SKILL_DAMAGE"
 
     /** {@inheritDoc}  */
-    override fun getCaster(event: ActorDamagedEvent): Actor? {
+    override fun getCaster(event: ActorDamagedByActorEvent): Actor? {
         return event.attacker
     }
 
     /** {@inheritDoc}  */
-    override fun getTarget(event: ActorDamagedEvent, settings: Data): Actor? {
+    override fun getTarget(event: ActorDamagedByActorEvent, settings: Data): Actor? {
         return if (isUsingTarget(settings)) event.actor else event.attacker
     }
 }

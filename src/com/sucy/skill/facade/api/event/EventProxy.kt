@@ -9,10 +9,14 @@ interface EventProxy<I : Event, T, E : T> {
     val targetType: Class<E>
     fun proxy(event: E): I
     fun proxy(event: I): E
+    fun appliesTo(event: E): Boolean
 
-    fun notify(event: T, handler: (event: I) -> Unit) {
+    fun notify(event: T, handler: (I) -> Unit) {
         @Suppress("UNCHECKED_CAST")
-        val proxied = proxy(event as E)
-        handler.invoke(proxied)
+        val cast = event as E
+        if (appliesTo(cast)) {
+            val proxied = proxy(cast)
+            handler.invoke(proxied)
+        }
     }
 }

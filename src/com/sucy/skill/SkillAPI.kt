@@ -17,6 +17,6 @@ object SkillAPI {
     fun init(plugin: SkillAPIPlugin) {
         this.plugin = plugin
         this.settings = Settings(plugin)
-        this.eventBus = EventBus()
+        this.eventBus = EventBus(plugin.eventBusProxy)
     }
 }

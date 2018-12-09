@@ -4,6 +4,8 @@ import com.google.common.collect.ImmutableMap
 import com.sucy.skill.api.event.Step
 import com.sucy.skill.facade.api.event.EventBusProxy
 import com.sucy.skill.facade.api.event.EventProxy
+import com.sucy.skill.facade.api.event.actor.ActorDamagedByActorEvent
+import com.sucy.skill.facade.bukkit.event.actor.BukkitActorDamagedByActorEvent
 import org.bukkit.event.Event
 import org.bukkit.event.EventPriority
 import org.bukkit.event.Listener
@@ -53,4 +55,8 @@ class BukkitEventBusProxy(private val plugin: JavaPlugin) : EventBusProxy<Event>
             .put(Step.ENFORCE, EventPriority.HIGHEST)
             .put(Step.REACT, EventPriority.MONITOR)
             .build())
+
+    init {
+        proxies[ActorDamagedByActorEvent::class.java] = BukkitActorDamagedByActorEvent.PROXY
+    }
 }
