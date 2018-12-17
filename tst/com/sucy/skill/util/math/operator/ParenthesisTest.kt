@@ -2,6 +2,7 @@ package com.sucy.skill.util.math.operator
 
 import com.sucy.skill.Assert
 import com.sucy.skill.util.math.TokenTest
+import com.sucy.skill.util.math.formula.operator.Parenthesis
 import org.junit.Test
 
 /**

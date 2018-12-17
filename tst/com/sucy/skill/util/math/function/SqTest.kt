@@ -2,6 +2,7 @@ package com.sucy.skill.util.math.function
 
 import com.sucy.skill.Assert
 import com.sucy.skill.util.math.TokenTest
+import com.sucy.skill.util.math.formula.function.Sq
 import org.junit.Test
 
 /**
