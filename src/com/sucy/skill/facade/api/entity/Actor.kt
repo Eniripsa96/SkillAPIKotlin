@@ -23,3 +23,4 @@ interface Actor : Entity {
 
     fun hasPermission(permission: String): Boolean
 }
+

@@ -1,12 +1,12 @@
 package com.sucy.skill.facade.api.event.actor
 
 import com.sucy.skill.api.event.Event
-import com.sucy.skill.facade.api.entity.Player
+import com.sucy.skill.facade.api.entity.Actor
 
 /**
  * SkillAPIKotlin © 2018
  */
-interface PlayerToggleCrouchEvent : Event {
-    val player: Player
+interface ToggleCrouchEvent : Event {
+    val actor: Actor
     val isCrouching: Boolean
 }
