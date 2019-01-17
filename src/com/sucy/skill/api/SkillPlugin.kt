@@ -1,7 +1,6 @@
 package com.sucy.skill.api
 
 /**
- *
  * Interface for plugins that define new classes and skills
  *
  * Make sure to only add the appropriate type in each method
@@ -18,7 +17,7 @@ interface SkillPlugin {
      * a reference of the API, you can store the api reference into one
      * of your own fields
      */
-    fun getSkills(): Iterable<RPGElement>
+    fun getSkills(): Iterable<Levelable>
 
     /**
      * Method to add new classes to the game
@@ -27,6 +26,6 @@ interface SkillPlugin {
      *
      * This is called after registerSkills
      */
-    fun getProfessions(): Iterable<RPGElement>
+    fun getProfessions(): Iterable<Levelable>
 }
 

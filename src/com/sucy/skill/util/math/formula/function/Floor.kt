@@ -1,7 +1,5 @@
 package com.sucy.skill.util.math.formula.function
 
-import com.sucy.skill.facade.api.entity.Actor
-import com.sucy.skill.util.access.Access
 import java.util.*
 
 /**
@@ -9,7 +7,7 @@ import java.util.*
  */
 object Floor : Func {
     override val token = "floor"
-    override fun apply(stack: Stack<Double>, access: Access, context: Actor?) {
+    override fun apply(stack: Stack<Double>, values: DoubleArray) {
         stack.push(Math.floor(stack.pop()))
     }
 }

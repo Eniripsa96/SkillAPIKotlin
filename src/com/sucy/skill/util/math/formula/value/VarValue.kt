@@ -1,17 +1,10 @@
 package com.sucy.skill.util.math.formula.value
 
-import com.sucy.skill.facade.api.entity.Actor
-import com.sucy.skill.util.access.Access
-
 /**
  * SkillAPIKotlin © 2018
  */
-data class VarValue(private val key: String) : Value {
-    override fun getValue(access: Access, context: Actor?): Double {
-        return try {
-            (access.find(key, context))?.toString()?.toDouble() ?: 0.0
-        } catch (ex: Exception) {
-            0.0
-        }
+data class VarValue(private val index: Int) : Value {
+    override fun getValue(values: DoubleArray): Double {
+        return values[index]
     }
 }

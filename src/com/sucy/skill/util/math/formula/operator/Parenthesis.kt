@@ -1,7 +1,5 @@
 package com.sucy.skill.util.math.formula.operator
 
-import com.sucy.skill.facade.api.entity.Actor
-import com.sucy.skill.util.access.Access
 import java.util.*
 
 /**
@@ -10,7 +8,7 @@ import java.util.*
 object Parenthesis : Operator {
     override val token = '('
     override val precedence = 0
-    override fun apply(stack: Stack<Double>, access: Access, context: Actor?) {
+    override fun apply(stack: Stack<Double>, values: DoubleArray) {
         throw UnsupportedOperationException("Parenthesis can't be evaluated")
     }
 }

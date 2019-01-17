@@ -7,7 +7,7 @@ import com.sucy.skill.facade.api.entity.Actor
  * SkillAPIKotlin © 2018
  */
 class Access(
-        private val accessors: Map<String, (context: Actor?) -> Any?>,
+        private val accessors: Map<String, (context: Actor?) -> Any?> = ImmutableMap.of(),
         private val subGroups: Map<String, Access> = ImmutableMap.of()) {
 
     fun find(key: String, context: Actor? = null): Any? {

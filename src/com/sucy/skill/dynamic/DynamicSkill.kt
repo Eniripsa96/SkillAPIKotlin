@@ -1,7 +1,7 @@
 package com.sucy.skill.dynamic
 
 import com.sucy.skill.api.Icon
-import com.sucy.skill.api.RPGElement
+import com.sucy.skill.api.Levelable
 import com.sucy.skill.api.skill.PassiveSkill
 import com.sucy.skill.api.skill.SkillShot
 import com.sucy.skill.dynamic.trigger.TriggerEffect
@@ -12,7 +12,7 @@ import java.util.*
  * SkillAPIKotlin © 2018
  */
 class DynamicSkill(name: String, icon: Icon, maxLevel: Int)
-    : RPGElement(name, icon, maxLevel), SkillShot, PassiveSkill {
+    : Levelable(name, icon, maxLevel), SkillShot, PassiveSkill {
 
     private val triggers = ArrayList<TriggerHandler>()
     private val iconKeyMapping = HashMap<String, Effect>()

@@ -1,6 +1,5 @@
 package com.sucy.skill.util.math.formula
 
-import com.sucy.skill.facade.api.entity.Actor
 import com.sucy.skill.util.access.Access
 import com.sucy.skill.util.math.formula.function.Func
 import com.sucy.skill.util.math.formula.function.Funcs
@@ -15,12 +14,16 @@ import java.util.stream.Collectors
 /**
  * SkillAPIKotlin © 2018
  */
-class Formula(equation: String, private val access: Access) {
+class Formula(equation: String, private val keys: List<String>) {
     val tokens = ArrayList<Token>()
 
-    fun evaluate(context: Actor?): Double {
+    fun evaluate(vararg values: Double): Double {
+        if (values.size != keys.size) {
+            throw java.lang.IllegalArgumentException("Evaluation arguments do not match expected keys: $keys")
+        }
+
         val stack = Stack<Double>()
-        tokens.forEach { it.apply(stack, access, context) }
+        tokens.forEach { it.apply(stack, values) }
         return stack.pop()
     }
 
@@ -74,7 +77,7 @@ class Formula(equation: String, private val access: Access) {
         try {
             tokens.add(ConstValue(token.toDouble()))
         } catch (ex: NumberFormatException) {
-            tokens.add(VarValue(token))
+            tokens.add(VarValue(keys.indexOf(token)))
         }
     }
 
@@ -84,5 +87,9 @@ class Formula(equation: String, private val access: Access) {
 
         private val FUNC_TOKENS: Map<String, Func> = Arrays.stream(Funcs.values())
                 .collect(Collectors.toMap({ func: Funcs -> func.func.token }) { func: Funcs -> func.func })
+
+        fun const(value: Double): Formula {
+            return Formula(value.toString(), Collections.emptyList())
+        }
     }
 }

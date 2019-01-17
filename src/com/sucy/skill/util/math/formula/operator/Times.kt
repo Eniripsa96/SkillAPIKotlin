@@ -1,7 +1,5 @@
 package com.sucy.skill.util.math.formula.operator
 
-import com.sucy.skill.facade.api.entity.Actor
-import com.sucy.skill.util.access.Access
 import java.util.*
 
 /**
@@ -10,7 +8,7 @@ import java.util.*
 object Times : Operator {
     override val token = '*'
     override val precedence = 2
-    override fun apply(stack: Stack<Double>, access: Access, context: Actor?) {
+    override fun apply(stack: Stack<Double>, values: DoubleArray) {
         stack.push(stack.pop() * stack.pop())
     }
 }
