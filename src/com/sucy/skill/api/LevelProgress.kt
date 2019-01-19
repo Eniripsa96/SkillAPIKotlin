@@ -6,7 +6,7 @@ import com.sucy.skill.facade.api.entity.Actor
  * Handles recording experience and levels for [Levelable] objects
  * for a specific [Actor], such as a player's profession.
  */
-open class LevelProgress(val owner: Actor, val levelable: Levelable) {
+open class LevelProgress<T : Levelable>(val owner: Actor, val data: T) {
     var exp = 0.0
         private set
     var totalExp = 0.0
@@ -16,7 +16,7 @@ open class LevelProgress(val owner: Actor, val levelable: Levelable) {
     val requiredExp: Double
         get() { return computeRequiredExp(level) }
     val isMaxLevel: Boolean
-        get() { return levelable.maxLevel <= level }
+        get() { return data.maxLevel <= level }
 
     fun giveExp(amount: Double, source: String) {
         if (amount <= 0 || isMaxLevel) return
@@ -29,7 +29,7 @@ open class LevelProgress(val owner: Actor, val levelable: Levelable) {
     }
 
     fun giveLevels(amount: Int) {
-        val gained = Math.min(amount, levelable.maxLevel - level)
+        val gained = Math.min(amount, data.maxLevel - level)
         if (gained <= 0) return
 
         level += gained
@@ -50,6 +50,6 @@ open class LevelProgress(val owner: Actor, val levelable: Levelable) {
     }
 
     private fun computeRequiredExp(level: Int): Double {
-        return Math.max(0.0, Math.floor(levelable.expCurve.evaluate(level.toDouble())))
+        return Math.max(0.0, Math.floor(data.expCurve.evaluate(level.toDouble())))
     }
 }

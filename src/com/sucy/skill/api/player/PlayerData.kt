@@ -1,10 +1,11 @@
 package com.sucy.skill.api.player
 
-import java.util.*
+import com.sucy.skill.api.profession.ProfessionSet
+import com.sucy.skill.facade.api.entity.Actor
 
 /**
  * SkillAPIKotlin © 2018
  */
-data class PlayerData internal constructor(val uuid: UUID) {
-
+data class PlayerData internal constructor(val owner: Actor) {
+    val professionSet = ProfessionSet()
 }
