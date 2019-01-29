@@ -11,7 +11,7 @@ open class Levelable(
         var icon: Icon,
         var maxLevel: Int) {
 
-    protected val key = name.toLowerCase()
+    val key = name.toLowerCase()
 
     protected var description = ArrayList<String>()
     protected val metadata = Data()

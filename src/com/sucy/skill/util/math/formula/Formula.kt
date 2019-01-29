@@ -1,6 +1,5 @@
 package com.sucy.skill.util.math.formula
 
-import com.sucy.skill.util.access.Access
 import com.sucy.skill.util.math.formula.function.Func
 import com.sucy.skill.util.math.formula.function.Funcs
 import com.sucy.skill.util.math.formula.operator.Operator
@@ -56,7 +55,7 @@ class Formula(equation: String, private val keys: List<String>) {
                         }
                     }
                     else -> {
-                        val newOp = OP_TOKENS[equation[i]]!!
+                        val newOp = OP_TOKENS.getValue(equation[i])
                         while (!operators.isEmpty() && operators.peek().precedence >= newOp.precedence) {
                             tokens.add(operators.pop())
                         }
@@ -77,7 +76,9 @@ class Formula(equation: String, private val keys: List<String>) {
         try {
             tokens.add(ConstValue(token.toDouble()))
         } catch (ex: NumberFormatException) {
-            tokens.add(VarValue(keys.indexOf(token)))
+            val index = keys.indexOf(token.trim())
+            if (index < 0) throw IllegalArgumentException("Invalid formula: $token is not a valid token")
+            tokens.add(VarValue(index))
         }
     }
 
