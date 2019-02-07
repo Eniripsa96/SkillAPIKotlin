@@ -3,7 +3,6 @@ import * as PropTypes from "prop-types";
 import {Button} from "@material-ui/core";
 import Icon from "@material-ui/core/Icon";
 import withStyles from "@material-ui/core/es/styles/withStyles";
-import Dropdown from "./Dropdown";
 
 const styles = theme => ({
     button: {
@@ -18,15 +17,26 @@ class FormButton extends React.PureComponent {
     static propTypes = {
         text: PropTypes.string.isRequired,
         icon: PropTypes.string.isRequired,
-        onClick: PropTypes.func.isRequired
+        onClick: PropTypes.func.isRequired,
+        color: PropTypes.string,
+        context: PropTypes.any
     };
 
     render() {
-        const {text, icon, onClick, classes} = this.props;
-        return <Button variant="contained" color="secondary" onClick={onClick} className={classes.button}>
+        const {text, icon, classes, color} = this.props;
+        return <Button
+            variant="contained"
+            color={color || 'secondary'}
+            onClick={this.onClick}
+            className={classes.button}>
+
             {text}
             <Icon className={classes.icon}>{icon}</Icon>
         </Button>
+    }
+
+    onClick = () => {
+        this.props.onClick(this.props.context);
     }
 }
 

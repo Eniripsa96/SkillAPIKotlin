@@ -8,6 +8,10 @@ class Settings {
         return this.data.version || '1.13';
     }
 
+    getSidebar() {
+        return this.data.sidebar || 'skills';
+    }
+
     applyChanges(changes) {
         this.data = { ...this.data, ...changes };
         saveLocally('settings', this.data);
@@ -15,8 +19,8 @@ class Settings {
 }
 
 const settings = new Settings();
-const { provider, consumer } = React.createContext(settings);
+const { Provider, Consumer } = React.createContext(null);
 
-export { provider as SettingsProvider, consumer as SettingsConsumer, settings }
+export { Provider as SettingsProvider, Consumer as SettingsConsumer }
 
-export default Settings;
+export default settings;
