@@ -7,15 +7,20 @@ import * as PropTypes from "prop-types";
 import Icon from "@material-ui/core/es/Icon/Icon";
 import Tooltip from "@material-ui/core/Tooltip";
 import Sidebar from "../sidebar/Sidebar";
+import Action from "../../input/Action";
 
-const styles = {
+const style = theme => ({
     root: {
-        flexGrow: 1
+        flexGrow: 1,
+        display: 'flex'
     },
     grow: {
         flexGrow: 1
+    },
+    appBar: {
+        zIndex: theme.zIndex.drawer + 1
     }
-};
+});
 
 class Header extends React.PureComponent {
     static propTypes = {
@@ -32,29 +37,15 @@ class Header extends React.PureComponent {
         const {backup, showSettings, classes} = this.props;
         const {showSidebar} = this.state;
 
-        return <div>
-            <AppBar color="primary" position="static">
+        return <div className={classes.root}>
+            <AppBar color="primary" position="static" className={classes.appBar}>
                 <Toolbar color="primary">
-                    <IconButton onClick={this.showSidebar} color="default">
-                        <Icon>menu</Icon>
-                    </IconButton>
+                    <Action icon="menu" tooltip="Open menu" onClick={this.showSidebar}/>
                     <Typography color="primary" variant="h4" className={classes.grow}>
                         SkillAPI
                     </Typography>
-                    <Tooltip title="Backup All Data">
-                        <IconButton
-                            onClick={backup}
-                            color="secondary">
-                            <Icon>save_alt</Icon>
-                        </IconButton>
-                    </Tooltip>
-                    <Tooltip title="View Editor Settings">
-                        <IconButton
-                            onClick={showSettings}
-                            color="secondary">
-                            <Icon>settings</Icon>
-                        </IconButton>
-                    </Tooltip>
+                    <Action icon="save_alt" tooltip="Backup All Data" onClick={backup}/>
+                    <Action icon="settings" tooltip="View Editor Settings" onClick={showSettings}/>
                 </Toolbar>
             </AppBar>
             <Drawer open={showSidebar} onClose={this.hideSidebar}>
@@ -72,4 +63,4 @@ class Header extends React.PureComponent {
     };
 }
 
-export default withStyles(styles)(Header);
+export default withStyles(style)(Header);

@@ -1,6 +1,6 @@
 import * as React from "react";
 import * as PropTypes from "prop-types";
-import {Icon, ListItem, ListItemIcon, ListItemText} from "@material-ui/core";
+import {Icon, ListItem, ListItemIcon, ListItemSecondaryAction, ListItemText} from "@material-ui/core";
 import {withRouter} from "react-router-dom";
 
 class ListLink extends React.PureComponent {
@@ -12,12 +12,15 @@ class ListLink extends React.PureComponent {
     };
 
     render() {
-        const {icon, text} = this.props;
+        const {icon, text, children} = this.props;
         return <ListItem button onClick={this.onClick}>
             {icon && <ListItemIcon>
                 <Icon>{icon}</Icon>
             </ListItemIcon>}
             <ListItemText primary={text}/>
+            {children && <ListItemSecondaryAction>
+                {children}
+            </ListItemSecondaryAction>}
         </ListItem>
     }
 

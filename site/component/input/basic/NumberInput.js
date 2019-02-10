@@ -23,9 +23,9 @@ class NumberInput extends React.PureComponent {
     };
 
     render() {
-        const {integer, value} = this.props;
+        const {integer, value, ...props} = this.props;
         return <TextInput
-            {...this.props}
+            {...props}
             value={value.toString()}
             blacklistPattern={integer ? INT_PATTERN : DECIMAL_PATTERN}
             onChange={this.onChange}/>

@@ -7,7 +7,8 @@ class FormLink extends React.Component {
     static propTypes = {
         text: PropTypes.string.isRequired,
         icon: PropTypes.string.isRequired,
-        onClick: PropTypes.func.isRequired,
+        context: PropTypes.any,
+        onClick: PropTypes.func,
         color: PropTypes.string
     };
 
@@ -21,7 +22,11 @@ class FormLink extends React.Component {
     }
 
     onClick = () => {
-        this.props.history.push(this.props.link);
+        const {history, link, onClick, context} = this.props;
+        if (onClick) {
+            onClick(context);
+        }
+        history.push(link);
     }
 }
 

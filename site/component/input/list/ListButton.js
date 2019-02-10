@@ -1,6 +1,7 @@
 import * as React from "react";
 import * as PropTypes from "prop-types";
-import {Icon, ListItem, ListItemIcon, ListItemText} from "@material-ui/core";
+import {Icon, ListItem, ListItemIcon, ListItemSecondaryAction, ListItemText} from "@material-ui/core";
+import withStyles from "@material-ui/core/es/styles/withStyles";
 
 class ListButton extends React.PureComponent {
     static propTypes = {
@@ -12,13 +13,16 @@ class ListButton extends React.PureComponent {
     };
 
     render() {
-        const {icon, text, selected} = this.props;
-        return <ListItem button onClick={this.onClick} selected={selected}>
+        const {icon, text, selected, children, active, classes} = this.props;
+        return <ListItem button onClick={this.onClick} selected={selected} className={active ? classes.selected : 'nope'}>
             {icon &&
                 <ListItemIcon>
                     <Icon>{icon}</Icon>
                 </ListItemIcon>}
             <ListItemText primary={text}/>
+            {children && <ListItemSecondaryAction>
+                {children}
+            </ListItemSecondaryAction>}
         </ListItem>
     }
 
@@ -27,4 +31,8 @@ class ListButton extends React.PureComponent {
     };
 }
 
-export default ListButton;
+export default withStyles({
+    selected: {
+        'background-color': '#ffab3c !important'
+    }
+})(ListButton);

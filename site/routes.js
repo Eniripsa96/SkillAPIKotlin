@@ -1,12 +1,11 @@
 import Home from "./pages/home/Home";
 import SkillList from "./pages/skill/SkillList";
-import SkillForm from "./pages/skill/SkillForm";
+import SkillForm from "./pages/skill/SkillEditor";
 
 const routes = {
     HOME: {path: '/', component: Home},
-    SKILL: {path: '/skills', component: SkillList},
-    NEW_SKILL: {path: '/skills/new', component: SkillForm},
-    EDIT_SKILL: {path: '/skills/edit/:name', component: SkillForm}
+    SKILL_LIST: {path: '/skills', component: SkillList},
+    SKILL_EDITOR: {path: '/skills/:id', component: SkillForm}
 };
 
 function resolve(route, args) {

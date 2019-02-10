@@ -20,8 +20,9 @@ class TextInput extends React.PureComponent {
     };
 
     render() {
-        const {fullWidth, label, value, autoFocus} = this.props;
+        const {fullWidth, label, value, autoFocus, blacklistPattern, context, ...props} = this.props;
         return <TextField
+            {...props}
             fullWidth={fullWidth}
             autoFocus={autoFocus}
             label={label}

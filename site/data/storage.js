@@ -1,6 +1,6 @@
 const StorageKey = {
     SKILL: "skill",
-    CLASS: "class"
+    PROFESSION: "profession"
 };
 
 function loadLocally(key) {
@@ -12,4 +12,8 @@ function saveLocally(key, value) {
     localStorage.setItem(key, JSON.stringify(value));
 }
 
-export {loadLocally, saveLocally, StorageKey};
+function deleteLocally(key) {
+    localStorage.removeItem(key);
+}
+
+export {loadLocally, saveLocally, deleteLocally, StorageKey};

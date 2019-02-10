@@ -23,7 +23,7 @@ const theme = createMuiTheme({
     overrides: {
         MuiAppBar: {
             colorPrimary: {
-                'background-color': 'rgba(0, 0, 0, 0.54)'
+                'background-color': '#161616'
             }
         }
     },
@@ -42,18 +42,24 @@ class App extends React.Component {
         return <Router>
             <MuiThemeProvider theme={theme}>
                 <SettingsProvider value={settings}>
-                    <Header showSettings={this.showSettings}/>
-                    <SettingsForm
-                        isOpen={showSettings}
-                        close={this.closeSettings}
-                        settings={settings}/>
-                    <Switch>
-                        {Object.keys(routes).map(key => {
-                            const { path, component } = routes[key];
-                            return <Route path={path} component={component} key={path} exact/>
-                        })}
-                        <Route component={Error404}/>
-                    </Switch>
+                    <Header showSettings={this.showSettings} backup={this.backup}/>
+                    <div style={{
+                        width: 'calc(100% - 20px)',
+                        height: 'calc(100% - 20px)',
+                        padding: '10px'
+                    }}>
+                        <SettingsForm
+                            isOpen={showSettings}
+                            close={this.closeSettings}
+                            settings={settings}/>
+                        <Switch>
+                            {Object.keys(routes).map(key => {
+                                const { path, component } = routes[key];
+                                return <Route path={path} component={component} key={path} exact/>
+                            })}
+                            <Route component={Error404}/>
+                        </Switch>
+                    </div>
                 </SettingsProvider>
             </MuiThemeProvider>
         </Router>
@@ -65,7 +71,12 @@ class App extends React.Component {
 
     closeSettings = () => {
         this.setState({showSettings: false});
-    }
+        this.forceUpdate();
+    };
+
+    backup = () => {
+
+    };
 }
 
 export default App;

@@ -4,11 +4,16 @@ import {fade} from "@material-ui/core/styles/colorManipulator";
 import Icon from "@material-ui/core/Icon";
 import {CardContent, InputBase, withStyles} from "@material-ui/core";
 import Card from "@material-ui/core/Card";
-import {DEFAULT_FOLDER} from "../../data/folders";
 import {StorageKey} from "../../data/storage";
 import FolderList from "../../component/display/folders/FolderList";
-import FormLink from "../../component/input/FormLink";
-import routes from "../../routes";
+import routes, {resolve} from "../../routes";
+import {DEFAULT_SKILL} from "./SkillEditor";
+import {skillLoader} from "../../data/loaders";
+import FormButton from "../../component/input/FormButton";
+import Folders from "../../data/folders";
+import List from "@material-ui/core/List";
+import Action from "../../component/input/Action";
+import ListLink from "../../component/input/list/ListLink";
 
 const styles = theme => ({
     search: {
@@ -47,16 +52,21 @@ const styles = theme => ({
 });
 
 class SkillList extends React.Component {
-    state = {
-        selected: DEFAULT_FOLDER
-    };
+    constructor(props) {
+        super(props);
+        this.folders = new Folders(StorageKey.SKILL);
+        this.state = {selected: this.folders.folders[0]};
+    }
 
     render() {
         const {classes} = this.props;
         const {selected} = this.state;
         return <Grid container spacing={24}>
             <Grid item xs={3}>
-                <FolderList type={StorageKey.SKILL} selected={selected} selectFolder={this.selectFolder}/>
+                <FolderList
+                    folders={this.folders}
+                    selected={selected}
+                    selectFolder={this.selectFolder}/>
             </Grid>
             <Grid item xs={9}>
                 <Card>
@@ -72,15 +82,51 @@ class SkillList extends React.Component {
                                     input: classes.inputInput
                                 }}/>
                         </div>
-                        <FormLink icon="add" text="New Skill" link={routes.NEW_SKILL.path}/>
+                        <List>
+                            {selected.items.map(this.renderItem)}
+                        </List>
+                        <FormButton icon="add" text="New Skill" onClick={this.createSkill}/>
                     </CardContent>
                 </Card>
             </Grid>
         </Grid>
     }
 
+    renderItem = (id, index) => {
+        return <ListLink
+            key={index}
+            text={skillLoader.load(id).name}
+            link={resolve(routes.SKILL_EDITOR, {id})}>
+            <Action
+                icon={'clear'}
+                tooltip={'Delete'}
+                onClick={this.deleteItem}
+                context={id}/>
+        </ListLink>;
+    };
+
+    deleteItem = (id) => {
+        this.folders.removeItem(this.state.selected, {id});
+        skillLoader.delete({id});
+        this.forceUpdate();
+    };
+
     selectFolder = (name) => {
         this.setState({selected: name});
+    };
+
+    createSkill = () => {
+        const {history} = this.props;
+        const {selected} = this.state;
+
+        let id = 1;
+        while (skillLoader.load(id)) id++;
+        const skill = {...DEFAULT_SKILL, id};
+
+        skillLoader.save(skill);
+        this.folders.addItem(selected, skill);
+
+        history.push(resolve(routes.SKILL_EDITOR, {id}));
     };
 }
 
