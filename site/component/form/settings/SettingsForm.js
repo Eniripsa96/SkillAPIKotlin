@@ -1,5 +1,5 @@
 import * as React from "react";
-import {Dialog, DialogActions, DialogContent, DialogTitle, InputLabel} from "@material-ui/core";
+import {Dialog, DialogActions, DialogContent, DialogTitle, Divider, InputLabel} from "@material-ui/core";
 import * as PropTypes from 'prop-types';
 import Dropdown from "../../input/basic/Dropdown";
 import FormButton from "../../input/FormButton";
@@ -20,7 +20,10 @@ class SettingsForm extends React.Component {
         const {version, premium} = this.state;
         const {isOpen, settings} = this.props;
         return <Dialog open={isOpen} onClose={this.confirm} disableRestoreFocus>
-            <DialogTitle>Editor Settings</DialogTitle>
+            <DialogTitle>
+                Editor Settings
+                <Divider/>
+            </DialogTitle>
             <DialogContent>
                 <Dropdown
                     autoFocus
@@ -36,6 +39,7 @@ class SettingsForm extends React.Component {
                     context="premium"
                     onChange={this.onChange}/>
             </DialogContent>
+            <Divider/>
             <DialogActions>
                 <FormButton icon="done" text="Done" onClick={this.confirm}/>
             </DialogActions>

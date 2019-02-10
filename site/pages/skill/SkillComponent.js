@@ -1,21 +1,13 @@
 import * as React from "react";
 import PropTypes from 'prop-types';
-import {
-    Collapse,
-    Divider,
-    Icon,
-    List,
-    ListItem,
-    ListItemIcon,
-    ListItemSecondaryAction,
-    ListItemText
-} from "@material-ui/core";
+import {Collapse, Divider, List} from "@material-ui/core";
 import Action from "../../component/input/Action";
 import {Type} from "./commonOptions";
 import DetailedOptionsDialog from "../../component/form/dialogs/DetailedOptionsDialog";
-import {COMPONENTS_BY_NAME, getComponentDetails, getComponentOptions} from "./components";
+import {getComponentDetails, getComponentOptions} from "./components";
 import withStyles from "@material-ui/core/es/styles/withStyles";
 import ListButton from "../../component/input/list/ListButton";
+import DynamicForm from "../../component/form/dialogs/DynamicForm";
 
 const ICONS = {
     [Type.MECHANIC]: 'code',
@@ -47,6 +39,7 @@ class SkillComponent extends React.PureComponent {
     state = {
         expanded: true,
         typeDialog: false,
+        editSettings: false,
         componentOptions: null
     };
 
@@ -60,7 +53,7 @@ class SkillComponent extends React.PureComponent {
 
     render() {
         const {data, selected} = this.props;
-        const {expanded, typeDialog, componentOptions} = this.state;
+        const {expanded, typeDialog, componentOptions, editSettings} = this.state;
         const {name, type, children} = data;
         const active = selected === data.id;
         const canHaveChildren = this.canHaveChildren(data);
@@ -69,7 +62,7 @@ class SkillComponent extends React.PureComponent {
             <ListButton icon={ICONS[type]} text={name} onClick={this.select} active={active}>
                 {canHaveChildren && <Action icon="add" tooltip="Add a new effect" onClick={this.showTypeDialog}
                                             color={active ? 'default' : 'secondary'}/>}
-                <Action icon="edit" tooltip={`Edit ${name} settings`} onClick={this.showEditDialog}
+                <Action icon="edit" tooltip={`Edit ${name} settings`} onClick={this.showSettingsDialog}
                         color={active ? 'default' : 'secondary'}/>
                 <Action
                     disabled={!children.length}
@@ -92,6 +85,14 @@ class SkillComponent extends React.PureComponent {
                 submit={this.addChild}
                 cancel={this.closeDialog}
                 options={componentOptions}/>}
+            {editSettings && <DynamicForm
+                optionSettings={this.getSettings(data)}
+                data={data.metadata}
+                open
+                title={`${data.name} Settings`}
+                close={this.closeSettingsDialog}
+                onChange={this.updateMetadata}
+                onDelete={this.onDelete}/>}
         </div>
     }
 
@@ -150,6 +151,19 @@ class SkillComponent extends React.PureComponent {
         update({...data, children}, index);
     };
 
+    updateMetadata = (metadata) => {
+        const {data, index, update} = this.props;
+        update({...data, metadata}, index);
+    };
+
+    showSettingsDialog = () => {
+        this.setState({editSettings: true});
+    };
+
+    closeSettingsDialog = () => {
+        this.setState({editSettings: false});
+    };
+
     toggleExpanded = () => {
         this.setState(({expanded}) => ({expanded: !expanded}));
     };
@@ -204,6 +218,13 @@ class SkillComponent extends React.PureComponent {
         update({...data, children}, index);
     };
 
+    onDelete = () => {
+        if (confirm('Are you sure you want to delete this component and all its children?')) {
+            const {update, index} = this.props;
+            update(null, index);
+        }
+    };
+
     findParentForLower(childIndex) {
         const {data} = this.props;
         const {children} = data;
@@ -218,6 +239,10 @@ class SkillComponent extends React.PureComponent {
             }
         }
         return -1;
+    }
+
+    getSettings(data) {
+        return data && getComponentDetails(data.type, data.name).metadata;
     }
 
     canHaveChildren(data) {

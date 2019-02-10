@@ -1,6 +1,6 @@
 import * as React from "react";
 import * as PropTypes from "prop-types";
-import {Dialog, DialogActions, DialogContent, DialogTitle} from "@material-ui/core";
+import {Dialog, DialogActions, DialogContent, DialogTitle, Divider} from "@material-ui/core";
 import FormButton from "../../input/FormButton";
 import TextInput from "../../input/basic/TextInput";
 
@@ -25,7 +25,10 @@ class StringDialog extends React.PureComponent {
         const {value, valid, error} = this.state;
 
         return <Dialog open={open} onClose={cancel || this.submit} disableRestoreFocus>
-            <DialogTitle>{title}</DialogTitle>
+            <DialogTitle>
+                {title}
+                <Divider/>
+            </DialogTitle>
             <DialogContent>
                 <TextInput
                     error={!!error}
@@ -36,6 +39,7 @@ class StringDialog extends React.PureComponent {
                     value={value}
                     onChange={this.onChange}/>
             </DialogContent>
+            <Divider/>
             <DialogActions>
                 <FormButton icon="done" text="Confirm" onClick={this.confirm} disabled={!valid}/>
                 <FormButton icon="clear" text="Cancel" onClick={cancel} color="primary"/>

@@ -9,7 +9,11 @@ let COMPONENT_OPTIONS = [];
 
 function instance(id) {
     const {name, type} = this;
-    return {name, type, id, children: [], metadata: {}};
+    const metadata = {};
+    this.metadata.forEach(option => {
+        metadata[option.key] = option.initial;
+    });
+    return {name, type, id, children: [], metadata};
 }
 
 function add(component) {

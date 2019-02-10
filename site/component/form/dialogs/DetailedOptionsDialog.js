@@ -44,9 +44,11 @@ class DetailedOptionsDialog extends React.PureComponent {
         if (!open || !options) return null;
 
         return <Dialog fullWidth maxWidth={size || 'md'} open onClose={this.cancel} className={classes.dialog}>
-            <DialogTitle>{title}</DialogTitle>
-            <DialogContent>
+            <DialogTitle>
+                {title}
                 <Divider/>
+            </DialogTitle>
+            <DialogContent>
                 <div style={{'textAlign': 'center'}}>
                     <div style={{display: 'inline-block'}}>
                         {options.map(this.renderOption)}
@@ -57,6 +59,7 @@ class DetailedOptionsDialog extends React.PureComponent {
                     <Typography>{this.determineText()}</Typography>
                 </CardContent>
             </DialogContent>
+            <Divider/>
             <DialogActions>
                 <FormButton icon="done" text="Confirm" onClick={this.close}/>
                 <FormButton icon="clear" text="Cancel" onClick={this.cancel} color="primary"/>

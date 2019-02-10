@@ -1,7 +1,6 @@
 import * as React from "react";
-import {Card, CardContent, DialogTitle, Divider, Drawer, Typography, withStyles} from "@material-ui/core";
+import {Card, CardContent, Divider, Drawer, Typography, withStyles} from "@material-ui/core";
 import TextInput from "../../component/input/basic/TextInput";
-import {loadLocally, StorageKey} from "../../data/storage";
 import NumberInput from "../../component/input/basic/NumberInput";
 import BooleanInput from "../../component/input/basic/BooleanInput";
 import FormButton from "../../component/input/FormButton";
@@ -56,12 +55,14 @@ class SkillEditor extends React.Component {
 
     componentDidMount() {
         document.addEventListener('mouseup', this.onMouseUp);
+        window.onbeforeunload = this.onUnload;
         this.reload();
     }
 
     componentWillUnmount() {
         document.removeEventListener('mouseup', this.onMouseUp);
-        skillLoader.save(this.state.skill);
+        window.onbeforeunload = null;
+        this.save();
     }
 
     reload() {
@@ -223,6 +224,14 @@ class SkillEditor extends React.Component {
             this.setState({selectedComponent: null});
         }
     };
+
+    onUnload = () => {
+        this.save();
+    };
+
+    save() {
+        skillLoader.save(this.state.skill);
+    }
 }
 
 export {DEFAULT_SKILL}

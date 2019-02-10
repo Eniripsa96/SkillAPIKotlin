@@ -18,7 +18,7 @@ const TRIGGER_OPTIONS = [
     {
         key: 'cooldown',
         name: 'Apply Cooldown',
-        description: '',
+        description: 'Whether or not to put the skill on cooldown when the trigger fires',
         type: InputType.BOOLEAN,
         initial: false
     }

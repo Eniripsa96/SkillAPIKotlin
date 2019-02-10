@@ -2,7 +2,7 @@ import * as React from "react";
 import Grid from "@material-ui/core/Grid";
 import {fade} from "@material-ui/core/styles/colorManipulator";
 import Icon from "@material-ui/core/Icon";
-import {CardContent, InputBase, withStyles} from "@material-ui/core";
+import {CardContent, Divider, InputBase, withStyles} from "@material-ui/core";
 import Card from "@material-ui/core/Card";
 import {StorageKey} from "../../data/storage";
 import FolderList from "../../component/display/folders/FolderList";
@@ -85,6 +85,7 @@ class SkillList extends React.Component {
                         <List>
                             {selected.items.map(this.renderItem)}
                         </List>
+                        <Divider/>
                         <FormButton icon="add" text="New Skill" onClick={this.createSkill}/>
                     </CardContent>
                 </Card>

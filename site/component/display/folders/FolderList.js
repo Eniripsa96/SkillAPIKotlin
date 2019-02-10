@@ -59,9 +59,11 @@ class FolderList extends React.Component {
     };
 
     deleteFolder = (folder) => {
-        const {folders, selectFolder} = this.props;
-        folders.delete(folder.name);
-        selectFolder(folders.folders[0]);
+        if (confirm(`Are you sure you want to delete the "${folder.name}" folder${folder.items.length ? ` and the ${folder.items.length} skills within it` : ''}?`)) {
+            const {folders, selectFolder} = this.props;
+            folders.delete(folder.name);
+            selectFolder(folders.folders[0]);
+        }
     };
 
     showDialog = () => {

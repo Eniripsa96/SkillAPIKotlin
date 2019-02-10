@@ -28,7 +28,7 @@ class Folders {
 
     delete(name) {
         this.folders = this.folders.filter(folder => folder.name !== name);
-        this.byName[name].items.forEach(this.loader.delete);
+        this.byName[name].items.forEach(id => this.loader.delete({id}));
         delete this.byName[name];
         saveLocally(this.key, this.folders);
     }
