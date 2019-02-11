@@ -75,7 +75,6 @@ class SkillEditor extends React.Component {
         this.setState({
             skill: {...DEFAULT_SKILL, ...skill}
         });
-
     }
 
     render() {

@@ -2,6 +2,8 @@ import React from "react";
 import {MULTI_TARGET_OPTIONS, Type} from "../commonOptions";
 import InputType from "../../../component/input/dynamic/InputType";
 
+const SHAPE_OPTIONS = ['Sphere', 'Cube'];
+
 const AreaTarget = {
     name: 'Area',
     type: Type.TARGET,
@@ -21,7 +23,7 @@ const AreaTarget = {
             description: 'What sort of shape the area should be',
             type: InputType.DROPDOWN,
             initial: 'Circle',
-            options: ['Sphere', 'Cube']
+            options: () => SHAPE_OPTIONS
         },
         ...MULTI_TARGET_OPTIONS
     ]

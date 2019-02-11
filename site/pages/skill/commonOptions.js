@@ -7,6 +7,8 @@ const Type = {
     TRIGGER: 'trigger'
 };
 
+const ALLY_OPTIONS = ['Any', 'Ally', 'Enemy'];
+
 const TRIGGER_OPTIONS = [
     {
         key: 'mana',
@@ -31,7 +33,7 @@ const TARGET_OPTIONS = [
         description: 'Whether to only target allies, enemies, or both',
         type: InputType.DROPDOWN,
         initial: 'Enemy',
-        options: ['Any', 'Ally', 'Enemy']
+        options: () => ALLY_OPTIONS
     },
     {
         key: 'caster',

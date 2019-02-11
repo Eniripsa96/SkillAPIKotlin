@@ -5,6 +5,8 @@ import BooleanInput from "../basic/BooleanInput";
 import TextInput from "../basic/TextInput";
 import Dropdown from "../basic/Dropdown";
 import NumberInput from "../basic/NumberInput";
+import {SettingsConsumer} from "../../form/settings/Settings";
+import Select from "react-select";
 
 class DynamicInput extends React.PureComponent {
     static propTypes = {
@@ -31,7 +33,7 @@ class DynamicInput extends React.PureComponent {
             case InputType.STRING:
                 return this.renderStringInput();
             case InputType.MULTI_DROPDOWN:
-                return null;
+                return this.renderMultiDropdownInput();
             case InputType.DOUBLE:
                 return this.renderNumberInput(false);
             case InputType.INTEGER:
@@ -67,13 +69,15 @@ class DynamicInput extends React.PureComponent {
         const {settings, data} = this.props;
         const {key, description, initial, options} = settings;
 
-        return <Dropdown
-            fullWidth
-            label={name}
-            values={options}
-            value={data[key] || initial}
-            tooltip={description}
-            onChange={this.onChange}/>
+        return <SettingsConsumer>
+            {settings => <Dropdown
+                fullWidth
+                label={name}
+                values={options(settings)}
+                value={data[key] || initial}
+                tooltip={description}
+                onChange={this.onChange}/>}
+        </SettingsConsumer>
     }
 
     renderNumberInput(integer) {
@@ -87,6 +91,22 @@ class DynamicInput extends React.PureComponent {
             value={data[key] || initial}
             tooltip={description}
             onChange={this.onChange}/>
+    }
+
+    renderMultiDropdownInput() {
+        const {settings, data} = this.props;
+        const {key, description, initial, options} = settings;
+
+        return <SettingsConsumer>
+            {settings => <Dropdown
+                fullWidth
+                multi
+                label={name}
+                values={options(settings)}
+                value={data[key] || initial}
+                tooltip={description}
+                onChange={this.onChange}/>}
+        </SettingsConsumer>
     }
 
     onChange = (value) => {

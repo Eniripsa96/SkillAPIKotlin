@@ -55,6 +55,11 @@ class SkillComponent extends React.PureComponent {
         const {data, selected} = this.props;
         const {expanded, typeDialog, componentOptions, editSettings} = this.state;
         const {name, type, children} = data;
+
+        if (!data || !name || !type || !getComponentDetails(type, name)) {
+            return null;
+        }
+
         const active = selected === data.id;
         const canHaveChildren = this.canHaveChildren(data);
 

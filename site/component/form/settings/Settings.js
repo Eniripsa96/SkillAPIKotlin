@@ -9,7 +9,7 @@ class Settings {
      *     version: string
      * }}
      */
-    data = loadLocally('settings') || { };
+    data = loadLocally('settings') || {};
 
     constructor() {
         this.applyChanges({});
@@ -24,15 +24,15 @@ class Settings {
     }
 
     applyChanges(changes) {
-        this.data = { ...this.data, ...changes };
+        this.data = {...this.data, ...changes};
         saveLocally('settings', this.data);
         reloadComponentOptions(this);
     }
 }
 
 const settings = new Settings();
-const { Provider, Consumer } = React.createContext(null);
+const {Provider, Consumer} = React.createContext(null);
 
-export { Provider as SettingsProvider, Consumer as SettingsConsumer }
+export {Provider as SettingsProvider, Consumer as SettingsConsumer}
 
 export default settings;

@@ -5,7 +5,7 @@ import InputType from "../../../component/input/dynamic/InputType";
 const ACTION_OPTIONS = ['Any', 'Break', 'Place'];
 
 const BlockTrigger = {
-    name: 'Block Break',
+    name: 'Block',
     type: Type.TRIGGER,
     description: 'Triggers effects upon a block being broken',
     children: true,

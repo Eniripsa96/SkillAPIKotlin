@@ -12,7 +12,7 @@ class BooleanInput extends React.PureComponent {
         label: PropTypes.string.isRequired,
         onChange: PropTypes.func.isRequired,
         fullWidth: PropTypes.bool,
-        value: PropTypes.string,
+        value: PropTypes.any,
         context: PropTypes.string
     };
 
