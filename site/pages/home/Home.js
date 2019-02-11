@@ -1,36 +1,37 @@
 import * as React from "react";
-import {Card, CardContent, Typography} from "@material-ui/core";
+import {Card, CardContent, Divider, Typography} from "@material-ui/core";
 
 class Home extends React.PureComponent {
     render() {
-        return <Card>
-            <CardContent>
-                <Typography>
-                    Lorem ipsum dolor sit amet, consectetuer adipiscing elit.
-                    Aenean commodo ligula eget dolor. Aenean massa. Cum sociis
-                    natoque penatibus et magnis dis parturient montes, nascetur
-                    ridiculus mus. Donec quam felis, ultricies nec, pellentesque
-                    eu, pretium quis, sem. Nulla consequat massa quis enim. Donec
-                    pede justo, fringilla vel, aliquet nec, vulputate eget, arcu.
-                    In enim justo, rhoncus ut, imperdiet a, venenatis vitae, justo.
-                    Nullam dictum felis eu pede mollis pretium. Integer tincidunt.
-                    Cras dapibus. Vivamus elementum semper nisi. Aenean vulputate
-                    eleifend tellus. Aenean leo ligula, porttitor eu, consequat
-                    vitae, eleifend ac, enim. Aliquam lorem ante, dapibus in,
-                    viverra quis, feugiat a, tellus. Phasellus viverra nulla ut
-                    metus varius laoreet. Quisque rutrum. Aenean imperdiet. Etiam
-                    ultricies nisi vel augue. Curabitur ullamcorper ultricies nisi.
-                    Nam eget dui. Etiam rhoncus. Maecenas tempus, tellus eget
-                    condimentum rhoncus, sem quam semper libero, sit amet adipiscing
-                    sem neque sed ipsum. Nam quam nunc, blandit vel, luctus pulvinar,
-                    hendrerit id, lorem. Maecenas nec odio et ante tincidunt tempus.
-                    Donec vitae sapien ut libero venenatis faucibus. Nullam quis
-                    ante. Etiam sit amet orci eget eros faucibus tincidunt. Duis leo.
-                    Sed fringilla mauris sit amet nibh. Donec sodales sagittis magna.
-                    Sed consequat, leo eget bibendum sodales, augue velit cursus nunc,
-                </Typography>
-            </CardContent>
-        </Card>
+        return <div style={{maxWidth: '600px', margin: '0 auto'}}>
+            <Card>
+                <CardContent>
+                    <Typography variant="h4">
+                        SkillAPI Dynamic Editor
+                    </Typography>
+                    <Divider/>
+                    <Typography>
+                        This is the official skill editor for the SkillAPI plugin.
+                        You can create custom skills and professions through this tool, download the configuration files,
+                        and drop them in the SkillAPI plugin folder to avoid manually creating/editing the files.
+                    </Typography>
+                    <br/><br/>
+                    <Typography variant="h4">
+                        Using this tool
+                    </Typography>
+                    <Divider/>
+                    <Typography>
+                        <ol>
+                            <li>Configure the editor using the gear icon in the top right</li>
+                            <li>Use the menu icon in the top left to navigate through the tool</li>
+                        </ol>
+                        Most options provided in the tool have tooltips to try to better explain what the option is,
+                        so hover over anything that you find confusing. Any further questions can be asked in the
+                        support Discord, accessible via the menu in the top left.
+                    </Typography>
+                </CardContent>
+            </Card>
+        </div>
     }
 }
 

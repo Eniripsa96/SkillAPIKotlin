@@ -2,35 +2,35 @@ import React from "react";
 import {MECHANIC_OPTIONS, Type} from "../commonOptions";
 import InputType from "../../../component/input/dynamic/InputType";
 
-const AttributeCondition = {
-    name: 'Attribute',
+const ValueCondition = {
+    name: 'Value',
     type: Type.CONDITION,
-    description: 'Applies child effects if the current target has an attribute value in the required range',
+    description: 'Checks whether or not a given value is within the required range',
     children: true,
     metadata: [
         ...MECHANIC_OPTIONS,
         {
-            key: 'attribute',
-            name: 'Attribute',
-            description: 'The attribute to check the value for',
+            key: 'key',
+            name: 'Key',
+            description: 'The unique identifier for the value',
             type: InputType.STRING,
-            initial: 'Strength'
+            initial: 'default'
         },
         {
             key: 'min',
             name: 'Minimum',
-            description: 'The minimum value required for the attribute',
+            description: 'The minimum amount the value must be',
             type: InputType.FORMULA,
-            initial: '0'
+            initial: '1'
         },
         {
             key: 'max',
             name: 'Maximum',
-            description: 'The maximum value required for the attribute',
+            description: 'The maximum amount the value must be',
             type: InputType.FORMULA,
             initial: '999'
         }
     ]
 };
 
-export default AttributeCondition
+export default ValueCondition

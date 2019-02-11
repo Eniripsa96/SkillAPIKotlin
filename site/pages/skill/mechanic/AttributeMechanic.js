@@ -1,5 +1,5 @@
 import React from "react";
-import {Type} from "../commonOptions";
+import {MECHANIC_OPTIONS, Type} from "../commonOptions";
 import InputType from "../../../component/input/dynamic/InputType";
 
 const AttributeMechanic = {
@@ -8,6 +8,7 @@ const AttributeMechanic = {
     description: 'Adds to or removes from an attribute of the target',
     children: false,
     metadata: [
+        ...MECHANIC_OPTIONS,
         {
             key: 'attribute',
             name: 'Attribute',

@@ -76,4 +76,15 @@ const MULTI_TARGET_OPTIONS = [
     ...TARGET_OPTIONS
 ];
 
-export {Type, TRIGGER_OPTIONS, TARGET_OPTIONS, MULTI_TARGET_OPTIONS}
+const MECHANIC_OPTIONS = [
+    {
+        key: 'target',
+        name: 'Target',
+        description: 'Who to apply the mechanic to',
+        type: InputType.DROPDOWN,
+        initial: 'Target',
+        options: () => ['Both', 'Caster', 'Target']
+    }
+];
+
+export {Type, TRIGGER_OPTIONS, MECHANIC_OPTIONS, TARGET_OPTIONS, MULTI_TARGET_OPTIONS}

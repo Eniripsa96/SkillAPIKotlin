@@ -1,7 +1,9 @@
 import AttributeCondition from "./AttributeCondition";
+import ValueCondition from "./ValueCondition";
 
 const CONDITIONS = [
-    AttributeCondition
+    AttributeCondition,
+    ValueCondition,
 ];
 
 export default CONDITIONS

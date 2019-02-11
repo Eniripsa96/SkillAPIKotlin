@@ -1,7 +1,11 @@
 import AttributeMechanic from "./AttributeMechanic";
+import ValueMechanic from "./ValueMechanic";
+import DamageMechanic from "./DamageMechanic";
 
 const MECHANICS = [
-    AttributeMechanic
+    AttributeMechanic,
+    DamageMechanic,
+    ValueMechanic,
 ];
 
 export default MECHANICS
