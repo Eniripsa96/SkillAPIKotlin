@@ -79,7 +79,7 @@ const MULTI_TARGET_OPTIONS = [
 const MECHANIC_OPTIONS = [
     {
         key: 'target',
-        name: 'Target',
+        name: 'Apply To',
         description: 'Who to apply the mechanic to',
         type: InputType.DROPDOWN,
         initial: 'Target',

@@ -6,7 +6,6 @@ import TextInput from "../basic/TextInput";
 import Dropdown from "../basic/Dropdown";
 import NumberInput from "../basic/NumberInput";
 import {SettingsConsumer} from "../../form/settings/Settings";
-import Select from "react-select";
 
 class DynamicInput extends React.PureComponent {
     static propTypes = {
@@ -67,7 +66,7 @@ class DynamicInput extends React.PureComponent {
 
     renderDropdownInput() {
         const {settings, data} = this.props;
-        const {key, description, initial, options} = settings;
+        const {key, name, description, initial, options} = settings;
 
         return <SettingsConsumer>
             {settings => <Dropdown
@@ -95,7 +94,7 @@ class DynamicInput extends React.PureComponent {
 
     renderMultiDropdownInput() {
         const {settings, data} = this.props;
-        const {key, description, initial, options} = settings;
+        const {key, name, description, initial, options} = settings;
 
         return <SettingsConsumer>
             {settings => <Dropdown

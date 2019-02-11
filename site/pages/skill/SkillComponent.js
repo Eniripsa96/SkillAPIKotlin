@@ -8,6 +8,7 @@ import {getComponentDetails, getComponentOptions} from "./components";
 import withStyles from "@material-ui/core/es/styles/withStyles";
 import ListButton from "../../component/input/list/ListButton";
 import DynamicForm from "../../component/form/dialogs/DynamicForm";
+import {loadLocally, saveLocally} from "../../data/storage";
 
 const ICONS = {
     [Type.MECHANIC]: 'code',
@@ -56,11 +57,20 @@ class SkillComponent extends React.PureComponent {
         const {expanded, typeDialog, componentOptions, editSettings} = this.state;
         const {name, type, children} = data;
 
-        if (!data || !name || !type || !getComponentDetails(type, name)) {
-            return null;
+        let error = null;
+        if (!name) error = 'Invalid - missing name';
+        if (!type) error = 'Invalid - missing type';
+        if (!getComponentDetails(type, name)) error = 'Invalid - unknown component';
+
+        const active = data && selected === data.id;
+
+        if (error) {
+            return <div>
+                <ListButton icon="warning" text={error} onClick={this.select} active={active}/>
+                <Divider/>
+            </div>
         }
 
-        const active = selected === data.id;
         const canHaveChildren = this.canHaveChildren(data);
 
         return <div>
@@ -255,7 +265,7 @@ class SkillComponent extends React.PureComponent {
     }
 
     onKeyUp = (e) => {
-        const {selected, data, index, lift, lower, move, update} = this.props;
+        const {selected, data, index, lift, lower, move, update, generateId} = this.props;
         if (selected !== data.id) return;
 
         switch (e.key) {
@@ -273,6 +283,22 @@ class SkillComponent extends React.PureComponent {
                 break;
             case 'ArrowRight':
                 lower && lower(index);
+                break;
+            case 'c':
+                if (e.ctrlKey) {
+                    saveLocally('copy', data);
+                }
+                break;
+            case 'v':
+                const copied = loadLocally('copy');
+                if (!copied || copied.type === Type.TRIGGER) return;
+                const instance = {...copied, id: generateId()};
+                if (this.canHaveChildren(data)) {
+                    const children = [...data.children, instance];
+                    update({...data, children}, index);
+                } else if (lift) {
+                    lift(index, data, instance);
+                }
                 break;
         }
     };

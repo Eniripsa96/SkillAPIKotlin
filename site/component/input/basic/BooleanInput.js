@@ -25,10 +25,15 @@ class BooleanInput extends React.PureComponent {
         const {value} = this.props;
         return <Dropdown
             {...this.props}
-            value={TRUE_VALUES.includes((value + '').toLowerCase()) ? TRUE : FALSE}
+            value={isTrue(value) ? TRUE : FALSE}
             values={VALUES}
             extraValues={null}/>
     }
 }
 
+function isTrue(value) {
+    return TRUE_VALUES.includes((value + '').toLowerCase());
+}
+
+export {isTrue}
 export default BooleanInput

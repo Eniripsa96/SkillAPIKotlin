@@ -2,7 +2,7 @@ import * as React from "react";
 import {Card, CardContent, Divider, Drawer, Typography, withStyles} from "@material-ui/core";
 import TextInput from "../../component/input/basic/TextInput";
 import NumberInput from "../../component/input/basic/NumberInput";
-import BooleanInput from "../../component/input/basic/BooleanInput";
+import BooleanInput, {isTrue} from "../../component/input/basic/BooleanInput";
 import FormButton from "../../component/input/FormButton";
 import DetailedOptionsDialog from "../../component/form/dialogs/DetailedOptionsDialog";
 import SkillComponent, {Type} from "./SkillComponent";
@@ -10,10 +10,14 @@ import List from "@material-ui/core/List";
 import {getComponentOptions} from "./components";
 import routes from "../../routes";
 import {skillLoader} from "../../data/loaders";
+import {loadLocally} from "../../data/storage";
 
 const DEFAULT_SKILL = {
     name: 'New Skill',
     maxLevel: 5,
+    spCost: 1,
+    cooldown: 5,
+    manaCost: 5,
     autoUnlock: 'Yes',
     requirements: [],
     triggers: []
@@ -55,12 +59,14 @@ class SkillEditor extends React.Component {
 
     componentDidMount() {
         document.addEventListener('mouseup', this.onMouseUp);
+        document.addEventListener('keyup', this.onKeyUp);
         window.onbeforeunload = this.onUnload;
         this.reload();
     }
 
     componentWillUnmount() {
         document.removeEventListener('mouseup', this.onMouseUp);
+        document.removeEventListener('keyup', this.keyUp);
         window.onbeforeunload = null;
         this.save();
     }
@@ -80,7 +86,7 @@ class SkillEditor extends React.Component {
     render() {
         const {classes} = this.props;
         const {skill, dialogData, dialogCallback} = this.state;
-        const {name, maxLevel, autoUnlock} = skill;
+        const {name, maxLevel, autoUnlock, spCost, manaCost, cooldown} = skill;
         return <div>
             <Drawer variant="permanent" anchor="left" className={classes.drawer}>
                 <Card className={classes.drawerCard}>
@@ -111,6 +117,27 @@ class SkillEditor extends React.Component {
                             onChange={this.onChange}
                             context="autoUnlock"/>
 
+                        {!isTrue(autoUnlock) && <NumberInput
+                            fullWidth
+                            label="Skill Point Cost"
+                            value={spCost}
+                            onChange={this.onChange}
+                            context="spCost"/>}
+
+                        {this.requiresMana() && <NumberInput
+                            fullWidth
+                            label="Mana Cost"
+                            value={manaCost}
+                            onChange={this.onChange}
+                            context="manaCost"/>}
+
+                        {this.requiresCooldown() && <NumberInput
+                            fullWidth
+                            label="Cooldown"
+                            value={cooldown}
+                            onChange={this.onChange}
+                            context="cooldown"/>}
+
                         <Typography variant="h5" className={classes.header}>Requirements</Typography>
                         <Divider/>
                         {/* TODO - add requirement list display */}
@@ -135,6 +162,18 @@ class SkillEditor extends React.Component {
                 submit={dialogCallback}
                 cancel={this.closeDialog}/>
         </div>
+    }
+
+    requiresMana() {
+        const {skill} = this.state;
+        const {triggers} = skill;
+        return triggers && !!triggers.find(trigger => trigger.metadata && isTrue(trigger.metadata.mana));
+    }
+
+    requiresCooldown() {
+        const {skill} = this.state;
+        const {triggers} = skill;
+        return triggers && !!triggers.find(trigger => trigger.metadata && isTrue(trigger.metadata.cooldown));
     }
 
     renderComponent = (component, index) => {
@@ -179,17 +218,17 @@ class SkillEditor extends React.Component {
 
     generateId = () => {
         const {skill} = this.state;
-        const ids = [];
+        const ids = {};
         skill.triggers.forEach(trigger => this.appendId(trigger, ids));
         let i = 1;
-        while (ids.includes(i)) {
+        while (ids[i]) {
             i++
         }
         return i;
     };
 
     appendId(component, ids) {
-        ids.push(component.id);
+        ids[component.id] = true;
         component.children.forEach(child => this.appendId(child, ids));
     }
 
@@ -221,6 +260,19 @@ class SkillEditor extends React.Component {
     onMouseUp = () => {
         if (this.state.selectedComponent !== null) {
             this.setState({selectedComponent: null});
+        }
+    };
+
+    onKeyUp = (e) => {
+        const {skill} = this.state;
+        switch (e.key) {
+            case 'v':
+                const copied = loadLocally('copy');
+                if (!copied || copied.type !== Type.TRIGGER) return;
+                const instance = {...copied, id: this.generateId()};
+                const triggers = [...skill.triggers, instance];
+                this.setState({selectedComponent: instance.id, skill: {...skill, triggers}});
+                break;
         }
     };
 
