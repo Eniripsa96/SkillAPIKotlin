@@ -3,10 +3,12 @@ import SkillList from "./pages/skill/SkillList";
 import SkillForm from "./pages/skill/SkillEditor";
 
 const routes = {
-    HOME: {path: '/', component: Home},
+    HOME: {path: '', component: Home},
     SKILL_LIST: {path: '/skills', component: SkillList},
     SKILL_EDITOR: {path: '/skills/:id', component: SkillForm}
 };
+
+Object.keys(routes).forEach(key => routes[key].path = '/SkillAPIKotlin' + routes[key].path);
 
 function resolve(route, args) {
     let path = route.path;
