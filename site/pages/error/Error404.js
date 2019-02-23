@@ -1,6 +1,7 @@
 import * as React from "react";
 import {Dialog, DialogActions, DialogContent, DialogTitle, Typography} from "@material-ui/core";
-import FormButton from "../../component/input/FormButton";
+import FormLink from "../../component/input/FormLink";
+import routes from "../../routes";
 
 class Error404 extends React.PureComponent {
     render() {
@@ -14,14 +15,10 @@ class Error404 extends React.PureComponent {
                 </Typography>
             </DialogContent>
             <DialogActions>
-                <FormButton icon="link" text="Home" onClick={this.navigateHome}/>
+                <FormLink icon="link" text="Home" link={routes.HOME.path}/>
             </DialogActions>
         </Dialog>
     }
-
-    navigateHome = () => {
-        this.props.history.push('/');
-    };
 }
 
 export default Error404;

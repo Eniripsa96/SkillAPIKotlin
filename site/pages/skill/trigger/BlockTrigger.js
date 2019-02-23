@@ -25,7 +25,7 @@ const BlockTrigger = {
             description: 'The types of block that must be interacted with for the trigger to fire',
             type: InputType.MULTI_DROPDOWN,
             initial: ['Any'],
-            options: (settings) => ['Any']
+            options: (settings) => settings.getEnumData().BLOCKS
         }
     ]
 };

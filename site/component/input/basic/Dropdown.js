@@ -14,9 +14,14 @@ const styles = theme => ({
         marginBottom: '8px'
     },
     chip: {
+        margin: '4px',
         '&:hover': {
             'background-color': '#dd2211'
         }
+    },
+    chipDiv: {
+        display: 'flex',
+        flexWrap: 'wrap'
     }
 });
 
@@ -63,7 +68,7 @@ class Dropdown extends React.PureComponent {
 
     renderSelected = (selected) => {
         const {classes} = this.props;
-        return <div>
+        return <div className={classes.chipDiv}>
             {selected.map(value => (
                 <Chip key={value} label={value} className={classes.chip} onClick={(e) => {
                     e.stopPropagation();
