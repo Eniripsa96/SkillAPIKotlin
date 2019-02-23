@@ -1,26 +1,26 @@
 package com.sucy.skill.dynamic
 
-import com.sucy.skill.api.Icon
-import com.sucy.skill.api.Levelable
 import com.sucy.skill.api.skill.PassiveSkill
+import com.sucy.skill.api.skill.Skill
 import com.sucy.skill.api.skill.SkillShot
-import com.sucy.skill.dynamic.trigger.TriggerEffect
+import com.sucy.skill.dynamic.trigger.Trigger
+import com.sucy.skill.facade.api.data.Item
 import com.sucy.skill.facade.api.entity.Actor
 import java.util.*
 
 /**
  * SkillAPIKotlin © 2018
  */
-class DynamicSkill(name: String, icon: Icon, maxLevel: Int)
-    : Levelable(name, icon, maxLevel), SkillShot, PassiveSkill {
+class DynamicSkill(name: String, icon: Item, maxLevel: Int)
+    : Skill(name, icon, maxLevel), SkillShot, PassiveSkill {
 
     private val triggers = ArrayList<TriggerHandler>()
     private val iconKeyMapping = HashMap<String, Effect>()
     private val activeLevels = HashMap<UUID, Int>()
 
-    private var castEffect: TriggerEffect? = null
-    private var initializeEffect: TriggerEffect? = null
-    private var cleanupEffect: TriggerEffect? = null
+    private var castEffect: Trigger<*>? = null
+    private var initializeEffect: Trigger<*>? = null
+    private var cleanupEffect: Trigger<*>? = null
 
     val castable: Boolean
         get() { return castEffect != null }
@@ -55,7 +55,7 @@ class DynamicSkill(name: String, icon: Icon, maxLevel: Int)
         cleanupEffect?.trigger(user, user, level)
     }
 
-    override fun cast(user: Actor, level: Int): Boolean {
-        return castEffect?.trigger(user, user, level) ?: false
+    override fun apply(caster: Actor, level: Int, target: Actor): Boolean {
+        return castEffect?.trigger(caster, target, level) ?: false
     }
 }

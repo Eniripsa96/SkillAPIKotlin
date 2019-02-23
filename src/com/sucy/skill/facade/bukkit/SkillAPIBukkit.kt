@@ -10,6 +10,13 @@ import org.bukkit.plugin.java.JavaPlugin
 class SkillAPIBukkit : JavaPlugin(), SkillAPIPlugin {
     override val eventBusProxy = BukkitEventBusProxy(this)
 
+    override fun onEnable() {
+    }
+
+    override fun onDisable() {
+
+    }
+
     override fun reload() {
         TODO("not implemented") //To change body of created functions use File | Settings | File Templates.
     }

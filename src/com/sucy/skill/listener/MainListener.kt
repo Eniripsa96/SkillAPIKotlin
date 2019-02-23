@@ -18,11 +18,6 @@ class MainListener : SkillAPIListener {
 
     @Listen(Step.REACT, true)
     fun onLogin(event: AsyncPlayerLoginEvent) {
-        if (SkillAPI.settings.saving.enableSqlDatabase && SkillAPI.settings.saving.sqlLoadDelayInSeconds > 0) {
-            // temp
-        } else {
-            // load
-        }
     }
 
     @Listen

@@ -1,5 +1,6 @@
 package com.sucy.skill.api
 
+import com.sucy.skill.facade.api.data.Item
 import com.sucy.skill.util.io.Data
 import com.sucy.skill.util.math.formula.Formula
 
@@ -8,7 +9,7 @@ import com.sucy.skill.util.math.formula.Formula
  */
 open class Levelable(
         var name: String,
-        var icon: Icon,
+        var icon: Item,
         var maxLevel: Int) {
 
     val key = name.toLowerCase()

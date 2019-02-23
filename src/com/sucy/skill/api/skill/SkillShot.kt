@@ -41,5 +41,5 @@ interface SkillShot {
      *
      * @return true if could cast, false otherwise
      */
-    fun cast(user: Actor, level: Int): Boolean
+    fun cast(caster: Actor, level: Int): Boolean
 }

@@ -7,7 +7,7 @@ import com.sucy.skill.util.io.Data
 /**
  * SkillAPI © 2018
  */
-class EnvironmentalTrigger : Trigger<ActorDamagedByActorEvent> {
+class EnvironmentalTrigger : Trigger<ActorDamagedByActorEvent>() {
 
     /** {@inheritDoc}  */
     override val key: String
@@ -18,9 +18,9 @@ class EnvironmentalTrigger : Trigger<ActorDamagedByActorEvent> {
         get() = ActorDamagedByActorEvent::class.java
 
     /** {@inheritDoc}  */
-    override fun shouldTrigger(event: ActorDamagedByActorEvent, level: Int, settings: Data): Boolean {
-        val type = settings.getString("type", "any").replace(' ', '_')
-        return event.attacker == null && type.equals("ANY", true) || type.equals(event.damageType, true)
+    override fun shouldTrigger(event: ActorDamagedByActorEvent, level: Int): Boolean {
+        val type = metadata.getString("type", "any").replace(' ', '_')
+        return type.equals("ANY", true) || type.equals(event.damageType, true)
     }
 
     /** {@inheritDoc}  */

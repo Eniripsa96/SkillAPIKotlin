@@ -7,7 +7,7 @@ import com.sucy.skill.util.io.Data
 /**
  * SkillAPI © 2018
  */
-class KillTrigger : Trigger<ActorDeathEvent> {
+class KillTrigger : Trigger<ActorDeathEvent>() {
 
     /** {@inheritDoc}  */
     override val key: String
@@ -18,7 +18,7 @@ class KillTrigger : Trigger<ActorDeathEvent> {
         get() = ActorDeathEvent::class.java
 
     /** {@inheritDoc}  */
-    override fun shouldTrigger(event: ActorDeathEvent, level: Int, settings: Data): Boolean {
+    override fun shouldTrigger(event: ActorDeathEvent, level: Int): Boolean {
         return event.killer != null
     }
 

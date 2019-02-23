@@ -7,7 +7,7 @@ import com.sucy.skill.util.io.Data
 /**
  * SkillAPI © 2018
  */
-class DeathTrigger : Trigger<ActorDeathEvent> {
+class DeathTrigger : Trigger<ActorDeathEvent>() {
 
     /** {@inheritDoc}  */
     override val key: String
@@ -18,8 +18,8 @@ class DeathTrigger : Trigger<ActorDeathEvent> {
         get() = ActorDeathEvent::class.java
 
     /** {@inheritDoc}  */
-    override fun shouldTrigger(event: ActorDeathEvent, level: Int, settings: Data): Boolean {
-        return !isTargetingKiller(settings) || event.killer != null
+    override fun shouldTrigger(event: ActorDeathEvent, level: Int): Boolean {
+        return true
     }
 
     /** {@inheritDoc}  */
@@ -32,10 +32,6 @@ class DeathTrigger : Trigger<ActorDeathEvent> {
 
     /** {@inheritDoc}  */
     override fun getTarget(event: ActorDeathEvent, settings: Data): Actor {
-        return event.actor
-    }
-
-    private fun isTargetingKiller(settings: Data): Boolean {
-        return settings.getString("killer", "false").equals("true", true)
+        return event.killer ?: event.actor
     }
 }

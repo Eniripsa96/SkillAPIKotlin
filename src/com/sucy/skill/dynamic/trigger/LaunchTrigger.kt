@@ -7,7 +7,7 @@ import com.sucy.skill.util.io.Data
 /**
  * SkillAPI © 2018
  */
-class LaunchTrigger : Trigger<ProjectileLaunchEvent> {
+class LaunchTrigger : Trigger<ProjectileLaunchEvent>() {
 
     /** {@inheritDoc}  */
     override val key: String
@@ -18,8 +18,8 @@ class LaunchTrigger : Trigger<ProjectileLaunchEvent> {
         get() = ProjectileLaunchEvent::class.java
 
     /** {@inheritDoc}  */
-    override fun shouldTrigger(event: ProjectileLaunchEvent, level: Int, settings: Data): Boolean {
-        val type = settings.getString("type", "any")
+    override fun shouldTrigger(event: ProjectileLaunchEvent, level: Int): Boolean {
+        val type = metadata.getString("type", "any")
         return type.equals("ANY", true) || type.equals(event.projectile.type, true)
     }
 

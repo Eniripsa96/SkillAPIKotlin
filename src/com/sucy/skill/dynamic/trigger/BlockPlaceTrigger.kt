@@ -7,7 +7,7 @@ import com.sucy.skill.util.io.Data
 /**
  * SkillAPI © 2018
  */
-class BlockPlaceTrigger : Trigger<BlockPlaceEvent> {
+class BlockPlaceTrigger : Trigger<BlockPlaceEvent>() {
 
     /** {@inheritDoc}  */
     override val key: String
@@ -18,8 +18,8 @@ class BlockPlaceTrigger : Trigger<BlockPlaceEvent> {
         get() = BlockPlaceEvent::class.java
 
     /** {@inheritDoc}  */
-    override fun shouldTrigger(event: BlockPlaceEvent, level: Int, settings: Data): Boolean {
-        val types = settings.getStringList("material")
+    override fun shouldTrigger(event: BlockPlaceEvent, level: Int): Boolean {
+        val types = metadata.getStringList("material")
         return (types.isEmpty() || types.size == 1 && types.get(0).equals("ANY", true)
                 || types.stream().anyMatch { mat -> event.block.type.equals(mat, true) })
     }

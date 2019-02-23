@@ -41,7 +41,7 @@ fun List<String>.color(): List<String> {
  * Formats [this] into title case (e.g. This Is Title Case)
  */
 fun String.titleCase(): String {
-    return SPLIT_REGEX.split(this, -1)
+    return SPLIT_REGEX.split(this, 0)
             .joinToString(separator = " ") { it[0].toUpperCase() + it.substring(1).toLowerCase() }
 }
 

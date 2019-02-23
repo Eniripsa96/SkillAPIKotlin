@@ -376,10 +376,6 @@ Casting:
   instant-item:
     type: BOOKSHELF
     data: 0
-    durability: 0
-    name: '&6Instant Bar'
-    data: 0
-    durability: 0
     name: '&6Instant Bar'
     lore:
     - ''

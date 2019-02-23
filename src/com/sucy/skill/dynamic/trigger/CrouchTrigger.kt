@@ -7,7 +7,7 @@ import com.sucy.skill.util.io.Data
 /**
  * SkillAPI © 2018
  */
-class CrouchTrigger : Trigger<ToggleCrouchEvent> {
+class CrouchTrigger : Trigger<ToggleCrouchEvent>() {
 
     /** {@inheritDoc}  */
     override val key: String
@@ -18,8 +18,8 @@ class CrouchTrigger : Trigger<ToggleCrouchEvent> {
         get() = ToggleCrouchEvent::class.java
 
     /** {@inheritDoc}  */
-    override fun shouldTrigger(event: ToggleCrouchEvent, level: Int, settings: Data): Boolean {
-        val type = settings.getString("type", "start crouching")
+    override fun shouldTrigger(event: ToggleCrouchEvent, level: Int): Boolean {
+        val type = metadata.getString("type", "start crouching")
         return type.equals("both", ignoreCase = true) || event.isCrouching != type.equals("stop crouching", ignoreCase = true)
     }
 

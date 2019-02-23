@@ -7,7 +7,7 @@ import com.sucy.skill.util.io.Data
 /**
  * SkillAPI © 2018
  */
-class MoveTrigger : Trigger<ActorMoveEvent> {
+class MoveTrigger : Trigger<ActorMoveEvent>() {
 
     /** {@inheritDoc}  */
     override val key: String
@@ -18,7 +18,7 @@ class MoveTrigger : Trigger<ActorMoveEvent> {
         get() = ActorMoveEvent::class.java
 
     /** {@inheritDoc}  */
-    override fun shouldTrigger(event: ActorMoveEvent, level: Int, settings: Data): Boolean {
+    override fun shouldTrigger(event: ActorMoveEvent, level: Int): Boolean {
         return event.from.world == event.to.world
     }
 

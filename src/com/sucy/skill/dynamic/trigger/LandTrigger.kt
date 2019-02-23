@@ -7,7 +7,7 @@ import com.sucy.skill.util.io.Data
 /**
  * SkillAPI © 2018
  */
-class LandTrigger : Trigger<ActorLandedEvent> {
+class LandTrigger : Trigger<ActorLandedEvent>() {
 
     /** {@inheritDoc}  */
     override val key: String
@@ -18,8 +18,8 @@ class LandTrigger : Trigger<ActorLandedEvent> {
         get() = ActorLandedEvent::class.java
 
     /** {@inheritDoc}  */
-    override fun shouldTrigger(event: ActorLandedEvent, level: Int, settings: Data): Boolean {
-        val minDistance = settings.getDouble("min-distance", 0.0)
+    override fun shouldTrigger(event: ActorLandedEvent, level: Int): Boolean {
+        val minDistance = metadata.getDouble("min-distance", 0.0)
         return event.distance >= minDistance
     }
 

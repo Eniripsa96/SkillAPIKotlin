@@ -4,10 +4,12 @@ import com.google.common.collect.ImmutableList
 import com.google.common.collect.ImmutableSet
 import com.sucy.skill.facade.api.data.Item
 import com.sucy.skill.facade.internal.data.InternalItem
+import com.sucy.skill.util.math.formula.Formula
 import com.sucy.skill.util.text.color
 import java.util.*
 import java.util.stream.Collectors
 import kotlin.collections.ArrayList
+import kotlin.collections.HashMap
 
 /**
  * SkillAPIKotlin © 2018
@@ -15,6 +17,7 @@ import kotlin.collections.ArrayList
 class Data internal constructor() {
     val comments = HashMap<String, MutableList<String>>()
     private val data = HashMap<String, Any>()
+    private val formulas = HashMap<String, Formula>()
     private val keys = ArrayList<String>()
 
     constructor(initial: Map<String, Any>) : this() {
@@ -117,6 +120,11 @@ class Data internal constructor() {
         }
     }
 
+    fun getScaled(key: String, level: Int, fallback: Double = 0.0): Double {
+        return formulas.computeIfAbsent(key) { Formula(getString(key, "y"), FORMULA_KEYS) }
+                .evaluate(level.toDouble(), fallback)
+    }
+
     fun getStringList(key: String, fallback: List<String> = ImmutableList.of()): List<String> {
         val found = get(key)
         @Suppress("UNCHECKED_CAST")
@@ -180,7 +188,8 @@ class Data internal constructor() {
     }
 
     private companion object {
-        var TRUE_TERMS = ImmutableSet.of(
+        val FORMULA_KEYS = ImmutableList.of("x", "y")
+        val TRUE_TERMS: Set<String> = ImmutableSet.of(
                 "true",
                 "t",
                 "y",

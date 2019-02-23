@@ -42,5 +42,5 @@ interface TargetSkill {
      *
      * @return true if could cast, false otherwise
      */
-    fun cast(user: Actor, target: Actor, level: Int, ally: Boolean): Boolean
+    fun cast(caster: Actor, target: Actor, level: Int, ally: Boolean): Boolean
 }

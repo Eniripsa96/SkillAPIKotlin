@@ -13,6 +13,14 @@ abstract class Effect {
     private val children = ArrayList<Effect>()
     protected val metadata = Data()
 
+    /**
+     * Called after all data is loaded to parse any settings from the metadata
+     */
+    abstract fun initialize()
+
+    /**
+     * Called every time the skill is used
+     */
     abstract fun execute(caster: Actor, level: Int, targets: List<Actor>): Boolean
 
     fun executeChildren(caster: Actor, level: Int, targets: List<Actor>): Boolean {
@@ -32,5 +40,8 @@ abstract class Effect {
         children.forEach { it.cleanUp(caster) }
     }
 
-    fun doCleanUp(caster: Actor) { }
+    /**
+     * Called when a player logs off, dies, or unlearns a skill
+     */
+    open fun doCleanUp(caster: Actor) { }
 }
