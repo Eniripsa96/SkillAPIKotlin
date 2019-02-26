@@ -1,18 +1,24 @@
-package com.sucy.skill.api.attribute
+package com.sucy.skill.api.values
+
+import java.util.function.Consumer
 
 /**
  * SkillAPIKotlin © 2018
  */
-class AttributeValue {
-    private var base = 0
-    private var bonus = 0
+class Value {
+    private var base = 0.0
+    private var bonus = 0.0
     private var multiplier = 1.0
 
-    private val baseSources = HashMap<String, Int>()
-    private val additiveSource = HashMap<String, Int>()
+    private val baseSources = HashMap<String, Double>()
+    private val additiveSource = HashMap<String, Double>()
     private val multiplierSources = HashMap<String, Double>()
 
-    var total = 0
+    private val baseStacks = HashMap<String, ValueStacks>()
+    private val bonusStacks = HashMap<String, ValueStacks>()
+    private val multiplierStacks = HashMap<String, ValueStacks>()
+
+    var total = 0.0
         private set
 
     /**
@@ -29,9 +35,16 @@ class AttributeValue {
      * any other bonuses and only allows one [bonus] per source, with the
      * latest application overwriting older bonuses.
      */
-    fun addBase(amount: Int, source: String) {
-        base += amount - (baseSources.put(source, amount) ?: 0)
+    fun addBase(amount: Double, source: String) {
+        base += amount - (baseSources.put(source, amount) ?: 0.0)
         updateTotal()
+    }
+
+    fun addBaseStack(amount: Double, duration: Double, maxStacks: Int, type: TimerType, source: String) {
+        val stacks = baseStacks.computeIfAbsent(source) {
+            ValueStacks(0.0, Consumer { addBase(it, source) })
+        }
+        stacks.apply(amount, duration, type, maxStacks)
     }
 
     /**
@@ -39,9 +52,16 @@ class AttributeValue {
      * any other bonuses and only allows one bonus per [source], with the
      * latest application overwriting older bonuses.
      */
-    fun addBonus(amount: Int, source: String) {
-        bonus += amount - (additiveSource.put(source, amount) ?: 0)
+    fun addBonus(amount: Double, source: String) {
+        bonus += amount - (additiveSource.put(source, amount) ?: 0.0)
         updateTotal()
+    }
+
+    fun addBonusStack(amount: Double, duration: Double, maxStacks: Int, type: TimerType, source: String) {
+        val stacks = bonusStacks.computeIfAbsent(source) {
+            ValueStacks(0.0, Consumer { addBonus(it, source) })
+        }
+        stacks.apply(amount, duration, type, maxStacks)
     }
 
     /**
@@ -56,12 +76,19 @@ class AttributeValue {
         updateTotal()
     }
 
+    fun addMultiplierStack(amount: Double, duration: Double, maxStacks: Int, type: TimerType, source: String) {
+        val stacks = multiplierStacks.computeIfAbsent(source) {
+            ValueStacks(1.0, Consumer { addMultiplier(it, source) })
+        }
+        stacks.apply(amount, duration, type, maxStacks)
+    }
+
     /**
      * Clears all bonuses from [source] for the attribute
      */
     fun clear(source: String) {
-        base -= baseSources.remove(source) ?: 0
-        bonus -= additiveSource.remove(source) ?: 0
+        base -= baseSources.remove(source) ?: 0.0
+        bonus -= additiveSource.remove(source) ?: 0.0
         multiplier /= multiplierSources.remove(source) ?: 1.0
         updateTotal()
     }
@@ -81,6 +108,6 @@ class AttributeValue {
     }
 
     private fun updateTotal() {
-        total = Math.max(0, (base * multiplier + bonus).toInt())
+        total = base * multiplier + bonus
     }
 }

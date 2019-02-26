@@ -1,4 +1,4 @@
-package com.sucy.skill.api.attribute
+package com.sucy.skill.api.values
 
 /**
  * SkillAPIKotlin © 2018
