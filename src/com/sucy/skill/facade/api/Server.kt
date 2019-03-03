@@ -9,4 +9,6 @@ import com.sucy.skill.facade.api.task.TaskManager
 interface Server {
     val players: PlayerManager
     val taskManager: TaskManager
+
+    fun getWorld(name: String): World
 }

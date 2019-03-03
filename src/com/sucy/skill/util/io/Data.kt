@@ -4,12 +4,9 @@ import com.google.common.collect.ImmutableList
 import com.google.common.collect.ImmutableSet
 import com.sucy.skill.facade.api.data.Item
 import com.sucy.skill.facade.internal.data.InternalItem
-import com.sucy.skill.util.math.formula.Formula
+import com.sucy.skill.util.math.formula.DynamicFormula
 import com.sucy.skill.util.text.color
-import java.util.*
 import java.util.stream.Collectors
-import kotlin.collections.ArrayList
-import kotlin.collections.HashMap
 
 /**
  * SkillAPIKotlin © 2018
@@ -17,7 +14,7 @@ import kotlin.collections.HashMap
 class Data internal constructor() {
     val comments = HashMap<String, MutableList<String>>()
     private val data = HashMap<String, Any>()
-    private val formulas = HashMap<String, Formula>()
+    private val formulas = HashMap<String, DynamicFormula>()
     private val keys = ArrayList<String>()
 
     constructor(initial: Map<String, Any>) : this() {
@@ -120,9 +117,8 @@ class Data internal constructor() {
         }
     }
 
-    fun getScaled(key: String, level: Int, fallback: Double = 0.0): Double {
-        return formulas.computeIfAbsent(key) { Formula(getString(key, "y"), FORMULA_KEYS) }
-                .evaluate(level.toDouble(), fallback)
+    fun getFormula(key: String, fallback: Double = 0.0): DynamicFormula {
+        return formulas.computeIfAbsent(key) { DynamicFormula(getString(key, fallback.toString())) }
     }
 
     fun getStringList(key: String, fallback: List<String> = ImmutableList.of()): List<String> {
@@ -188,7 +184,6 @@ class Data internal constructor() {
     }
 
     private companion object {
-        val FORMULA_KEYS = ImmutableList.of("x", "y")
         val TRUE_TERMS: Set<String> = ImmutableSet.of(
                 "true",
                 "t",

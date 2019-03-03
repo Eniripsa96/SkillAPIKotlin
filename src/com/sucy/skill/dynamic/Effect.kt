@@ -1,5 +1,6 @@
 package com.sucy.skill.dynamic
 
+import com.google.common.collect.ImmutableMap
 import com.sucy.skill.facade.api.entity.Actor
 import com.sucy.skill.util.io.Data
 
@@ -40,8 +41,36 @@ abstract class Effect {
         children.forEach { it.cleanUp(caster) }
     }
 
+    fun compute(key: String, caster: Actor, target: Actor): Double {
+        formulaCaster = caster
+        formulaTarget = target
+        return metadata.getFormula(key).evaluate(formulaGetter)
+    }
+
     /**
      * Called when a player logs off, dies, or unlearns a skill
      */
     open fun doCleanUp(caster: Actor) { }
+
+    companion object {
+        private var formulaCaster: Actor? = null
+        private var formulaTarget: Actor? = null
+
+        private val formulaGetter: (String) -> Double = {
+            if (it.startsWith("target.")) getValue(formulaTarget!!, it.substring(7))
+            else getValue(formulaCaster!!, it)
+        }
+
+        fun getValue(actor: Actor, key: String): Double {
+            val common = VALUE_KEYS[key]
+            return common?.invoke(actor) ?: actor.values[key].total
+        }
+
+        private val VALUE_KEYS = ImmutableMap.builder<String, (Actor) -> Double>()
+                .put("health") { it.health }
+                .put("maxhealth") { it.maxHealth }
+                .put("lvl") { it.level.toDouble() }
+                .put("level") { it.level.toDouble() }
+                .build()
+    }
 }

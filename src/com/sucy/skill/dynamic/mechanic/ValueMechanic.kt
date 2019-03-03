@@ -3,17 +3,17 @@ package com.sucy.skill.dynamic.mechanic
 import com.sucy.skill.api.values.Value
 import com.sucy.skill.facade.api.entity.Actor
 
-class AttributeMechanic : AbstractValueMechanic() {
-    override val key = "attribute"
+class ValueMechanic : AbstractValueMechanic() {
+    override val key = "value"
 
-    private var attribute = "vitality"
+    private var valueKey = "default"
 
     override fun initialize() {
         super.initialize()
-        attribute = metadata.getString("attribute", attribute)
+        valueKey = metadata.getString("key", valueKey)
     }
 
     override fun getValue(target: Actor): Value {
-        return target.attributes[attribute]
+        return target.values[valueKey]
     }
 }

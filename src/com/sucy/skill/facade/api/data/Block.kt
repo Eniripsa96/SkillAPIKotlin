@@ -6,4 +6,8 @@ package com.sucy.skill.facade.api.data
 interface Block {
     val type: String
     val location: Location
+    val isSolid: Boolean
+    val isAir: Boolean
+
+    val state: BlockState
 }

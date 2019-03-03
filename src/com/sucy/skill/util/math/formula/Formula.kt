@@ -13,7 +13,7 @@ import java.util.stream.Collectors
 /**
  * SkillAPIKotlin © 2018
  */
-class Formula(equation: String, private val keys: List<String>) {
+open class Formula(equation: String, protected val keys: MutableList<String>) {
     val tokens = ArrayList<Token>()
 
     fun evaluate(vararg values: Double): Double {
@@ -70,7 +70,7 @@ class Formula(equation: String, private val keys: List<String>) {
         }
     }
 
-    private fun parseVal(token: String) {
+    protected open fun parseVal(token: String) {
         if (token.isBlank()) return
 
         try {

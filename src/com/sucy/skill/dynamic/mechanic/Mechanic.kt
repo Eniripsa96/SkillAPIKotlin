@@ -9,25 +9,29 @@ abstract class Mechanic : Effect() {
 
     private var applyToCaster = false
     private var applyToTarget = true
+    protected var casterOnce = false
 
     override fun initialize() {
         val target = metadata.getString("target", "target").toLowerCase()
         applyToCaster = !target.equals("target")
         applyToTarget = !target.equals("caster")
+        casterOnce = metadata.getBoolean("casterOnce", casterOnce)
     }
 
     override fun execute(caster: Actor, level: Int, targets: List<Actor>): Boolean {
         var result = false
-        targets.forEach {
-            if (applyToCaster) {
-                result = execute(caster, level, caster) || result
+
+        if (applyToCaster) {
+            if (casterOnce) {
+                return execute(caster, level, targets[0], caster)
+            } else {
+                targets.forEach { result = execute(caster, level, it, caster) }
             }
-            if (applyToTarget) {
-                result = execute(caster, level, it) || result
-            }
+        } else {
+            targets.forEach { result = execute(caster, level, it, it) }
         }
         return result
     }
 
-    abstract fun execute(caster: Actor, level: Int, target: Actor): Boolean
+    abstract fun execute(caster: Actor, level: Int, target: Actor, recipient: Actor): Boolean
 }

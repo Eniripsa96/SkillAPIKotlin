@@ -10,6 +10,9 @@ import java.util.*
  */
 interface Actor : Entity {
     val uuid: UUID
+    val health: Double
+    val maxHealth: Double
+    val level: Int
 
     val attributes: ValueSet
         get() {
