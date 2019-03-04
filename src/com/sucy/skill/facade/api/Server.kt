@@ -1,7 +1,7 @@
 package com.sucy.skill.facade.api
 
 import com.sucy.skill.facade.api.managers.PlayerManager
-import com.sucy.skill.facade.api.task.TaskManager
+import com.sucy.skill.facade.api.managers.TaskManager
 
 /**
  * SkillAPIKotlin © 2018

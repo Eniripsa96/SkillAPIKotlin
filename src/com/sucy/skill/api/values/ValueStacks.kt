@@ -1,7 +1,7 @@
 package com.sucy.skill.api.values
 
 import com.sucy.skill.SkillAPI
-import com.sucy.skill.facade.api.task.Task
+import com.sucy.skill.facade.api.managers.Task
 import com.sucy.skill.util.math.toTicks
 import java.util.*
 import java.util.function.Consumer

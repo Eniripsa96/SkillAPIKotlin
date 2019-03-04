@@ -10,4 +10,5 @@ interface Entity {
     val location: Location
     val velocity: Vector3
     val type: String
+    val name: String
 }

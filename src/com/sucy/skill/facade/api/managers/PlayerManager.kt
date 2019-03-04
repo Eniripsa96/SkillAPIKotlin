@@ -1,5 +1,6 @@
 package com.sucy.skill.facade.api.managers
 
+import com.sucy.skill.SkillAPI
 import com.sucy.skill.facade.api.entity.Player
 import java.util.*
 
@@ -7,10 +8,18 @@ import java.util.*
  * SkillAPIKotlin © 2018
  */
 interface PlayerManager {
-    fun getPlayerName(uuid: UUID): String
-    fun getPlayerId(name: String): UUID
-    fun getPlayer(uuid: UUID): Player
-    fun getPlayer(name: String): Player
-    fun isPlayerOnline(uuid: UUID): Boolean
-    fun isPlayerOnline(name: String): Boolean
+    fun getPlayer(uuid: UUID): Player?
+
+    fun getPlayer(name: String): Player? {
+        val uuid = SkillAPI.entityData.playerIds.inverse()[name]
+        return if (uuid == null) null else getPlayer(uuid)
+    }
+
+    fun isPlayerOnline(uuid: UUID): Boolean {
+        return getPlayer(uuid) != null
+    }
+
+    fun isPlayerOnline(name: String): Boolean {
+        return getPlayer(name) != null
+    }
 }
