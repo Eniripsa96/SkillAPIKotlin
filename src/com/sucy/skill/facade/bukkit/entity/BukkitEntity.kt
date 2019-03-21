@@ -9,7 +9,7 @@ import org.bukkit.entity.Entity
 /**
  * SkillAPIKotlin © 2018
  */
-open class BukkitEntity(private val entity: Entity) : com.sucy.skill.facade.api.entity.Entity {
+open class BukkitEntity(open val entity: Entity) : com.sucy.skill.facade.api.entity.Entity {
     override val type: String
         get() = entity.type.name
     override val location: Location
@@ -18,8 +18,4 @@ open class BukkitEntity(private val entity: Entity) : com.sucy.skill.facade.api.
         get() = BukkitVector3(entity.velocity)
     override val name: String
         get() = entity.customName ?: entity.name
-
-    open fun getBukkitEntity(): Entity {
-        return entity
-    }
 }

@@ -22,15 +22,15 @@ abstract class Effect {
     /**
      * Called every time the skill is used
      */
-    abstract fun execute(caster: Actor, level: Int, targets: List<Actor>): Boolean
+    abstract fun execute(context: CastContext, targets: List<Actor>): Boolean
 
-    fun executeChildren(caster: Actor, level: Int, targets: List<Actor>): Boolean {
+    fun executeChildren(context: CastContext, targets: List<Actor>): Boolean {
         if (targets.isEmpty()) return false
 
         var worked = false
         children.forEach {
             val counts = !it.metadata.getString("counts", "true").equals("false", true)
-            val passed = it.execute(caster, level, targets)
+            val passed = it.execute(context, targets)
             worked = (passed && counts) || worked
         }
         return worked

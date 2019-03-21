@@ -1,6 +1,7 @@
 package com.sucy.skill.dynamic.mechanic
 
 import com.sucy.skill.SkillAPI
+import com.sucy.skill.dynamic.CastContext
 import com.sucy.skill.dynamic.Effect
 import com.sucy.skill.dynamic.EffectType
 import com.sucy.skill.facade.api.entity.Actor
@@ -16,9 +17,9 @@ class DelayMechanic : Effect() {
         delay = metadata.getDouble("delay", delay * 20.0).toTicks()
     }
 
-    override fun execute(caster: Actor, level: Int, targets: List<Actor>): Boolean {
+    override fun execute(context: CastContext, targets: List<Actor>): Boolean {
         SkillAPI.server.taskManager.run(Runnable {
-            executeChildren(caster, level, targets)
+            executeChildren(context, targets)
         }, delay)
         return true
     }

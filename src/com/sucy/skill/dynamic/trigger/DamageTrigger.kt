@@ -2,7 +2,6 @@ package com.sucy.skill.dynamic.trigger
 
 import com.sucy.skill.facade.api.entity.Actor
 import com.sucy.skill.facade.api.event.actor.ActorDamagedByActorEvent
-import com.sucy.skill.util.io.Data
 import java.util.*
 import java.util.stream.Collectors
 import kotlin.collections.HashSet
@@ -39,9 +38,9 @@ class DamageTrigger : Trigger<ActorDamagedByActorEvent>() {
     }
 
     /** {@inheritDoc}  */
-    override fun setValues(event: ActorDamagedByActorEvent, data: MutableMap<String, Any>) {
-        data["api-taken"] = event.amount
-        data["api-dealt"] = event.amount
+    override fun setValues(event: ActorDamagedByActorEvent, target: Actor) {
+        target.metadata["api-taken"] = event.amount
+        target.metadata["api-dealt"] = event.amount
     }
 
     /** {@inheritDoc}  */
@@ -50,7 +49,7 @@ class DamageTrigger : Trigger<ActorDamagedByActorEvent>() {
     }
 
     /** {@inheritDoc}  */
-    override fun getTarget(event: ActorDamagedByActorEvent, settings: Data): Actor? {
+    override fun getTarget(event: ActorDamagedByActorEvent): Actor? {
         return if (attacker) event.actor else event.attacker
     }
 }

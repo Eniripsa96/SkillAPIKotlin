@@ -1,5 +1,6 @@
 package com.sucy.skill.dynamic.mechanic
 
+import com.sucy.skill.dynamic.CastContext
 import com.sucy.skill.dynamic.Effect
 import com.sucy.skill.dynamic.EffectType
 import com.sucy.skill.facade.api.entity.Actor
@@ -18,20 +19,20 @@ abstract class Mechanic : Effect() {
         casterOnce = metadata.getBoolean("casterOnce", casterOnce)
     }
 
-    override fun execute(caster: Actor, level: Int, targets: List<Actor>): Boolean {
+    override fun execute(context: CastContext, targets: List<Actor>): Boolean {
         var result = false
 
         if (applyToCaster) {
             if (casterOnce) {
-                return execute(caster, level, targets[0], caster)
+                return execute(context, targets[0], context.caster)
             } else {
-                targets.forEach { result = execute(caster, level, it, caster) }
+                targets.forEach { result = execute(context, it, context.caster) }
             }
         } else {
-            targets.forEach { result = execute(caster, level, it, it) }
+            targets.forEach { result = execute(context, it, it) }
         }
         return result
     }
 
-    abstract fun execute(caster: Actor, level: Int, target: Actor, recipient: Actor): Boolean
+    abstract fun execute(context: CastContext, target: Actor, recipient: Actor): Boolean
 }

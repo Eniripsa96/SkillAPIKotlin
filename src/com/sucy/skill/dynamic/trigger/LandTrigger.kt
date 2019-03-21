@@ -2,7 +2,6 @@ package com.sucy.skill.dynamic.trigger
 
 import com.sucy.skill.facade.api.entity.Actor
 import com.sucy.skill.facade.api.event.actor.ActorLandedEvent
-import com.sucy.skill.util.io.Data
 
 /**
  * SkillAPI © 2018
@@ -24,15 +23,12 @@ class LandTrigger : Trigger<ActorLandedEvent>() {
     }
 
     /** {@inheritDoc}  */
-    override fun setValues(event: ActorLandedEvent, data: MutableMap<String, Any>) {}
-
-    /** {@inheritDoc}  */
     override fun getCaster(event: ActorLandedEvent): Actor? {
         return event.actor
     }
 
     /** {@inheritDoc}  */
-    override fun getTarget(event: ActorLandedEvent, settings: Data): Actor? {
+    override fun getTarget(event: ActorLandedEvent): Actor? {
         return event.actor
     }
 }

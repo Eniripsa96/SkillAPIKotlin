@@ -2,7 +2,6 @@ package com.sucy.skill.dynamic.trigger
 
 import com.sucy.skill.facade.api.entity.Actor
 import com.sucy.skill.facade.api.event.actor.ActorDamagedByActorEvent
-import com.sucy.skill.util.io.Data
 
 /**
  * SkillAPI © 2018
@@ -24,15 +23,12 @@ class EnvironmentalTrigger : Trigger<ActorDamagedByActorEvent>() {
     }
 
     /** {@inheritDoc}  */
-    override fun setValues(event: ActorDamagedByActorEvent, data: MutableMap<String, Any>) {}
-
-    /** {@inheritDoc}  */
     override fun getCaster(event: ActorDamagedByActorEvent): Actor {
         return event.actor
     }
 
     /** {@inheritDoc}  */
-    override fun getTarget(event: ActorDamagedByActorEvent, settings: Data): Actor {
+    override fun getTarget(event: ActorDamagedByActorEvent): Actor {
         return event.actor
     }
 }

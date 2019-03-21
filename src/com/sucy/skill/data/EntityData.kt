@@ -14,6 +14,7 @@ class EntityData {
     val attributes = HashMap<UUID, ValueSet>()
     val values = HashMap<UUID, ValueSet>()
     val flags = HashMap<UUID, FlagSet>()
+    val metadata = HashMap<UUID, MutableMap<String, Any>>()
     val accounts = HashMap<UUID, PlayerAccounts>()
     val playerIds = HashBiMap.create<UUID, String>()
 

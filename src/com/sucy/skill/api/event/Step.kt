@@ -4,10 +4,10 @@ package com.sucy.skill.api.event
  * SkillAPIKotlin © 2018
  */
 enum class Step {
-    PROTECT,
+    FIRST,
     EARLY,
     NORMAL,
     LATE,
-    ENFORCE,
+    LAST,
     REACT
 }

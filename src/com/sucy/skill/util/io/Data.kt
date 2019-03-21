@@ -1,6 +1,5 @@
 package com.sucy.skill.util.io
 
-import com.google.common.collect.ImmutableList
 import com.google.common.collect.ImmutableSet
 import com.sucy.skill.facade.api.data.Item
 import com.sucy.skill.facade.internal.data.InternalItem
@@ -121,7 +120,7 @@ class Data internal constructor() {
         return formulas.computeIfAbsent(key) { DynamicFormula(getString(key, fallback.toString())) }
     }
 
-    fun getStringList(key: String, fallback: List<String> = ImmutableList.of()): List<String> {
+    fun getStringList(key: String, fallback: List<String> = emptyList()): List<String> {
         val found = get(key)
         @Suppress("UNCHECKED_CAST")
         return if (found is List<*>) found as List<String> else fallback

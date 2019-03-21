@@ -14,7 +14,7 @@ import java.util.*
 class DynamicSkill(name: String, icon: Item, maxLevel: Int)
     : Skill(name, icon, maxLevel), SkillShot, PassiveSkill {
 
-    private val triggers = ArrayList<TriggerHandler>()
+    private val triggers = ArrayList<Trigger<*>>()
     private val iconKeyMapping = HashMap<String, Effect>()
     private val activeLevels = HashMap<UUID, Int>()
 
@@ -25,16 +25,8 @@ class DynamicSkill(name: String, icon: Item, maxLevel: Int)
     val castable: Boolean
         get() { return castEffect != null }
 
-    fun isActive(actor: Actor): Boolean {
-        return activeLevels.containsKey(actor.uuid)
-    }
-
-    fun getActiveLevel(actor: Actor): Int {
-        return activeLevels.getOrDefault(actor.uuid, 0)
-    }
-
     fun registerEvents() {
-
+        triggers.forEach { it.initialize() }
     }
 
     override fun update(user: Actor, prevLevel: Int, newLevel: Int) {
@@ -43,12 +35,13 @@ class DynamicSkill(name: String, icon: Item, maxLevel: Int)
 
     override fun initialize(user: Actor, level: Int) {
         initializeEffect?.trigger(user, user, level)
+        triggers.forEach { it.init(user, level) }
         activeLevels[user.uuid] = level
     }
 
     override fun stopEffects(user: Actor, level: Int) {
         activeLevels.remove(user.uuid)
-        triggers.forEach { it.cleanup(user) }
+        triggers.forEach { it.cleanUp(user) }
 
         castEffect?.cleanUp(user)
         initializeEffect?.cleanUp(user)

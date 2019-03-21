@@ -1,6 +1,7 @@
 package com.sucy.skill.dynamic.mechanic
 
 import com.sucy.skill.SkillAPI
+import com.sucy.skill.dynamic.CastContext
 import com.sucy.skill.facade.api.data.BlockState
 import com.sucy.skill.facade.api.data.Location
 import com.sucy.skill.facade.api.entity.Actor
@@ -30,11 +31,11 @@ class BlockMechanic : Mechanic() {
         solid = affected != "air"
     }
 
-    override fun execute(caster: Actor, level: Int, target: Actor, recipient: Actor): Boolean {
-        val duration = compute("duration", caster, target).toTicks()
-        val radX = compute("radX", caster, target).toInt()
-        val radY = compute("radY", caster, target).toInt()
-        val radZ = compute("radZ", caster, target).toInt()
+    override fun execute(context: CastContext, target: Actor, recipient: Actor): Boolean {
+        val duration = compute("duration", context.caster, target).toTicks()
+        val radX = compute("radX", context.caster, target).toInt()
+        val radY = compute("radY", context.caster, target).toInt()
+        val radZ = compute("radZ", context.caster, target).toInt()
 
         val world = SkillAPI.server.getWorld(recipient.location.world)
         val affected = ArrayList<Location>()

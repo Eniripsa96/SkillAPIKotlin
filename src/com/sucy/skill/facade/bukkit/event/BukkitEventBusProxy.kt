@@ -48,11 +48,11 @@ class BukkitEventBusProxy(private val plugin: JavaPlugin) : EventBusProxy<Event>
     }
 
     private val stepMappings = EnumMap(ImmutableMap.builder<Step, EventPriority>()
-            .put(Step.PROTECT, EventPriority.LOWEST)
+            .put(Step.FIRST, EventPriority.LOWEST)
             .put(Step.EARLY, EventPriority.LOW)
             .put(Step.NORMAL, EventPriority.NORMAL)
             .put(Step.LATE, EventPriority.HIGH)
-            .put(Step.ENFORCE, EventPriority.HIGHEST)
+            .put(Step.LAST, EventPriority.HIGHEST)
             .put(Step.REACT, EventPriority.MONITOR)
             .build())
 

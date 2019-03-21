@@ -42,11 +42,11 @@ class SpongeEventBusProxy(private val plugin: Any) : EventBusProxy<Event> {
     }
 
     private val stepMappings = EnumMap(ImmutableMap.builder<Step, Order>()
-            .put(Step.PROTECT, Order.FIRST)
+            .put(Step.FIRST, Order.FIRST)
             .put(Step.EARLY, Order.EARLY)
             .put(Step.NORMAL, Order.DEFAULT)
             .put(Step.LATE, Order.LATE)
-            .put(Step.ENFORCE, Order.LAST)
+            .put(Step.LAST, Order.LAST)
             .put(Step.REACT, Order.POST)
             .build())
 }

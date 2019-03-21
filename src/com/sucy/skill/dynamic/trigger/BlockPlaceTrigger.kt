@@ -2,7 +2,6 @@ package com.sucy.skill.dynamic.trigger
 
 import com.sucy.skill.facade.api.entity.Actor
 import com.sucy.skill.facade.api.event.world.BlockPlaceEvent
-import com.sucy.skill.util.io.Data
 
 /**
  * SkillAPI © 2018
@@ -25,9 +24,9 @@ class BlockPlaceTrigger : Trigger<BlockPlaceEvent>() {
     }
 
     /** {@inheritDoc}  */
-    override fun setValues(event: BlockPlaceEvent, data: MutableMap<String, Any>) {
-        data["api-world-type"] = event.block.type
-        data["api-world-loc"] = event.block.location
+    override fun setValues(event: BlockPlaceEvent, target: Actor) {
+        target.metadata["api-world-type"] = event.block.type
+        target.metadata["api-world-loc"] = event.block.location
     }
 
     /** {@inheritDoc}  */
@@ -36,7 +35,7 @@ class BlockPlaceTrigger : Trigger<BlockPlaceEvent>() {
     }
 
     /** {@inheritDoc}  */
-    override fun getTarget(event: BlockPlaceEvent, settings: Data): Actor? {
+    override fun getTarget(event: BlockPlaceEvent): Actor? {
         return event.actor
     }
 }

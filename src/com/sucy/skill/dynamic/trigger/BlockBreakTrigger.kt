@@ -2,7 +2,6 @@ package com.sucy.skill.dynamic.trigger
 
 import com.sucy.skill.facade.api.entity.Actor
 import com.sucy.skill.facade.api.event.world.BlockBreakEvent
-import com.sucy.skill.util.io.Data
 
 /**
  * SkillAPI © 2018
@@ -25,9 +24,9 @@ class BlockBreakTrigger : Trigger<BlockBreakEvent>() {
     }
 
     /** {@inheritDoc}  */
-    override fun setValues(event: BlockBreakEvent, data: MutableMap<String, Any>) {
-        data["api-world-type"] = event.block.type
-        data["api-world-loc"] = event.block.location
+    override fun setValues(event: BlockBreakEvent, target: Actor) {
+        target.metadata["api-world-type"] = event.block.type
+        target.metadata["api-world-loc"] = event.block.location
     }
 
     /** {@inheritDoc}  */
@@ -36,7 +35,7 @@ class BlockBreakTrigger : Trigger<BlockBreakEvent>() {
     }
 
     /** {@inheritDoc}  */
-    override fun getTarget(event: BlockBreakEvent, settings: Data): Actor? {
+    override fun getTarget(event: BlockBreakEvent): Actor? {
         return event.actor
     }
 }

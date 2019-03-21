@@ -2,7 +2,6 @@ package com.sucy.skill.dynamic.trigger
 
 import com.sucy.skill.facade.api.entity.Actor
 import com.sucy.skill.facade.api.event.actor.ToggleCrouchEvent
-import com.sucy.skill.util.io.Data
 
 /**
  * SkillAPI © 2018
@@ -24,15 +23,12 @@ class CrouchTrigger : Trigger<ToggleCrouchEvent>() {
     }
 
     /** {@inheritDoc}  */
-    override fun setValues(event: ToggleCrouchEvent, data: MutableMap<String, Any>) {}
-
-    /** {@inheritDoc}  */
     override fun getCaster(event: ToggleCrouchEvent): Actor {
         return event.actor
     }
 
     /** {@inheritDoc}  */
-    override fun getTarget(event: ToggleCrouchEvent, settings: Data): Actor {
+    override fun getTarget(event: ToggleCrouchEvent): Actor {
         return event.actor
     }
 }

@@ -3,6 +3,7 @@ package com.sucy.skill.dynamic.mechanic
 import com.sucy.skill.api.values.TimerType
 import com.sucy.skill.api.values.Value
 import com.sucy.skill.api.values.ValueType
+import com.sucy.skill.dynamic.CastContext
 import com.sucy.skill.facade.api.entity.Actor
 
 abstract class AbstractValueMechanic : Mechanic() {
@@ -26,9 +27,9 @@ abstract class AbstractValueMechanic : Mechanic() {
         stackKey = metadata.getString("stackKey", stackKey)
     }
 
-    override fun execute(caster: Actor, level: Int, target: Actor, recipient: Actor): Boolean {
+    override fun execute(context: CastContext, target: Actor, recipient: Actor): Boolean {
         val value = getValue(recipient)
-        val modifier = compute("value", caster, target)
+        val modifier = compute("value", context.caster, target)
         if (stack) {
             when (valueType) {
                 ValueType.BASE -> value.addBaseStack(modifier, duration, maxStacks, timerType, stackKey)

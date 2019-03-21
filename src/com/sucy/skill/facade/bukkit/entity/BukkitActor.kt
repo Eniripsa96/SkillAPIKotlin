@@ -8,7 +8,7 @@ import java.util.*
 /**
  * SkillAPIKotlin © 2018
  */
-open class BukkitActor(private val entity: LivingEntity) : BukkitEntity(entity), Actor {
+open class BukkitActor(override val entity: LivingEntity) : BukkitEntity(entity), Actor {
     override val uuid: UUID
         get() = entity.uniqueId
     override val health: Double
@@ -19,9 +19,5 @@ open class BukkitActor(private val entity: LivingEntity) : BukkitEntity(entity),
     
     override fun hasPermission(permission: String): Boolean {
         return entity.hasPermission(permission)
-    }
-
-    override fun getBukkitEntity(): LivingEntity {
-        return entity
     }
 }

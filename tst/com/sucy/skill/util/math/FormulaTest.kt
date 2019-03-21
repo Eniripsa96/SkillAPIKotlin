@@ -1,13 +1,11 @@
 package com.sucy.skill.util.math
 
 import com.google.common.collect.ImmutableList
-import com.google.common.collect.ImmutableMap
-import com.sucy.skill.util.access.Access
 import com.sucy.skill.util.math.formula.Formula
 import com.sucy.skill.util.math.formula.Token
 import com.sucy.skill.util.math.formula.function.Sq
-import com.sucy.skill.util.math.formula.operator.Plus
 import com.sucy.skill.util.math.formula.operator.Divide
+import com.sucy.skill.util.math.formula.operator.Plus
 import com.sucy.skill.util.math.formula.operator.Times
 import com.sucy.skill.util.math.formula.value.ConstValue
 import com.sucy.skill.util.math.formula.value.VarValue

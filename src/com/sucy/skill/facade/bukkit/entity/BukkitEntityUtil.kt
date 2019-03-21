@@ -28,6 +28,6 @@ object BukkitEntityUtil {
     }
 
     fun toBukkit(entity: com.sucy.skill.facade.api.entity.Entity): Entity {
-        return (entity as BukkitEntity).getBukkitEntity()
+        return (entity as BukkitEntity).entity
     }
 }
