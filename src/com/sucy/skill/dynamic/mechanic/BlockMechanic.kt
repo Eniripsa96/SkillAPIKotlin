@@ -58,7 +58,7 @@ class BlockMechanic : Mechanic() {
         }
 
         var task: Task? = null
-        task = SkillAPI.server.taskManager.run(Runnable {
+        task = SkillAPI.server.taskManager.run(duration) {
             affected.forEach {
                 val remaining = pending.compute(it) { _, u -> u?.minus(1) } ?: 1
                 if (remaining <= 0) {
@@ -66,7 +66,7 @@ class BlockMechanic : Mechanic() {
                 }
                 tasks.remove(task)
             }
-        }, duration)
+        }
 
         return !affected.isEmpty()
     }

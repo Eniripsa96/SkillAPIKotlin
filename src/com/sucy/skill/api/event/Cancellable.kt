@@ -5,4 +5,8 @@ package com.sucy.skill.api.event
  */
 interface Cancellable {
     var cancelled: Boolean
+
+    fun cancel() {
+        cancelled = true
+    }
 }

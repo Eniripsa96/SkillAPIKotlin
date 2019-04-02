@@ -9,6 +9,10 @@ import java.util.*
  * SkillAPIKotlin © 2018
  */
 open class BukkitActor(override val entity: LivingEntity) : BukkitEntity(entity), Actor {
+    override val exists: Boolean
+        get() = entity.isValid
+    override val dead: Boolean
+        get() = entity.isDead
     override val uuid: UUID
         get() = entity.uniqueId
     override val health: Double

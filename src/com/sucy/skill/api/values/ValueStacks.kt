@@ -30,11 +30,11 @@ class ValueStacks(val default: Double, val onChange: Consumer<Double>) {
 
         val id = UUID.randomUUID()
         values[id] = value
-        tasks[id] = SkillAPI.server.taskManager.run(Runnable {
+        tasks[id] = SkillAPI.server.taskManager.run(duration.toTicks()) {
             tasks.remove(id)
             values.remove(id)
             resolve()
-        }, duration.toTicks())
+        }
 
         resolve()
     }

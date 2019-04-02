@@ -31,7 +31,6 @@ abstract class Trigger<E : Event> : Effect() {
     /**
      * @param event event details
      * @param level the level of the owning skill
-     * @param settings skill settings
      * @return true if the skill should activate, false otherwise
      */
     abstract fun shouldTrigger(event: E, level: Int): Boolean

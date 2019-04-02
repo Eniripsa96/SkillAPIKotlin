@@ -1,8 +1,10 @@
 package com.sucy.skill.facade.api.managers
 
+import com.sucy.skill.api.event.Cancellable
+
 interface TaskManager {
-    fun schedule(task: Runnable, delay: Long, interval: Long): Task
-    fun run(task: Runnable, delay: Long): Task
-    fun runAsync(task: Runnable): Task
-    fun runAsync(task: Runnable, delay: Long): Task
+    fun schedule(delay: Long, interval: Long, task: (Cancellable) -> Unit): Task
+    fun run(delay: Long, task: () -> Unit): Task
+    fun runAsync(task: () -> Unit): Task
+    fun runAsync(delay: Long, task: () -> Unit): Task
 }

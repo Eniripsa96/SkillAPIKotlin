@@ -14,6 +14,8 @@ interface Actor : Entity {
     val health: Double
     val maxHealth: Double
     val level: Int
+    val dead: Boolean
+    val exists: Boolean
 
     val attributes: ValueSet
         get() = SkillAPI.entityData.attributes.computeIfAbsent(uuid) { ValueSet() }
