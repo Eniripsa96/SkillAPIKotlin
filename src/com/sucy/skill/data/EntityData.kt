@@ -2,6 +2,7 @@ package com.sucy.skill.data
 
 import com.google.common.collect.HashBiMap
 import com.sucy.skill.api.player.PlayerAccounts
+import com.sucy.skill.api.skill.SkillSet
 import com.sucy.skill.api.values.FlagSet
 import com.sucy.skill.api.values.ValueSet
 import java.util.*
@@ -16,12 +17,15 @@ class EntityData {
     val flags = HashMap<UUID, FlagSet>()
     val metadata = HashMap<UUID, MutableMap<String, Any>>()
     val accounts = HashMap<UUID, PlayerAccounts>()
+    val skills = HashMap<UUID, SkillSet>()
     val playerIds = HashBiMap.create<UUID, String>()
 
     fun unload(uuid: UUID) {
         attributes.remove(uuid)
         values.remove(uuid)
         flags.remove(uuid)
+        metadata.remove(uuid)
         accounts.remove(uuid)
+        skills.remove(uuid)
     }
 }

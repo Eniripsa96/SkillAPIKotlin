@@ -1,6 +1,7 @@
 package com.sucy.skill.facade.api.entity
 
 import com.sucy.skill.SkillAPI
+import com.sucy.skill.api.skill.SkillSet
 import com.sucy.skill.api.values.FlagSet
 import com.sucy.skill.api.values.ValueSet
 import java.util.*
@@ -29,6 +30,10 @@ interface Actor : Entity {
     val metadata: MutableMap<String, Any>
         get() = SkillAPI.entityData.metadata.computeIfAbsent(uuid) { HashMap() }
 
+    val skills: SkillSet
+        get() = SkillAPI.entityData.skills.computeIfAbsent(uuid) { SkillSet() }
+
     fun hasPermission(permission: String): Boolean
+    fun executeCommand(command: String)
 }
 

@@ -5,7 +5,7 @@ import com.sucy.skill.facade.api.entity.Actor
 class SkillSet {
     private val skills = HashMap<String, SkillProgress>()
 
-    operator fun SkillSet.get(skillName: String): SkillProgress? {
+    operator fun get(skillName: String): SkillProgress? {
         return skills[skillName]
     }
 
@@ -33,5 +33,12 @@ class SkillSet {
                 skills.remove(it)
             }
         }
+    }
+
+    /**
+     * Iterates through the set of skills, applying the [handler] to each.
+     */
+    fun forEach(handler: (SkillProgress) -> Unit) {
+        skills.values.forEach(handler)
     }
 }

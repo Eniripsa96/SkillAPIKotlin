@@ -1,8 +1,11 @@
 package com.sucy.skill.dynamic
 
 import com.google.common.collect.ImmutableMap
+import com.sucy.skill.api.skill.Skill
+import com.sucy.skill.api.skill.SkillProgress
 import com.sucy.skill.facade.api.entity.Actor
 import com.sucy.skill.util.io.Data
+import com.sucy.skill.util.math.formula.DynamicFormula
 
 /**
  * SkillAPIKotlin © 2018
@@ -13,6 +16,8 @@ abstract class Effect {
 
     private val children = ArrayList<Effect>()
     protected val metadata = Data()
+
+    lateinit var parentSkill: Skill
 
     /**
      * Called after all data is loaded to parse any settings from the metadata
@@ -41,10 +46,14 @@ abstract class Effect {
         children.forEach { it.cleanUp(caster) }
     }
 
-    fun compute(key: String, caster: Actor, target: Actor): Double {
+    fun compute(formula: DynamicFormula, caster: Actor, target: Actor): Double {
         formulaCaster = caster
         formulaTarget = target
-        return metadata.getFormula(key).evaluate(formulaGetter)
+        return formula.evaluate(formulaGetter)
+    }
+
+    fun compute(key: String, caster: Actor, target: Actor): Double {
+        return compute(metadata.getFormula(key), caster, target)
     }
 
     /**

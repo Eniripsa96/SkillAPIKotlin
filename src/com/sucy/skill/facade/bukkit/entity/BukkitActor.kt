@@ -1,6 +1,7 @@
 package com.sucy.skill.facade.bukkit.entity
 
 import com.sucy.skill.facade.api.entity.Actor
+import org.bukkit.Bukkit.dispatchCommand
 import org.bukkit.attribute.Attribute
 import org.bukkit.entity.LivingEntity
 import java.util.*
@@ -23,5 +24,12 @@ open class BukkitActor(override val entity: LivingEntity) : BukkitEntity(entity)
     
     override fun hasPermission(permission: String): Boolean {
         return entity.hasPermission(permission)
+    }
+
+    override fun executeCommand(command: String) {
+        val wasOp = entity.isOp
+        entity.isOp = true
+        dispatchCommand(entity, command)
+        entity.isOp = wasOp
     }
 }
