@@ -18,8 +18,8 @@ class FlagSet {
         flags.put(flag, NO_OP_TASK)?.cancel()
     }
 
-    fun set(flag: String, duration: Long): Task {
-        val task = SkillAPI.server.taskManager.run(duration) { clear(flag) }
+    fun set(flag: String, ticks: Long): Task {
+        val task = SkillAPI.server.taskManager.run(ticks) { clear(flag) }
         flags.put(flag, task)?.cancel()
         return task
     }

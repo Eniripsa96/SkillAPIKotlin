@@ -6,13 +6,14 @@ import com.sucy.skill.api.values.FlagSet
 import com.sucy.skill.api.values.ValueSet
 import java.util.*
 import kotlin.collections.HashMap
+import kotlin.math.min
 
 /**
  * SkillAPIKotlin © 2018
  */
 interface Actor : Entity {
     val uuid: UUID
-    val health: Double
+    var health: Double
     val maxHealth: Double
     val level: Int
     val dead: Boolean
@@ -35,5 +36,9 @@ interface Actor : Entity {
 
     fun hasPermission(permission: String): Boolean
     fun executeCommand(command: String)
+
+    fun heal(amount: Double) {
+        health = min(maxHealth, health + amount)
+    }
 }
 

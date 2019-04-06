@@ -3,9 +3,11 @@ package com.sucy.skill.facade.api
 import com.sucy.skill.facade.api.data.Block
 import com.sucy.skill.facade.api.data.Vector3
 import com.sucy.skill.facade.enums.Shape
+import com.sucy.skill.util.math.sq
 
 interface World {
     fun getBlock(x: Int, y: Int, z: Int): Block
+    fun createExplosion(pos: Vector3, power: Double = 2.0, fire: Boolean = false, damageBlocks: Boolean = false)
 
     fun getBlock(pos: Vector3): Block {
         return getBlock(pos.x.toInt(), pos.y.toInt(), pos.z.toInt())
@@ -17,17 +19,33 @@ interface World {
         val z = pos.z.toInt()
 
         return when (shape) {
-            Shape.BOX -> {
-                for (i in (x - radX)..(x + radX)) {
-                    for (j in (y - radY)..(y + radY)) {
-                        for (k in (z - radZ)..(z + radZ)) {
-                            consumer(getBlock(i, j, k))
-                        }
+            Shape.BOX -> iterate(x, y, z, radX, radY, radZ) { i, j, k ->
+                consumer.invoke(getBlock(i, j, k))
+            }
+            Shape.SPHERE -> {
+                val rxSq = radX * radX
+                val rySq = radY * radY
+                val rzSq = radZ * radZ
+
+                iterate(x, y, z, radX, radY, radZ) { i, j, k ->
+                    val dx = (x - i) / radX
+                    val dy = (y - j) / radY
+                    val dz = (z - k) / radZ
+
+                    if (dx * dx + dy * dy + dz * dz < 1) {
+                        consumer.invoke(getBlock(i, j, k))
                     }
                 }
             }
-            Shape.SPHERE -> {
+        }
+    }
 
+    private inline fun iterate(x: Int, y: Int, z: Int, radX: Int, radY: Int, radZ: Int, handler: (Int, Int, Int) -> Unit) {
+        for (i in (x - radX)..(x + radX)) {
+            for (j in (y - radY)..(y + radY)) {
+                for (k in (z - radZ)..(z + radZ)) {
+                    handler.invoke(i, j, k)
+                }
             }
         }
     }

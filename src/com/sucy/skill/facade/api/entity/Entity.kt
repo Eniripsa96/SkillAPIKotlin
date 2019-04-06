@@ -11,4 +11,7 @@ interface Entity {
     val velocity: Vector3
     val type: String
     val name: String
+
+    fun setOnFire(duration: Long)
+    fun clearFire()
 }

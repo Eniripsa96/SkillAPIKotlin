@@ -23,13 +23,19 @@ abstract class Mechanic : Effect() {
         var result = false
 
         if (applyToCaster) {
+            if (context.caster.dead || !context.caster.exists) return false
+
             if (casterOnce) {
                 return execute(context, targets[0], context.caster)
             } else {
-                targets.forEach { result = execute(context, it, context.caster) }
+                targets.forEach {
+                    result = execute(context, it, context.caster) || result
+                }
             }
         } else {
-            targets.forEach { result = execute(context, it, it) }
+            targets.forEach {
+                result = (!it.dead && it.exists && execute(context, it, it)) || result
+            }
         }
         return result
     }
