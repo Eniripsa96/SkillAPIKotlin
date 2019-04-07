@@ -15,3 +15,10 @@ fun Double.toTicks(): Long {
 fun Double.toMillis(): Long {
     return (this * 1000).toLong()
 }
+
+/**
+ * Converts a coordinate into a chunk coordinate
+ */
+fun Double.toChunk(): Int {
+    return this.toInt() shr 4
+}

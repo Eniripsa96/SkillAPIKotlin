@@ -13,6 +13,8 @@ class ExplosionMechanic : Mechanic() {
     private var damageBlocks = false
 
     override fun initialize() {
+        super.initialize()
+
         power = metadata.getFormula("power", 2.0)
         fire = metadata.getBoolean("fire", fire)
         damageBlocks = metadata.getBoolean("damageBlocks", damageBlocks)

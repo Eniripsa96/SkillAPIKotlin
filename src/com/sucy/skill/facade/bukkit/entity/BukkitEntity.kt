@@ -18,4 +18,12 @@ open class BukkitEntity(open val entity: Entity) : com.sucy.skill.facade.api.ent
         get() = BukkitVector3(entity.velocity)
     override val name: String
         get() = entity.customName ?: entity.name
+
+    override fun setOnFire(duration: Long) {
+        entity.fireTicks = duration.toInt()
+    }
+
+    override fun clearFire() {
+        entity.fireTicks = 0
+    }
 }

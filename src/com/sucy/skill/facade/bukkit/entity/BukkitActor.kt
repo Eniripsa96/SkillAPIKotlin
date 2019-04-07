@@ -16,8 +16,9 @@ open class BukkitActor(override val entity: LivingEntity) : BukkitEntity(entity)
         get() = entity.isDead
     override val uuid: UUID
         get() = entity.uniqueId
-    override val health: Double
+    override var health: Double
         get() = entity.health
+        set(value) { entity.health = value }
     override val maxHealth: Double
         get() = entity.getAttribute(Attribute.GENERIC_MAX_HEALTH).value
     override val level = 1

@@ -13,6 +13,8 @@ class CooldownMechanic : Mechanic() {
     private lateinit var seconds: DynamicFormula
 
     override fun initialize() {
+        super.initialize()
+        
         skillName = metadata.getString("skill", skillName)
         seconds = metadata.getFormula("seconds", -1.0)
     }

@@ -10,6 +10,7 @@ class HealMechanic : Mechanic() {
     private lateinit var amount: DynamicFormula
 
     override fun initialize() {
+        super.initialize()
         amount = metadata.getFormula("amount", 1.0)
     }
 

@@ -12,6 +12,7 @@ class FlagMechanic : Mechanic() {
     private lateinit var seconds: DynamicFormula
 
     override fun initialize() {
+        super.initialize()
         flag = metadata.getString("flag", flag)
         seconds = metadata.getFormula("seconds", 3.0)
     }

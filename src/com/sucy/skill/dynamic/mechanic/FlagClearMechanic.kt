@@ -9,6 +9,7 @@ class FlagClearMechanic : Mechanic() {
     private var flag = "default"
 
     override fun initialize() {
+        super.initialize()
         flag = metadata.getString("flag", flag)
     }
 

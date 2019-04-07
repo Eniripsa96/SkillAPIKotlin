@@ -2,15 +2,24 @@ package com.sucy.skill.facade.api
 
 import com.sucy.skill.facade.api.data.Block
 import com.sucy.skill.facade.api.data.Vector3
+import com.sucy.skill.facade.api.entity.Actor
 import com.sucy.skill.facade.enums.Shape
-import com.sucy.skill.util.math.sq
 
 interface World {
     fun getBlock(x: Int, y: Int, z: Int): Block
+    fun getActorsInRadius(center: Vector3, radius: Double): List<Actor>
     fun createExplosion(pos: Vector3, power: Double = 2.0, fire: Boolean = false, damageBlocks: Boolean = false)
 
     fun getBlock(pos: Vector3): Block {
         return getBlock(pos.x.toInt(), pos.y.toInt(), pos.z.toInt())
+    }
+
+    fun forEachChunkPos(pos: Vector3, radius: Double, handler: (i: Int, j: Int) -> Unit) {
+        val minX = (pos.x - radius).toInt() shr 4
+        val maxX = (pos.x + radius).toInt() shr 4
+        val minZ = (pos.z - radius).toInt() shr 4
+        val maxZ = (pos.z + radius).toInt() shr 4
+
     }
 
     fun forEachBlock(pos: Vector3, radX: Int, radY: Int, radZ: Int, shape: Shape, consumer: (Block) -> Unit) {

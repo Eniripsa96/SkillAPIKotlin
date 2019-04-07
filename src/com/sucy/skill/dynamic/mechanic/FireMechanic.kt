@@ -11,6 +11,7 @@ class FireMechanic : Mechanic() {
     private lateinit var seconds: DynamicFormula
 
     override fun initialize() {
+        super.initialize()
         seconds = metadata.getFormula("seconds", 3.0)
     }
 
