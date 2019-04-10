@@ -3,8 +3,10 @@ package com.sucy.skill.facade.bukkit.event.actor
 import com.sucy.skill.facade.api.entity.Actor
 import com.sucy.skill.facade.api.event.DefaultEventProxy
 import com.sucy.skill.facade.api.event.actor.ActorDamagedByActorEvent
-import com.sucy.skill.facade.bukkit.entity.BukkitEntityUtil
+import com.sucy.skill.facade.bukkit.BukkitUtil
 import com.sucy.skill.facade.bukkit.event.BukkitEventUtils
+import com.sucy.skill.facade.bukkit.skillAPI
+import org.bukkit.entity.LivingEntity
 import org.bukkit.event.Event
 import org.bukkit.event.entity.EntityDamageByEntityEvent
 import org.bukkit.event.entity.EntityDamageEvent
@@ -26,18 +28,18 @@ data class BukkitActorDamagedByActorEvent(
      * an exception if the event is not compatible (not an actor being damaged)
      */
     constructor(event: EntityDamageByEntityEvent) : this(
-            actor = BukkitEntityUtil.wrap(event.entity) as Actor,
+            actor = event.entity.skillAPI() as Actor,
             source = BukkitEventUtils.determineSource(event.damager),
             damageType = event.cause.name,
-            attacker = BukkitEntityUtil.findActor(event.damager)!!,
+            attacker = BukkitUtil.findActor(event.damager)!!,
             amount = event.damage,
             cancelled = event.isCancelled
     )
 
     fun restore(): EntityDamageByEntityEvent {
         return EntityDamageByEntityEvent(
-                BukkitEntityUtil.toBukkit(actor),
-                BukkitEntityUtil.toBukkit(attacker),
+                BukkitUtil.toBukkit(actor),
+                BukkitUtil.toBukkit(attacker),
                 EntityDamageEvent.DamageCause.valueOf(damageType),
                 amount
         )
@@ -48,7 +50,7 @@ data class BukkitActorDamagedByActorEvent(
                 EntityDamageByEntityEvent::class.java,
                 { BukkitActorDamagedByActorEvent(it) },
                 { (it as BukkitActorDamagedByActorEvent).restore() },
-                { BukkitEntityUtil.wrap(it.entity) is Actor && BukkitEntityUtil.findActor(it.damager) != null }
+                { it.entity is LivingEntity && BukkitUtil.findActor(it.damager) != null }
         )
     }
 }

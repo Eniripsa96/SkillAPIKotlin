@@ -1,5 +1,7 @@
 package com.sucy.skill.facade.api.data
 
+import com.sucy.skill.util.math.Vector3
+
 /**
  * SkillAPIKotlin © 2018
  */

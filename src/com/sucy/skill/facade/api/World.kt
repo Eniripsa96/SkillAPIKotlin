@@ -1,9 +1,9 @@
 package com.sucy.skill.facade.api
 
 import com.sucy.skill.facade.api.data.Block
-import com.sucy.skill.facade.api.data.Vector3
 import com.sucy.skill.facade.api.entity.Actor
 import com.sucy.skill.facade.enums.Shape
+import com.sucy.skill.util.math.Vector3
 
 interface World {
     fun getBlock(x: Int, y: Int, z: Int): Block
@@ -14,12 +14,17 @@ interface World {
         return getBlock(pos.x.toInt(), pos.y.toInt(), pos.z.toInt())
     }
 
-    fun forEachChunkPos(pos: Vector3, radius: Double, handler: (i: Int, j: Int) -> Unit) {
+    fun forEachChunkPos(pos: Vector3, radius: Double, handler: (x: Int, z: Int) -> Unit) {
         val minX = (pos.x - radius).toInt() shr 4
         val maxX = (pos.x + radius).toInt() shr 4
         val minZ = (pos.z - radius).toInt() shr 4
         val maxZ = (pos.z + radius).toInt() shr 4
 
+        for (x in minX..maxX) {
+            for (z in minZ..maxZ) {
+                handler.invoke(x, z)
+            }
+        }
     }
 
     fun forEachBlock(pos: Vector3, radX: Int, radY: Int, radZ: Int, shape: Shape, consumer: (Block) -> Unit) {
@@ -32,10 +37,6 @@ interface World {
                 consumer.invoke(getBlock(i, j, k))
             }
             Shape.SPHERE -> {
-                val rxSq = radX * radX
-                val rySq = radY * radY
-                val rzSq = radZ * radZ
-
                 iterate(x, y, z, radX, radY, radZ) { i, j, k ->
                     val dx = (x - i) / radX
                     val dy = (y - j) / radY

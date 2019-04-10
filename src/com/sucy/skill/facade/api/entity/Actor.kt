@@ -4,6 +4,7 @@ import com.sucy.skill.SkillAPI
 import com.sucy.skill.api.skill.SkillSet
 import com.sucy.skill.api.values.FlagSet
 import com.sucy.skill.api.values.ValueSet
+import com.sucy.skill.command.CommandSender
 import java.util.*
 import kotlin.collections.HashMap
 import kotlin.math.min
@@ -11,7 +12,7 @@ import kotlin.math.min
 /**
  * SkillAPIKotlin © 2018
  */
-interface Actor : Entity {
+interface Actor : Entity, CommandSender {
     val uuid: UUID
     var health: Double
     val maxHealth: Double

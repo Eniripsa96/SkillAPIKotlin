@@ -1,9 +1,9 @@
 package com.sucy.skill.facade.bukkit.entity
 
 import com.sucy.skill.facade.api.data.Location
-import com.sucy.skill.facade.api.data.Vector3
+import com.sucy.skill.facade.bukkit.BukkitUtil.wrap
 import com.sucy.skill.facade.bukkit.data.BukkitLocation
-import com.sucy.skill.facade.bukkit.data.BukkitVector3
+import com.sucy.skill.util.math.Vector3
 import org.bukkit.entity.Entity
 
 /**
@@ -15,7 +15,7 @@ open class BukkitEntity(open val entity: Entity) : com.sucy.skill.facade.api.ent
     override val location: Location
         get() = BukkitLocation(entity.location)
     override val velocity: Vector3
-        get() = BukkitVector3(entity.velocity)
+        get() = wrap(entity.velocity)
     override val name: String
         get() = entity.customName ?: entity.name
 

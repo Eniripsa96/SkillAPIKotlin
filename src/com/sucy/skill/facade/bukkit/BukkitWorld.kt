@@ -2,10 +2,9 @@ package com.sucy.skill.facade.bukkit
 
 import com.sucy.skill.facade.api.World
 import com.sucy.skill.facade.api.data.Block
-import com.sucy.skill.facade.api.data.Vector3
 import com.sucy.skill.facade.api.entity.Actor
 import com.sucy.skill.facade.bukkit.data.BukkitBlock
-import com.sucy.skill.facade.bukkit.entity.BukkitEntityUtil
+import com.sucy.skill.util.math.Vector3
 import org.bukkit.Location
 import org.bukkit.entity.LivingEntity
 
@@ -16,7 +15,7 @@ class BukkitWorld(private val world: org.bukkit.World) : World {
         forEachChunkPos(center, radius) { i, j ->
             world.getChunkAt(i, j).entities
                     .filter { it is LivingEntity && it.location.distanceSquared(loc) <= radius }
-                    .forEach { result.add(BukkitEntityUtil.wrap(it) as Actor) }
+                    .forEach { result.add(it.skillAPI() as Actor) }
         }
         return result
     }

@@ -12,15 +12,17 @@ abstract class TargetEffect : Effect() {
 
     private var fromCaster = false
     private var exceptCaster = false
-    private var random = false
+    private var random = true
     private var distinct = false
     private var max = 999
 
     override fun initialize() {
         fromCaster = metadata.getString("relative", "target").equals("caster", ignoreCase = true)
         max = metadata.getInt("max", 999)
-        random = metadata.getBoolean("random", random)
         distinct = metadata.getBoolean("distinct", distinct)
+
+        val resolveType = metadata.getString("resolve", "random")
+        random = resolveType.equals("random", ignoreCase = true)
 
         val casterInclusion = metadata.getString("includeCaster", "default")
         alwaysCaster = casterInclusion.equals("always", ignoreCase = true)
@@ -43,7 +45,10 @@ abstract class TargetEffect : Effect() {
         return when {
             validTargets.size <= max -> validTargets
             random -> validTargets.shuffled().subList(0, max)
-            else -> validTargets.subList(0, max)
+            else -> {
+                val casterLoc = context.caster.location.coords
+                validTargets.sortedBy { it.location.coords.dSq(casterLoc) }.subList(0, max)
+            }
         }
     }
 

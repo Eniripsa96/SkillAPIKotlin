@@ -6,5 +6,5 @@ import com.sucy.skill.facade.api.entity.Actor
 
 class SkillProgress(owner: Actor, data: Skill) : LevelProgress<Skill>(owner, data) {
     val sources = HashSet<String>()
-    var cooldown = Cooldown()
+    var cooldown = Cooldown(0.0)
 }
