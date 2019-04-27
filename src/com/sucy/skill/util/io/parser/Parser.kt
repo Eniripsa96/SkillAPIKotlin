@@ -53,6 +53,6 @@ abstract class Parser {
         file.writeText(serialize(data, quote))
     }
 
-    abstract fun parse(data: String): Data
+    abstract fun parse(data: String, quote: Char = '\''): Data
     abstract fun serialize(data: Data, builder: StringBuilder, indent: Int, quote: Char)
 }

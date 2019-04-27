@@ -5,6 +5,7 @@ import com.sucy.skill.api.values.Value
 import com.sucy.skill.api.values.ValueType
 import com.sucy.skill.dynamic.CastContext
 import com.sucy.skill.facade.api.entity.Actor
+import com.sucy.skill.util.text.enumName
 
 abstract class AbstractValueMechanic : Mechanic() {
     private var stack = true
@@ -22,8 +23,8 @@ abstract class AbstractValueMechanic : Mechanic() {
         stack = metadata.getBoolean("stack", stack)
         maxStacks = metadata.getInt("maxStacks", maxStacks)
         duration = metadata.getDouble("duration", duration)
-        valueType = ValueType.valueOf(metadata.getString("valueType", valueType.name))
-        timerType = TimerType.valueOf(metadata.getString("timerType", timerType.name))
+        valueType = ValueType.valueOf(metadata.getString("valueType", valueType.name).enumName())
+        timerType = TimerType.valueOf(metadata.getString("timerType", timerType.name).enumName())
         stackKey = metadata.getString("stackKey", stackKey)
     }
 

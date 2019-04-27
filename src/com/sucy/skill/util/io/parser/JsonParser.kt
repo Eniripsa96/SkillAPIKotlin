@@ -11,7 +11,7 @@ class JsonParser : Parser() {
     private val mapType = object : TypeToken<Map<String, Any>>() { }.type
     private val gson = GsonBuilder().setLenient().create()
 
-    override fun parse(data: String): Data {
+    override fun parse(data: String, quote: Char): Data {
         val map = gson.fromJson<Map<String, Any>>(data, mapType)
         return Data(map)
     }

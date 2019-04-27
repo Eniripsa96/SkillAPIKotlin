@@ -14,6 +14,11 @@ class ValueSet {
     }
 
     /**
+     * Clears the current value under a given key
+     */
+    fun remove(key: String): Value? = values.remove(key)
+
+    /**
      * Clears all bonuses from the given [source]
      */
     fun clear(source: String) {

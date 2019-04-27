@@ -6,6 +6,7 @@ import com.sucy.skill.facade.api.event.actor.ActorDamagedByActorEvent
 import com.sucy.skill.facade.bukkit.BukkitUtil
 import com.sucy.skill.facade.bukkit.event.BukkitEventUtils
 import com.sucy.skill.facade.bukkit.skillAPI
+import com.sucy.skill.util.text.enumName
 import org.bukkit.entity.LivingEntity
 import org.bukkit.event.Event
 import org.bukkit.event.entity.EntityDamageByEntityEvent
@@ -40,7 +41,7 @@ data class BukkitActorDamagedByActorEvent(
         return EntityDamageByEntityEvent(
                 BukkitUtil.toBukkit(actor),
                 BukkitUtil.toBukkit(attacker),
-                EntityDamageEvent.DamageCause.valueOf(damageType),
+                EntityDamageEvent.DamageCause.valueOf(damageType.enumName()),
                 amount
         )
     }

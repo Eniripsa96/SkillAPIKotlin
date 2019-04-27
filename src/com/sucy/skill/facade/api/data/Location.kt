@@ -11,4 +11,5 @@ interface Location {
     val yaw: Double
     val pitch: Double
     val forward: Vector3
+    val isLoaded: Boolean
 }

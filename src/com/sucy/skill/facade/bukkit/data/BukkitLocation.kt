@@ -12,9 +12,12 @@ data class BukkitLocation(private val location: Location) : com.sucy.skill.facad
         get() = wrap(location.direction)
     override val world: String
         get() = location.world.name
-    override val coords = wrap(location.toVector())
+    override val coords: Vector3
+        get() = wrap(location.toVector())
     override val yaw: Double
         get() = location.yaw.toDouble()
     override val pitch: Double
         get() = location.pitch.toDouble()
+    override val isLoaded: Boolean
+        get() = location.chunk.isLoaded
 }

@@ -52,3 +52,10 @@ fun String.camelCase(): String {
     return SPLIT_REGEX.split(this, -1)
             .joinToString { it[0].toUpperCase() + it.substring(1).toLowerCase() }
 }
+
+/**
+ * Formats a string to match standard enum formatting (e.g. THIS_IS_AN_ENUM_NAME)
+ */
+fun String.enumName(): String {
+   return this.toUpperCase().replace(' ', '_')
+}

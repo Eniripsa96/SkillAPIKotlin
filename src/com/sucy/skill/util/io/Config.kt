@@ -7,7 +7,11 @@ import java.io.File
 /**
  * SkillAPIKotlin © 2018
  */
-class Config(val owner: ConfigHolder, val name: String, val parser: Parser = Parsers.YAML.parser) {
+class Config(
+        private val owner: ConfigHolder,
+        val name: String,
+        private val parser: Parser = Parsers.YAML.parser
+) {
     private val file: File = File(owner.getConfigFolder(), "$name.yml")
 
     private lateinit var defaults: Data

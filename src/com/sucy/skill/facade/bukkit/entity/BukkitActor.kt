@@ -1,5 +1,6 @@
 package com.sucy.skill.facade.bukkit.entity
 
+import com.sucy.skill.facade.api.data.inventory.ActorInventory
 import com.sucy.skill.facade.api.entity.Actor
 import org.bukkit.Bukkit.dispatchCommand
 import org.bukkit.attribute.Attribute
@@ -10,6 +11,9 @@ import java.util.*
  * SkillAPIKotlin © 2018
  */
 open class BukkitActor(override val entity: LivingEntity) : BukkitEntity(entity), Actor {
+    override var inventory: ActorInventory
+        get() = entity.
+        set(value) {}
     override val exists: Boolean
         get() = entity.isValid
     override val dead: Boolean

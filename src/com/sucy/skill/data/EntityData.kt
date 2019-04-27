@@ -1,7 +1,7 @@
 package com.sucy.skill.data
 
 import com.google.common.collect.HashBiMap
-import com.sucy.skill.api.player.PlayerAccounts
+import com.sucy.skill.api.player.AccountSet
 import com.sucy.skill.api.skill.SkillSet
 import com.sucy.skill.api.values.FlagSet
 import com.sucy.skill.api.values.ValueSet
@@ -16,7 +16,7 @@ class EntityData {
     val values = HashMap<UUID, ValueSet>()
     val flags = HashMap<UUID, FlagSet>()
     val metadata = HashMap<UUID, MutableMap<String, Any>>()
-    val accounts = HashMap<UUID, PlayerAccounts>()
+    val accounts = HashMap<UUID, AccountSet>()
     val skills = HashMap<UUID, SkillSet>()
     val playerIds = HashBiMap.create<UUID, String>()
 

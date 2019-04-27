@@ -8,15 +8,14 @@ import com.sucy.skill.util.io.Data
 class SavingSettings(config: Data) {
 
     // Auto save
-    val enableAutoSave = config.getBoolean("auto-save")
-    val autoSaveIntervalInMinutes = config.getInt("minutes")
+    val enableAutoSave = config.getBoolean("auto-save", false)
+    val autoSaveIntervalInMinutes = config.getInt("minutes", 60)
 
     // SQL
-    val enableSqlDatabase = config.getBoolean("sql-database")
-    val sqlHostName = config.getString("sql-details.host")
-    val sqlPort = config.getInt("sql-details.port")
-    val sqlDatabaseName = config.getString("sql-details.database")
-    val sqlUsername = config.getString("sql-details.username")
-    val sqlPassword = config.getString("sql-details.password")
-    val sqlLoadDelayInSeconds = config.getInt("sql-details.delay")
+    val enableSqlDatabase = config.getBoolean("sql-database", false)
+    val sqlHostName = config.getString("sql-details.host", "localhost")
+    val sqlPort = config.getInt("sql-details.port", 1433)
+    val sqlDatabaseName = config.getString("sql-details.database", "default")
+    val sqlUsername = config.getString("sql-details.username", "admin")
+    val sqlPassword = config.getString("sql-details.password", "password")
 }

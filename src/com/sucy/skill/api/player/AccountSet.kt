@@ -6,11 +6,11 @@ import kotlin.collections.HashMap
 /**
  * SkillAPIKotlin © 2018
  */
-data class PlayerAccounts internal constructor(val uuid: UUID) {
-    val data = HashMap<Int, PlayerData>()
+data class AccountSet internal constructor(val uuid: UUID) {
+    val data = HashMap<Int, PlayerAccount>()
 
     private var active = -1
 
-    val activeAccount: PlayerData?
+    val activeAccount: PlayerAccount?
             get() = data[active]
 }

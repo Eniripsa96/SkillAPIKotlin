@@ -2,7 +2,6 @@ package com.sucy.skill.dynamic
 
 import com.google.common.collect.ImmutableMap
 import com.sucy.skill.api.skill.Skill
-import com.sucy.skill.api.skill.SkillProgress
 import com.sucy.skill.facade.api.entity.Actor
 import com.sucy.skill.util.io.Data
 import com.sucy.skill.util.math.formula.DynamicFormula
@@ -77,7 +76,7 @@ abstract class Effect {
 
         private val VALUE_KEYS = ImmutableMap.builder<String, (Actor) -> Double>()
                 .put("health") { it.health }
-                .put("maxhealth") { it.maxHealth }
+                .put("maxHealth") { it.maxHealth }
                 .put("lvl") { it.level.toDouble() }
                 .put("level") { it.level.toDouble() }
                 .build()

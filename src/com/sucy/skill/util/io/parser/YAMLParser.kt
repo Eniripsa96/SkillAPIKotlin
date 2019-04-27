@@ -98,7 +98,7 @@ class YAMLParser : Parser() {
         }
     }
 
-    override fun parse(data: String): Data {
+    override fun parse(data: String, quote: Char): Data {
         val lines = data.lines()
 
         val comments = ArrayList<String>()
@@ -150,7 +150,7 @@ class YAMLParser : Parser() {
                         val raw = lines[next].substring(indent + 1)
                         index = next + 1
                         next = nextLine(lines, index)
-                        list.add(parseString(raw))
+                        list.add(parseString(raw, quote))
                     }
                     if (list.isEmpty()) {
                         throw java.lang.IllegalArgumentException("Invalid empty key on line $index")
@@ -159,7 +159,7 @@ class YAMLParser : Parser() {
                 }
             } else {
                 val raw = trimmed.substring(trimmed.indexOf(':', key.length) + 1)
-                target.set(key, parseString(raw))
+                target.set(key, parseString(raw, quote))
             }
         }
         while (!stack.isEmpty()) target = stack.pop()
@@ -200,9 +200,9 @@ class YAMLParser : Parser() {
         }
     }
 
-    private fun parseString(data: String): String {
+    private fun parseString(data: String, quote: Char): String {
         val trimmed = data.trim()
-        return if (trimmed.startsWith('\'') && trimmed.endsWith('\'')) {
+        return if (trimmed.startsWith(quote) && trimmed.endsWith(quote)) {
             trimmed.substring(1, trimmed.length - 1)
         } else if (trimmed.startsWith('"') && trimmed.endsWith('"')) {
             trimmed.substring(1, trimmed.length - 1)

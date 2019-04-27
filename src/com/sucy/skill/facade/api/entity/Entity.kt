@@ -7,10 +7,10 @@ import com.sucy.skill.util.math.Vector3
  * SkillAPIKotlin © 2018
  */
 interface Entity {
-    val location: Location
-    val velocity: Vector3
+    var location: Location
+    var velocity: Vector3
     val type: String
-    val name: String
+    var name: String
 
     fun setOnFire(duration: Long)
     fun clearFire()

@@ -1,6 +1,6 @@
 package com.sucy.skill.facade.api.event.player
 
-import org.bukkit.entity.Player
+import com.sucy.skill.facade.api.entity.Player
 
 /**
  * SkillAPIKotlin © 2018

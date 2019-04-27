@@ -2,6 +2,7 @@ package com.sucy.skill.dynamic.trigger
 
 import com.sucy.skill.facade.api.entity.Actor
 import com.sucy.skill.facade.api.event.actor.ActorDamagedByActorEvent
+import com.sucy.skill.util.text.enumName
 import java.util.*
 import java.util.stream.Collectors
 import kotlin.collections.HashSet
@@ -28,7 +29,7 @@ class DamageTrigger : Trigger<ActorDamagedByActorEvent>() {
         max = metadata.getDouble("max", max)
         attacker = metadata.getBoolean("attacker", attacker)
         sources = metadata.getStringList("source")
-                .mapTo(HashSet()) { ActorDamagedByActorEvent.DamageSource.valueOf(it) }
+                .mapTo(HashSet()) { ActorDamagedByActorEvent.DamageSource.valueOf(it.enumName()) }
                 .ifEmpty { sources }
     }
 
