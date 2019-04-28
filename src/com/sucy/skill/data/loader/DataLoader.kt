@@ -9,7 +9,7 @@ interface DataLoader<T> {
     val transformers: Map<Int, DataTransformer>
 
     fun load(data: Data, version: Int) : T {
-        val transformer = transformers.getOrDefault(version, NoOpDataTransformer())
+        val transformer = transformers.getOrDefault(version, NoOpDataTransformer)
         val config = transformer.transform(data)
 
         requiredKeys.forEach {
@@ -22,4 +22,6 @@ interface DataLoader<T> {
     }
 
     fun load(data: Data) : T
+
+    fun serialize(data: T): Data
 }

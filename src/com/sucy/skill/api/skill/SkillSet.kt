@@ -1,21 +1,27 @@
 package com.sucy.skill.api.skill
 
-import com.sucy.skill.facade.api.entity.Actor
-
 class SkillSet {
-    private val skills = HashMap<String, SkillProgress>()
+    private val byName = HashMap<String, SkillProgress>()
+    private val byKey = HashMap<String, SkillProgress>()
 
-    operator fun get(skillName: String): SkillProgress? {
-        return skills[skillName]
+    operator fun get(skillKey: String): SkillProgress? {
+        val lower = skillKey.toLowerCase()
+        return byName[lower] ?: byKey[lower]
+    }
+
+    fun add(progress: SkillProgress) {
+        byName[progress.data.name.toLowerCase()] = progress
+        byKey[progress.data.key] = progress
     }
 
     /**
-     * Adds a [skill] to the available set of skills for the [owner]. The [source]
+     * Adds a [skill] to the available set of skills. The [source]
      * should be a unique identifier telling where the skill is coming from. Returns
      * the [SkillProgress] instance for the skill.
      */
-    fun giveSkill(owner: Actor, source: String, skill: Skill): SkillProgress {
-        val entry = skills.getOrPut(skill.key) { SkillProgress(owner, skill) }
+    fun giveSkill(source: String, skill: Skill): SkillProgress {
+        val entry = byName.getOrPut(skill.name.toLowerCase()) { SkillProgress(skill) }
+        byKey[skill.key] = entry
         entry.sources.add(source)
         return entry
     }
@@ -25,13 +31,13 @@ class SkillSet {
      * if they either weren't given by the [source] or were also provided by a different source.
      */
     fun removeSkills(source: String) {
-        val keys = HashSet(skills.keys)
-        keys.forEach {
-            val skill = skills.getValue(it)
-            skill.sources.remove(source)
-            if (skill.sources.isEmpty()) {
-                skills.remove(it)
-            }
+        byName.entries.removeIf {
+            it.value.sources.remove(source)
+            it.value.sources.isEmpty()
+        }
+        byKey.entries.removeIf {
+            it.value.sources.remove(source)
+            it.value.sources.isEmpty()
         }
     }
 
@@ -39,6 +45,6 @@ class SkillSet {
      * Iterates through the set of skills, applying the [handler] to each.
      */
     fun forEach(handler: (SkillProgress) -> Unit) {
-        skills.values.forEach(handler)
+        byName.values.forEach(handler)
     }
 }

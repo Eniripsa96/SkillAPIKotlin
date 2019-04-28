@@ -1,6 +1,7 @@
 package com.sucy.skill.facade.api
 
 import com.sucy.skill.facade.api.data.Block
+import com.sucy.skill.facade.api.data.Location
 import com.sucy.skill.facade.api.entity.Actor
 import com.sucy.skill.facade.enums.Shape
 import com.sucy.skill.util.math.Vector3
@@ -9,6 +10,7 @@ interface World {
     fun getBlock(x: Int, y: Int, z: Int): Block
     fun getActorsInRadius(center: Vector3, radius: Double): List<Actor>
     fun createExplosion(pos: Vector3, power: Double = 2.0, fire: Boolean = false, damageBlocks: Boolean = false)
+    fun isLoaded(location: Location): Boolean
 
     fun getBlock(pos: Vector3): Block {
         return getBlock(pos.x.toInt(), pos.y.toInt(), pos.z.toInt())

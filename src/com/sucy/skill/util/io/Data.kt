@@ -23,6 +23,15 @@ class Data internal constructor() {
         }
     }
 
+    fun getVersion(): Int {
+        return getInt(VERSION_KEY, 1)
+    }
+
+    fun setVersion(version: Int) {
+        set(VERSION_KEY, version)
+        addComment(VERSION_KEY, "DATA VERSION - DO NOT MODIFY OR REMOVE")
+    }
+
     fun keys(): List<String> {
         return ArrayList(keys)
     }
@@ -57,6 +66,11 @@ class Data internal constructor() {
     }
 
     fun set(key: String, value: List<String>) {
+        if (!keys.contains(key)) keys.add(key)
+        data[key] = value
+    }
+
+    fun set(key: String, value: Data) {
         if (!keys.contains(key)) keys.add(key)
         data[key] = value
     }
@@ -183,6 +197,7 @@ class Data internal constructor() {
     }
 
     private companion object {
+        const val VERSION_KEY = "_v"
         val TRUE_TERMS: Set<String> = ImmutableSet.of(
                 "true",
                 "t",

@@ -8,4 +8,5 @@ import com.sucy.skill.facade.api.data.Item
  */
 open class Profession(name: String, icon: Item, maxLevel: Int) : Levelable(name, icon, maxLevel) {
     val skills = HashSet<String>()
+    var group: String = "class"
 }

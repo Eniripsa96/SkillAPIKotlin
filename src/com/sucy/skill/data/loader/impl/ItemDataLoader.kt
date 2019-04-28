@@ -6,7 +6,7 @@ import com.sucy.skill.facade.api.data.Item
 import com.sucy.skill.facade.internal.data.InternalItem
 import com.sucy.skill.util.io.Data
 
-class ItemDataLoader : DataLoader<Item> {
+object ItemDataLoader : DataLoader<Item> {
     private val DEFAULT_ITEM = InternalItem("PUMPKIN")
 
     override val transformers = emptyMap<Int, DataTransformer>()

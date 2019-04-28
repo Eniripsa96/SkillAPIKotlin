@@ -18,6 +18,4 @@ data class BukkitLocation(private val location: Location) : com.sucy.skill.facad
         get() = location.yaw.toDouble()
     override val pitch: Double
         get() = location.pitch.toDouble()
-    override val isLoaded: Boolean
-        get() = location.chunk.isLoaded
 }

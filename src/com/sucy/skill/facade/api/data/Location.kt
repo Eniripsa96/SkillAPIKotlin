@@ -1,5 +1,6 @@
 package com.sucy.skill.facade.api.data
 
+import com.sucy.skill.SkillAPI
 import com.sucy.skill.util.math.Vector3
 
 /**
@@ -11,5 +12,7 @@ interface Location {
     val yaw: Double
     val pitch: Double
     val forward: Vector3
+
     val isLoaded: Boolean
+        get() = SkillAPI.server.getWorld(world).isLoaded(this)
 }

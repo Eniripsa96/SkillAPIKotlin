@@ -11,7 +11,7 @@ class SQLTable(private val database: SQLDatabase, val name: String) {
     private val createEntry = database.prepare("INSERT INTO $name (Name) VALUES (?)")
     private val deleteEntry = database.prepare("DELETE FROM $name WHERE Name = ?")
 
-    var entries = HashMap<String, SQLEntry>()
+    var exists = HashSet<String>()
 
     fun columnExists(name: String): Boolean {
         return try {
@@ -50,30 +50,31 @@ class SQLTable(private val database: SQLDatabase, val name: String) {
         }
     }
 
-    fun entryExists(name: String): Boolean {
-        if (entries.containsKey(name)) return true
-
-        val result = query(name)
-        return if (result != null) {
-            val exists = result.next()
-            result.close()
-            exists
-        } else {
-            return false
+    private fun entryExists(name: String): Boolean {
+        return try {
+            query(name).use {
+                it.next()
+            }
+        } catch (ex: Exception) {
+            false
         }
     }
 
     fun createEntry(name: String): SQLEntry {
         if (!database.isConnected) throw IllegalStateException("Cannot create an entry while not connected")
-        return entries.computeIfAbsent(name) {
-            if (entryExists(name)) SQLEntry(database, this, name)
-            else {
+        return when {
+            exists.contains(name) -> SQLEntry(database, this, name)
+            entryExists(name) -> {
+                exists.add(name)
+                SQLEntry(database, this, name)
+            }
+            else -> {
                 createEntry.setString(1, name)
                 createEntry.execute()
+                exists.add(name)
                 Logger.info("Created a new table entry for $name in table ${this.name}")
-                val entry = SQLEntry(database, this, name)
-                entries[name] = entry
-                entry
+
+                SQLEntry(database, this, name)
             }
         }
     }

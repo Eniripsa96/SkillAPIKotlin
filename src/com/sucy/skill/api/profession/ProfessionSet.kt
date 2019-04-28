@@ -9,16 +9,16 @@ class ProfessionSet {
     private val professions = HashMap<String, ProfessionProgress>()
 
     val all: Collection<ProfessionProgress>
-        get() { return professions.values }
+        get() = professions.values
 
     val main: ProfessionProgress?
-        get() { return this[SkillAPI.settings.account.mainGroup]; }
+        get() = this[SkillAPI.settings.account.mainGroup]
 
-    operator fun ProfessionSet.get(group: String): ProfessionProgress? {
+    operator fun get(group: String): ProfessionProgress? {
         return professions[group]
     }
 
-    operator fun ProfessionSet.set(group: String, profession: ProfessionProgress) {
+    operator fun set(group: String, profession: ProfessionProgress) {
         professions.put(group, profession)
     }
 

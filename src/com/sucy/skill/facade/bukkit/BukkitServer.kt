@@ -20,6 +20,8 @@ import org.bukkit.plugin.SimplePluginManager
 class BukkitServer(private val plugin: SkillAPIBukkit) : Server {
     override val players = BukkitPlayerManager()
     override val taskManager = BukkitTaskManager(plugin)
+    override val plugins
+        get() = Bukkit.getServer().pluginManager.plugins.asList()
     override fun getWorld(name: String) = BukkitWorld(Bukkit.getWorld(name))
 
     private var commandListener: CommandListener? = null

@@ -11,6 +11,7 @@ import com.sucy.skill.facade.api.managers.TaskManager
 interface Server {
     val players: PlayerManager
     val taskManager: TaskManager
+    val plugins: Iterable<Any>
 
     fun getWorld(name: String): World
     fun runCommand(user: Actor, command: String)
