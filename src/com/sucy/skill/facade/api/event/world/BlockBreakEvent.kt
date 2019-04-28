@@ -8,7 +8,8 @@ import com.sucy.skill.facade.api.entity.Actor
 /**
  * SkillAPIKotlin © 2018
  */
-interface BlockBreakEvent : Event, Cancellable {
-    var block: Block
-    var actor: Actor
-}
+data class BlockBreakEvent(
+    var block: Block,
+    var actor: Actor,
+    override var cancelled: Boolean = false
+) : Event, Cancellable

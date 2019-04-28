@@ -26,6 +26,7 @@
 package com.sucy.skill.api.skill
 
 import com.sucy.skill.facade.api.entity.Actor
+import com.sucy.skill.util.math.formula.Formula
 
 /**
  * Interface for skills that can be cast without a direct target
@@ -33,6 +34,8 @@ import com.sucy.skill.facade.api.entity.Actor
   skills, and AOE abilities around yourself or where you are looking
  */
 interface SkillShot {
+    var cooldown: Formula
+
     /**
      * Casts the skill
      *

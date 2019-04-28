@@ -1,6 +1,8 @@
 package com.sucy.skill.dynamic.mechanic
 
 import com.sucy.skill.api.skill.SkillProgress
+import com.sucy.skill.api.skill.SkillShot
+import com.sucy.skill.api.skill.TargetSkill
 import com.sucy.skill.dynamic.CastContext
 import com.sucy.skill.facade.api.entity.Actor
 import com.sucy.skill.util.math.formula.DynamicFormula
@@ -31,7 +33,15 @@ class CooldownMechanic : Mechanic() {
     }
 
     private fun apply(skill: SkillProgress, change: Double) {
-        if (percent) skill.cooldown.subtract(change * skill.cooldown.duration / 100.0)
+        if (skill.level <= 0) return
+
+        val cooldown = when {
+            skill.data is SkillShot -> skill.data.cooldown.evaluate(skill.level.toDouble())
+            skill.data is TargetSkill -> skill.data.cooldown.evaluate(skill.level.toDouble())
+            else -> 0.0
+        }
+
+        if (percent) skill.cooldown.subtract(change * cooldown / 100.0)
         else skill.cooldown.subtract(change)
     }
 }

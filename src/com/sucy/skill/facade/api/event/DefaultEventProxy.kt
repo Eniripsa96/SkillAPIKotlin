@@ -5,7 +5,7 @@ import com.sucy.skill.api.event.Event
 /**
  * SkillAPIKotlin © 2018
  */
-class DefaultEventProxy<I : Event, T, E : T>(
+open class DefaultEventProxy<I : Event, T, E : T>(
         override val targetType: Class<E>,
         private val inConverter: (E) -> I,
         private val outConverter: (I) -> E,

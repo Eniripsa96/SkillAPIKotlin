@@ -31,6 +31,7 @@ public class SkillAPI {
             plugin = skillAPIPlatform;
             eventBus = new EventBus(plugin.getEventBusProxy());
             scheduler = plugin.getScheduler();
+            server = plugin.getServer();
         }
     }
 
@@ -39,6 +40,7 @@ public class SkillAPI {
 
         settings = new Settings(plugin);
         entityData = new EntityData();
+        registry = new Registry();
 
         registerListeners();
 

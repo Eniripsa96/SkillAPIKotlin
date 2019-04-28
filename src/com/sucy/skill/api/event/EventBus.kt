@@ -49,9 +49,7 @@ class EventBus(private val proxy: EventBusProxy<*>) {
     /**
      * Triggers the [event] for all registered handlers.
      */
-    fun trigger(event: Event) {
-        proxy.invoke(event)
-    }
+    fun <T : Event> trigger(event: T): T = proxy.invoke(event)
 
     fun trigger(event: Event, step: Step) {
         val handlers = registry[event::class.starProjectedType]?.get(step)

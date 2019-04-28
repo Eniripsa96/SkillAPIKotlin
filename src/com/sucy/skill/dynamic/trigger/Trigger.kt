@@ -82,7 +82,7 @@ abstract class Trigger<E : Event> : Effect() {
         event as E
 
         val caster = getCaster(event)
-        if (caster == null || !active.containsKey(caster.uuid)) return
+        if (caster == null || !parentSkill.isActive(caster.uuid)) return
 
         val level = active.getValue(caster.uuid)
         if (!shouldTrigger(event, level)) return
@@ -108,13 +108,5 @@ abstract class Trigger<E : Event> : Effect() {
         } finally {
             running = false
         }
-    }
-
-    fun init(actor: Actor, level: Int) {
-        active[actor.uuid] = level
-    }
-
-    override fun doCleanUp(caster: Actor) {
-        active.remove(caster.uuid)
     }
 }

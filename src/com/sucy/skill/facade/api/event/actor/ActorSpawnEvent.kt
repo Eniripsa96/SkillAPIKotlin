@@ -7,6 +7,7 @@ import com.sucy.skill.facade.api.entity.Actor
 /**
  * SkillAPIKotlin © 2018
  */
-interface ActorSpawnEvent : Event, Cancellable {
-    val actor: Actor
-}
+data class ActorSpawnEvent(
+        val actor: Actor,
+        override var cancelled: Boolean = false
+) : Event, Cancellable

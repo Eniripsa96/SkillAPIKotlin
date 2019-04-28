@@ -7,19 +7,19 @@ import com.sucy.skill.facade.api.entity.Actor
 /**
  * SkillAPIKotlin © 2018
  */
-interface ActorDamagedByActorEvent : Event, Cancellable {
-    val actor: Actor
-    val source: DamageSource
-    val damageType: String
-    val attacker: Actor
+data class ActorDamagedByActorEvent(
+        val actor: Actor,
+        val source: DamageSource,
+        val damageType: String,
+        val attacker: Actor,
+        var amount: Double,
+        override var cancelled: Boolean = false
+) : Event, Cancellable
 
-    var amount: Double
-
-    enum class DamageSource {
-        ATTACK,
-        PROJECTILE,
-        SKILL,
-        ENVIRONMENT,
-        OTHER
-    }
+enum class DamageSource {
+    ATTACK,
+    PROJECTILE,
+    SKILL,
+    ENVIRONMENT,
+    OTHER
 }

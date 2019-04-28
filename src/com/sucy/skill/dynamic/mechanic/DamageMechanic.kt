@@ -3,6 +3,7 @@ package com.sucy.skill.dynamic.mechanic
 import com.sucy.skill.dynamic.CastContext
 import com.sucy.skill.facade.api.entity.Actor
 import com.sucy.skill.facade.api.event.actor.ActorDamagedByActorEvent
+import com.sucy.skill.facade.api.event.actor.DamageSource
 import com.sucy.skill.util.math.formula.DynamicFormula
 
 class DamageMechanic : Mechanic() {
@@ -26,7 +27,7 @@ class DamageMechanic : Mechanic() {
         recipient.damage(
                 amount = damage,
                 attacker = context.caster,
-                source = ActorDamagedByActorEvent.DamageSource.SKILL,
+                source = DamageSource.SKILL,
                 type = damageType,
                 trueDamage = trueDamage)
         return true

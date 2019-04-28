@@ -18,7 +18,7 @@ interface EventBusProxy<T> {
     /**
      * Invokes the [event] for the external system
      */
-    fun <E : Event> invoke(event: E) : Boolean
+    fun <E : Event> invoke(event: E) : E
 
     /**
      * Sets up the proxy for the given [eventProxy], attaching it to the external

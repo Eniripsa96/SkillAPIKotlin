@@ -3,6 +3,7 @@ package com.sucy.skill.dynamic.mechanic
 import com.sucy.skill.api.values.BuffType
 import com.sucy.skill.api.values.Value
 import com.sucy.skill.facade.api.entity.Actor
+import com.sucy.skill.util.match
 import com.sucy.skill.util.text.enumName
 
 class BuffMechanic : AbstractValueMechanic() {
@@ -13,7 +14,7 @@ class BuffMechanic : AbstractValueMechanic() {
     override fun initialize() {
         super.initialize()
 
-        val buffType = BuffType.valueOf(metadata.getString("buffType", "damage").enumName())
+        val buffType = BuffType::class.match(metadata.getString("buffType", "damage"), BuffType.DAMAGE)
         val category = metadata.getString("category")
 
         valueKey = buffType.getKey(category)

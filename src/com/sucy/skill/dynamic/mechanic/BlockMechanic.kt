@@ -7,6 +7,7 @@ import com.sucy.skill.facade.api.data.Location
 import com.sucy.skill.facade.api.entity.Actor
 import com.sucy.skill.facade.api.managers.Task
 import com.sucy.skill.facade.enums.Shape
+import com.sucy.skill.util.match
 import com.sucy.skill.util.math.toTicks
 import com.sucy.skill.util.text.enumName
 
@@ -23,7 +24,7 @@ class BlockMechanic : Mechanic() {
         super.initialize()
 
         casterOnce = false
-        shape = Shape.valueOf(metadata.getString("shape", "box").enumName())
+        shape = Shape::class.match(metadata.getString("shape", "box"), Shape.BOX)
         blockType = metadata.getString("blockType", blockType)
         blockData = metadata.getInt("blockData", blockData)
 

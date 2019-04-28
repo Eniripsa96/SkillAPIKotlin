@@ -8,12 +8,12 @@ import com.sucy.skill.util.io.Data
 import com.sucy.skill.util.math.Vector3
 
 object LocationDataLoader : DataLoader<Location> {
-    const val WORLD = "workd"
-    const val X = "x"
-    const val Y = "y"
-    const val Z = "z"
-    const val YAW = "yaw"
-    const val PITCH = "pitch"
+    private const val WORLD = "workd"
+    private const val X = "x"
+    private const val Y = "y"
+    private const val Z = "z"
+    private const val YAW = "yaw"
+    private const val PITCH = "pitch"
 
     override val requiredKeys: Array<String> = arrayOf()
     override val transformers: Map<Int, DataTransformer> = mapOf()
@@ -29,5 +29,17 @@ object LocationDataLoader : DataLoader<Location> {
                 yaw = data.getDouble(YAW, 0.0),
                 pitch = data.getDouble(PITCH, 0.0)
         )
+    }
+
+    override fun serialize(data: Location): Data {
+        val coords = data.coords
+        val result = Data()
+        result.set(WORLD, data.world)
+        result.set(X, coords.x)
+        result.set(Y, coords.y)
+        result.set(Z, coords.z)
+        result.set(YAW, data.yaw)
+        result.set(PITCH, data.pitch)
+        return result
     }
 }

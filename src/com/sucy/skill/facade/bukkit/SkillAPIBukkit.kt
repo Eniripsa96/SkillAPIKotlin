@@ -10,6 +10,8 @@ import org.bukkit.plugin.java.JavaPlugin
  */
 class SkillAPIBukkit : JavaPlugin(), SkillAPIPlatform {
     override val eventBusProxy = BukkitEventBusProxy(this)
+    override val scheduler = BukkitScheduler(this)
+    override val server = BukkitServer(this)
 
     override fun onEnable() {
         SkillAPI.init(this)

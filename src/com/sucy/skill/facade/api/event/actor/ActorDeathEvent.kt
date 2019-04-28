@@ -7,9 +7,9 @@ import com.sucy.skill.facade.api.entity.Actor
 /**
  * SkillAPIKotlin © 2018
  */
-interface ActorDeathEvent : Event {
-    val actor: Actor
-    val killer: Actor?
-    val drops: List<Item>
-    val exp: Int
-}
+data class ActorDeathEvent(
+        val actor: Actor,
+        val killer: Actor?,
+        val drops: List<Item>,
+        val exp: Int
+) : Event

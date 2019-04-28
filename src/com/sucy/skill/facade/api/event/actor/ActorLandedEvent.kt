@@ -6,7 +6,7 @@ import com.sucy.skill.facade.api.entity.Actor
 /**
  * SkillAPIKotlin © 2018
  */
-interface ActorLandedEvent : Event {
-    val actor: Actor
-    val distance: Double
-}
+data class ActorLandedEvent(
+        val actor: Actor,
+        val distance: Double
+) : Event

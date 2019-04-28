@@ -2,10 +2,9 @@ package com.sucy.skill.dynamic.trigger
 
 import com.sucy.skill.facade.api.entity.Actor
 import com.sucy.skill.facade.api.event.actor.ActorDamagedByActorEvent
+import com.sucy.skill.facade.api.event.actor.DamageSource
+import com.sucy.skill.util.match
 import com.sucy.skill.util.text.enumName
-import java.util.*
-import java.util.stream.Collectors
-import kotlin.collections.HashSet
 
 /**
  * SkillAPIKotlin © 2018
@@ -14,7 +13,7 @@ class DamageTrigger : Trigger<ActorDamagedByActorEvent>() {
     private var min = 0.0
     private var max = 1.0e10
     private var attacker = false
-    private var sources = Arrays.stream(ActorDamagedByActorEvent.DamageSource.values()).collect(Collectors.toSet())
+    private var sources = DamageSource.values().toSet()
 
     /** {@inheritDoc}  */
     override val key: String
@@ -29,7 +28,7 @@ class DamageTrigger : Trigger<ActorDamagedByActorEvent>() {
         max = metadata.getDouble("max", max)
         attacker = metadata.getBoolean("attacker", attacker)
         sources = metadata.getStringList("source")
-                .mapTo(HashSet()) { ActorDamagedByActorEvent.DamageSource.valueOf(it.enumName()) }
+                .mapTo(HashSet()) { DamageSource::class.match(it, DamageSource.OTHER) }
                 .ifEmpty { sources }
     }
 

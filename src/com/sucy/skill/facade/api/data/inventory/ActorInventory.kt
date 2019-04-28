@@ -14,7 +14,7 @@ interface ActorInventory {
 
     val size: Int
 
-    val contents: Array<Item?>
+    val contents: List<Item?>
 
     operator fun get(index: Int): Item?
     operator fun set(index: Int, item: Item?)

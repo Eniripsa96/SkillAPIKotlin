@@ -25,4 +25,8 @@ object ItemDataLoader : DataLoader<Item> {
             load(data)
         }
     }
+
+    override fun serialize(data: Item): Data {
+        TODO("not implemented")
+    }
 }

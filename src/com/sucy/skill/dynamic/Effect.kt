@@ -16,7 +16,7 @@ abstract class Effect {
     private val children = ArrayList<Effect>()
     protected val metadata = Data()
 
-    lateinit var parentSkill: Skill
+    lateinit var parentSkill: DynamicSkill
 
     /**
      * Called after all data is loaded to parse any settings from the metadata

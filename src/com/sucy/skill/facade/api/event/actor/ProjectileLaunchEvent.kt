@@ -7,6 +7,7 @@ import com.sucy.skill.facade.api.entity.Projectile
 /**
  * SkillAPIKotlin © 2018
  */
-interface ProjectileLaunchEvent : Event, Cancellable {
-    val projectile: Projectile
-}
+data class ProjectileLaunchEvent(
+        val projectile: Projectile,
+        override var cancelled: Boolean = false
+) : Event, Cancellable

@@ -2,6 +2,7 @@ package com.sucy.skill.facade.bukkit.event
 
 import com.sucy.skill.data.PluginState
 import com.sucy.skill.facade.api.event.actor.ActorDamagedByActorEvent
+import com.sucy.skill.facade.api.event.actor.DamageSource
 import org.bukkit.entity.Entity
 import org.bukkit.entity.Projectile
 
@@ -10,11 +11,11 @@ import org.bukkit.entity.Projectile
  */
 object BukkitEventUtils {
 
-    fun determineSource(actor: Entity): ActorDamagedByActorEvent.DamageSource {
+    fun determineSource(actor: Entity): DamageSource {
         return when {
-            PluginState.skillDamage -> ActorDamagedByActorEvent.DamageSource.SKILL
-            actor is Projectile -> ActorDamagedByActorEvent.DamageSource.PROJECTILE
-            else -> ActorDamagedByActorEvent.DamageSource.ATTACK
+            PluginState.skillDamage -> DamageSource.SKILL
+            actor is Projectile -> DamageSource.PROJECTILE
+            else -> DamageSource.ATTACK
         }
     }
 }

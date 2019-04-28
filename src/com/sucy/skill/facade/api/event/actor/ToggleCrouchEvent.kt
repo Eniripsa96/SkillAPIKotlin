@@ -6,7 +6,7 @@ import com.sucy.skill.facade.api.entity.Actor
 /**
  * SkillAPIKotlin © 2018
  */
-interface ToggleCrouchEvent : Event {
-    val actor: Actor
-    val isCrouching: Boolean
-}
+data class ToggleCrouchEvent(
+        val actor: Actor,
+        val isCrouching: Boolean
+) : Event

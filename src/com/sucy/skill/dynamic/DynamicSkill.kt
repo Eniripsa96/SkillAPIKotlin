@@ -6,6 +6,8 @@ import com.sucy.skill.api.skill.SkillShot
 import com.sucy.skill.dynamic.trigger.Trigger
 import com.sucy.skill.facade.api.data.Item
 import com.sucy.skill.facade.api.entity.Actor
+import com.sucy.skill.util.math.formula.DynamicFormula
+import com.sucy.skill.util.math.formula.Formula
 import java.util.*
 
 /**
@@ -22,8 +24,12 @@ class DynamicSkill(name: String, icon: Item, maxLevel: Int)
     private var initializeEffect: Trigger<*>? = null
     private var cleanupEffect: Trigger<*>? = null
 
+    override var cooldown = Formula.const(0.0)
+
     val castable: Boolean
-        get() { return castEffect != null }
+        get() = castEffect != null
+
+    fun isActive(uuid: UUID): Boolean = activeLevels.containsKey(uuid)
 
     fun registerEvents() {
         triggers.forEach { it.initialize() }
@@ -35,7 +41,6 @@ class DynamicSkill(name: String, icon: Item, maxLevel: Int)
 
     override fun initialize(user: Actor, level: Int) {
         initializeEffect?.trigger(user, user, level)
-        triggers.forEach { it.init(user, level) }
         activeLevels[user.uuid] = level
     }
 

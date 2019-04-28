@@ -5,7 +5,7 @@ import com.sucy.skill.api.event.Step
 import com.sucy.skill.facade.api.event.EventBusProxy
 import com.sucy.skill.facade.api.event.EventProxy
 import com.sucy.skill.facade.api.event.actor.ActorDamagedByActorEvent
-import com.sucy.skill.facade.bukkit.event.actor.BukkitActorDamagedByActorEvent
+import com.sucy.skill.facade.bukkit.event.actor.BukkitActorDamagedByActorEventProxy
 import org.bukkit.event.Event
 import org.bukkit.event.EventPriority
 import org.bukkit.event.Listener
@@ -36,15 +36,15 @@ class BukkitEventBusProxy(private val plugin: JavaPlugin) : EventBusProxy<Event>
         return true
     }
 
-    override fun <E : com.sucy.skill.api.event.Event> invoke(event: E) : Boolean {
-        val proxy = proxies[event::class.java] ?: false
+    override fun <E : com.sucy.skill.api.event.Event> invoke(event: E) : E {
+        val proxy = proxies[event::class.java] ?: return event
 
         @Suppress("UNCHECKED_CAST")
         val typedProxy = proxy as EventProxy<E, Event, Event>
 
-        plugin.server.pluginManager.callEvent(typedProxy.proxy(event))
-
-        return true
+        val proxied = typedProxy.proxy(event)
+        plugin.server.pluginManager.callEvent(proxied)
+        return typedProxy.proxy(proxied)
     }
 
     private val stepMappings = EnumMap(ImmutableMap.builder<Step, EventPriority>()
@@ -57,6 +57,6 @@ class BukkitEventBusProxy(private val plugin: JavaPlugin) : EventBusProxy<Event>
             .build())
 
     init {
-        proxies[ActorDamagedByActorEvent::class.java] = BukkitActorDamagedByActorEvent.PROXY
+        proxies[ActorDamagedByActorEvent::class.java] = BukkitActorDamagedByActorEventProxy
     }
 }

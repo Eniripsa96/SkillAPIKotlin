@@ -8,6 +8,7 @@ import com.sucy.skill.command.CommandSender
 import com.sucy.skill.facade.api.data.Location
 import com.sucy.skill.facade.api.data.inventory.ActorInventory
 import com.sucy.skill.facade.api.event.actor.ActorDamagedByActorEvent
+import com.sucy.skill.facade.api.event.actor.DamageSource
 import java.util.*
 import kotlin.collections.HashMap
 import kotlin.math.min
@@ -24,7 +25,7 @@ interface Actor : Entity, CommandSender {
     val level: Int
     val dead: Boolean
     val exists: Boolean
-    var inventory: ActorInventory
+    val inventory: ActorInventory
 
     val attributes: ValueSet
         get() = SkillAPI.entityData.attributes.computeIfAbsent(uuid) { ValueSet() }
@@ -47,10 +48,23 @@ interface Actor : Entity, CommandSender {
     fun damage(
             amount: Double,
             attacker: Actor,
-            source: ActorDamagedByActorEvent.DamageSource,
+            source: DamageSource,
             type: String,
             trueDamage: Boolean
-    )
+    ) {
+        val event = ActorDamagedByActorEvent(
+                actor = this,
+                source = source,
+                damageType = type,
+                attacker = attacker,
+                amount = amount
+        )
+
+        val modified = SkillAPI.eventBus.trigger(event)
+        if (modified.cancelled || modified.amount <= 0) return
+
+        health -= modified.amount
+    }
 
     fun heal(amount: Double) {
         health = min(maxHealth, health + amount)

@@ -8,8 +8,9 @@ import com.sucy.skill.facade.api.entity.Actor
 /**
  * SkillAPIKotlin © 2018
  */
-interface ActorMoveEvent : Event, Cancellable {
-    val actor: Actor
-    val from: Location
-    val to: Location
-}
+data class ActorMoveEvent(
+        val actor: Actor,
+        val from: Location,
+        val to: Location,
+        override var cancelled: Boolean = false
+) : Event, Cancellable

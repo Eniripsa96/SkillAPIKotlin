@@ -26,12 +26,15 @@
 package com.sucy.skill.api.skill
 
 import com.sucy.skill.facade.api.entity.Actor
+import com.sucy.skill.util.math.formula.Formula
 
 /**
  *
  * Interface for skills that require a specific target to cast
  */
 interface TargetSkill {
+    var cooldown: Formula
+
     /**
      * Casts the skill
      *

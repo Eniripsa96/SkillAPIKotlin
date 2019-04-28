@@ -24,4 +24,7 @@ object SkillDataLoader : DataLoader<Skill> {
         return result
     }
 
+    override fun serialize(data: Skill): Data {
+        TODO("not implemented")
+    }
 }
