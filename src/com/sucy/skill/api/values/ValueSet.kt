@@ -14,6 +14,13 @@ class ValueSet {
     }
 
     /**
+     * Returns true if there is a value existing for the given key
+     */
+    fun has(key: String): Boolean {
+        return values.containsKey(key)
+    }
+
+    /**
      * Clears the current value under a given key
      */
     fun remove(key: String): Value? = values.remove(key)

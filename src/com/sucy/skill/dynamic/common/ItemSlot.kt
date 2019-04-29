@@ -1,4 +1,4 @@
-package com.sucy.skill.dynamic.enums
+package com.sucy.skill.dynamic.common
 
 import com.sucy.skill.facade.api.data.Item
 import com.sucy.skill.facade.api.entity.Actor

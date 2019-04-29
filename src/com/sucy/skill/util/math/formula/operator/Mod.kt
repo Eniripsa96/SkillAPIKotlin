@@ -10,6 +10,10 @@ object Mod : Operator {
     override val precedence = 2
     override fun apply(stack: Stack<Double>, values: DoubleArray) {
         val right = stack.pop()
-        stack.push(stack.pop() % right)
+        if (right == 0.0) {
+            stack.push(0.0)
+        } else {
+            stack.push(stack.pop() % right)
+        }
     }
 }

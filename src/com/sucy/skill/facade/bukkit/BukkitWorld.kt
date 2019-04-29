@@ -8,7 +8,6 @@ import com.sucy.skill.util.math.Vector3
 import com.sucy.skill.util.math.toChunk
 import org.bukkit.Bukkit
 import org.bukkit.Location
-import org.bukkit.entity.LivingEntity
 
 class BukkitWorld(private val world: org.bukkit.World) : World {
     override fun isLoaded(location: com.sucy.skill.facade.api.data.Location): Boolean {
@@ -20,15 +19,26 @@ class BukkitWorld(private val world: org.bukkit.World) : World {
         val loc = Location(world, center.x, center.y, center.z)
         val result = ArrayList<Actor>()
         forEachChunkPos(center, radius) { i, j ->
-            world.getChunkAt(i, j).entities
-                    .filter { it is LivingEntity && it.location.distanceSquared(loc) <= radius }
-                    .forEach { result.add(it.skillAPI() as Actor) }
+            world.getChunkAt(i, j).entities.forEach {
+                val actor = it.toActor()
+                if (actor != null && it.location.distanceSquared(loc) <= radius) {
+                    result.add(actor)
+                }
+            }
         }
         return result
     }
 
     override fun createExplosion(pos: Vector3, power: Double, fire: Boolean, damageBlocks: Boolean) {
         world.createExplosion(pos.x, pos.y, pos.z, power.toFloat(), fire, damageBlocks)
+    }
+
+    override fun strikeLightning(pos: Vector3) {
+        world.strikeLightning(Location(world, pos.x, pos.y, pos.z))
+    }
+
+    override fun playLightningEffect(pos: Vector3) {
+        world.strikeLightningEffect(Location(world, pos.x, pos.y, pos.z))
     }
 
     override fun getBlock(x: Int, y: Int, z: Int): Block {

@@ -1,16 +1,14 @@
 package com.sucy.skill.facade.bukkit.entity
 
-import com.sucy.skill.SkillAPI
 import com.sucy.skill.facade.api.data.inventory.ActorInventory
 import com.sucy.skill.facade.api.entity.Actor
-import com.sucy.skill.facade.api.event.actor.ActorDamagedByActorEvent
-import com.sucy.skill.facade.api.event.actor.DamageSource
 import com.sucy.skill.facade.bukkit.data.inventory.BukkitMobInventory
-import com.sucy.skill.facade.bukkit.data.inventory.BukkitPlayerInventory
+import com.sucy.skill.util.math.limit
 import org.bukkit.Bukkit.dispatchCommand
 import org.bukkit.attribute.Attribute
 import org.bukkit.entity.LivingEntity
 import java.util.*
+import kotlin.math.max
 
 /**
  * SkillAPIKotlin © 2018
@@ -26,12 +24,12 @@ open class BukkitActor(override val entity: LivingEntity) : BukkitEntity(entity)
         get() = entity.uniqueId
     override var health: Double
         get() = entity.health
-        set(value) { entity.health = value }
+        set(value) { entity.health = limit(value, 0.0, maxHealth) }
     override var maxHealth: Double
         get() = entity.getAttribute(Attribute.GENERIC_MAX_HEALTH).value
         set(value) {
             val attr = entity.getAttribute(Attribute.GENERIC_MAX_HEALTH)
-            attr.baseValue = value - attr.value + attr.baseValue
+            attr.baseValue = max(value - attr.value + attr.baseValue, 1.0)
         }
     override var food: Double
         get() = 0.0

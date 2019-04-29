@@ -2,6 +2,7 @@ package com.sucy.skill.facade.bukkit.entity
 
 import com.sucy.skill.facade.api.data.inventory.ActorInventory
 import com.sucy.skill.facade.bukkit.data.inventory.BukkitPlayerInventory
+import com.sucy.skill.util.math.limit
 import org.bukkit.entity.Player
 
 /**
@@ -12,8 +13,8 @@ open class BukkitPlayer(override val entity: Player) : BukkitActor(entity), com.
         get() = BukkitPlayerInventory(entity.inventory)
     override var food: Double
         get() = entity.foodLevel.toDouble()
-        set(value) { entity.foodLevel = value.toInt() }
+        set(value) { entity.foodLevel = limit(value, 0.0, 20.0).toInt()  }
     override var saturation: Double
         get() = entity.saturation.toDouble()
-        set(value) { entity.saturation = value.toFloat() }
+        set(value) { entity.saturation = limit(value, 0.0, food).toFloat() }
 }

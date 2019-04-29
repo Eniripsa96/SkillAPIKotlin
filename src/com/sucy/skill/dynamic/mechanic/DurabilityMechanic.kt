@@ -1,11 +1,10 @@
 package com.sucy.skill.dynamic.mechanic
 
 import com.sucy.skill.dynamic.CastContext
-import com.sucy.skill.dynamic.enums.ItemSlot
+import com.sucy.skill.dynamic.common.ItemSlot
 import com.sucy.skill.facade.api.entity.Actor
 import com.sucy.skill.util.match
 import com.sucy.skill.util.math.formula.DynamicFormula
-import com.sucy.skill.util.text.enumName
 
 class DurabilityMechanic : Mechanic() {
     override val key = "durability"

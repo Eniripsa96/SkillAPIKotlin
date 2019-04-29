@@ -15,7 +15,8 @@ class PlayerAccount {
     val skillSet = SkillSet()
 
     var health: Double? = null
-    var mana: Double? = null
+    var mana: Double = 0.0
+    var maxMana: Double = 0.0
     var food: Double? = null
     var location: Location? = null
     var inventory: Array<Item>? = null

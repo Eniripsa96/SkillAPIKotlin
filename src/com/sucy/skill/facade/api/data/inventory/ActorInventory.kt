@@ -18,4 +18,6 @@ interface ActorInventory {
 
     operator fun get(index: Int): Item?
     operator fun set(index: Int, item: Item?)
+
+    fun give(item: Item): Boolean
 }

@@ -1,14 +1,11 @@
 package com.sucy.skill.facade.bukkit.event.actor
 
-import com.sucy.skill.facade.api.entity.Actor
-import com.sucy.skill.facade.api.event.DefaultEventProxy
 import com.sucy.skill.facade.api.event.EventProxy
 import com.sucy.skill.facade.api.event.actor.ActorDamagedByActorEvent
-import com.sucy.skill.facade.bukkit.BukkitUtil
 import com.sucy.skill.facade.bukkit.event.BukkitEventUtils
-import com.sucy.skill.facade.bukkit.skillAPI
+import com.sucy.skill.facade.bukkit.toActor
+import com.sucy.skill.facade.bukkit.toBukkit
 import com.sucy.skill.util.match
-import com.sucy.skill.util.text.enumName
 import org.bukkit.entity.LivingEntity
 import org.bukkit.event.Event
 import org.bukkit.event.entity.EntityDamageByEntityEvent
@@ -22,10 +19,10 @@ object BukkitActorDamagedByActorEventProxy : EventProxy<ActorDamagedByActorEvent
 
     override fun proxy(event: EntityDamageByEntityEvent): ActorDamagedByActorEvent {
         return ActorDamagedByActorEvent(
-                actor = event.entity.skillAPI() as Actor,
+                actor = event.entity.toActor()!!,
                 source = BukkitEventUtils.determineSource(event.damager),
                 damageType = event.cause.name,
-                attacker = BukkitUtil.findActor(event.damager)!!,
+                attacker = event.damager.toActor()!!,
                 amount = event.damage,
                 cancelled = event.isCancelled
         )
@@ -33,14 +30,14 @@ object BukkitActorDamagedByActorEventProxy : EventProxy<ActorDamagedByActorEvent
 
     override fun proxy(event: ActorDamagedByActorEvent): EntityDamageByEntityEvent {
         return EntityDamageByEntityEvent(
-                BukkitUtil.toBukkit(event.actor),
-                BukkitUtil.toBukkit(event.attacker),
+                event.actor.toBukkit(),
+                event.attacker.toBukkit(),
                 EntityDamageEvent.DamageCause::class.match(event.damageType, EntityDamageEvent.DamageCause.CUSTOM),
                 event.amount
         )
     }
 
     override fun appliesTo(event: EntityDamageByEntityEvent): Boolean {
-        return event.entity is LivingEntity && BukkitUtil.findActor(event.damager) != null
+        return event.entity is LivingEntity && event.damager.toActor() != null
     }
 }

@@ -9,6 +9,8 @@ import com.sucy.skill.facade.api.data.Location
 import com.sucy.skill.facade.api.data.inventory.ActorInventory
 import com.sucy.skill.facade.api.event.actor.ActorDamagedByActorEvent
 import com.sucy.skill.facade.api.event.actor.DamageSource
+import com.sucy.skill.facade.api.event.player.ManaCost
+import com.sucy.skill.facade.api.event.player.ManaSource
 import java.util.*
 import kotlin.collections.HashMap
 import kotlin.math.min
@@ -20,6 +22,11 @@ interface Actor : Entity, CommandSender {
     val uuid: UUID
     var health: Double
     var maxHealth: Double
+    val mana: Double
+        get() = 0.0
+    var maxMana: Double
+        get() = 0.0
+        set(_) {}
     var food: Double
     var saturation: Double
     val level: Int
@@ -70,6 +77,8 @@ interface Actor : Entity, CommandSender {
         health = min(maxHealth, health + amount)
     }
 
-    fun playSound(from: Location, sound: String, volume: Float, pitch: Float) {}
+    fun playSound(from: Location, sound: String, volume: Float, pitch: Float) { }
+    fun giveMana(amount: Double, reason: ManaSource): Boolean = false
+    fun takeMana(amount: Double, reason: ManaCost): Boolean = false
 }
 

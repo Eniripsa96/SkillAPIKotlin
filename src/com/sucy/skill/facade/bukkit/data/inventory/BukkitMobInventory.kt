@@ -2,29 +2,30 @@ package com.sucy.skill.facade.bukkit.data.inventory
 
 import com.sucy.skill.facade.api.data.Item
 import com.sucy.skill.facade.api.data.inventory.ActorInventory
-import com.sucy.skill.facade.bukkit.BukkitUtil
+import com.sucy.skill.facade.bukkit.*
 import com.sucy.skill.facade.bukkit.data.BukkitItem
 import org.bukkit.inventory.EntityEquipment
 
 data class BukkitMobInventory(private val equipment: EntityEquipment): ActorInventory {
     override var mainHand: Item?
         get() = equipment.itemInMainHand?.let { BukkitItem(it) }
-        set(value) { equipment.itemInMainHand = value?.let(BukkitUtil::toBukkit) }
+        set(value) { equipment.itemInMainHand = value?.toBukkit() }
     override var offHand: Item?
         get() = equipment.itemInOffHand?.let { BukkitItem(it) }
-        set(value) { equipment.itemInOffHand = value?.let(BukkitUtil::toBukkit) }
+        set(value) { equipment.itemInOffHand = value?.toBukkit() }
     override var helmet: Item?
         get() = equipment.helmet?.let { BukkitItem(it) }
-        set(value) { equipment.helmet = value?.let(BukkitUtil::toBukkit) }
+        set(value) { equipment.helmet = value?.toBukkit() }
     override var chestplate: Item?
         get() = equipment.chestplate?.let { BukkitItem(it) }
-        set(value) { equipment.chestplate = value?.let(BukkitUtil::toBukkit) }
+        set(value) { equipment.chestplate = value?.toBukkit() }
     override var leggings: Item?
         get() = equipment.leggings?.let { BukkitItem(it) }
-        set(value) { equipment.leggings = value?.let(BukkitUtil::toBukkit) }
+        set(value) { equipment.leggings = value?.toBukkit() }
     override var boots: Item?
         get() = equipment.boots?.let { BukkitItem(it) }
-        set(value) { equipment.boots = value?.let(BukkitUtil::toBukkit) }
+        set(value) { equipment.boots = value?.toBukkit()
+        }
     override var heldItemSlot: Int
         get() = 0
         set(_) {}
@@ -45,5 +46,18 @@ data class BukkitMobInventory(private val equipment: EntityEquipment): ActorInve
             5 -> boots = item
             else -> throw IndexOutOfBoundsException("Index must be between 0 and 5, found $index")
         }
+    }
+
+    override fun give(item: Item): Boolean {
+        val bukkit = item.toBukkit()
+        val type = bukkit.type
+        if (equipment.helmet == null && type.isHelmet()) equipment.helmet = bukkit
+        else if (equipment.chestplate == null && type.isChestplate()) equipment.chestplate = bukkit
+        else if (equipment.leggings == null && type.isLeggings()) equipment.leggings = bukkit
+        else if (equipment.boots == null && type.isBoots()) equipment.boots = bukkit
+        else if (equipment.itemInMainHand == null) equipment.itemInMainHand = bukkit
+        else if (equipment.itemInOffHand == null) equipment.itemInOffHand = bukkit
+        else return false
+        return true
     }
 }

@@ -1,6 +1,6 @@
 package com.sucy.skill.util.math.formula.function
 
-import com.sucy.skill.util.math.formula.MathConst
+import com.sucy.skill.util.math.toRadians
 import java.util.*
 
 /**
@@ -9,6 +9,6 @@ import java.util.*
 object Sin : Func {
     override val token = "sin"
     override fun apply(stack: Stack<Double>, values: DoubleArray) {
-        stack.push(Math.sin(stack.pop() * MathConst.DEG_TO_RAD))
+        stack.push(Math.sin(stack.pop().toRadians()))
     }
 }

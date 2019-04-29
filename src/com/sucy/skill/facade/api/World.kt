@@ -10,6 +10,8 @@ interface World {
     fun getBlock(x: Int, y: Int, z: Int): Block
     fun getActorsInRadius(center: Vector3, radius: Double): List<Actor>
     fun createExplosion(pos: Vector3, power: Double = 2.0, fire: Boolean = false, damageBlocks: Boolean = false)
+    fun strikeLightning(pos: Vector3)
+    fun playLightningEffect(pos: Vector3)
     fun isLoaded(location: Location): Boolean
 
     fun getBlock(pos: Vector3): Block {

@@ -5,7 +5,7 @@ import com.sucy.skill.facade.api.data.Item
 /**
  * SkillAPIKotlin © 2018
  */
-class InternalItem(
+data class InternalItem(
         override var type: String,
         override var durability: Short = 0,
         override var data: Byte = 0,
