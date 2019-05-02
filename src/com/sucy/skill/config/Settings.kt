@@ -9,15 +9,25 @@ import com.sucy.skill.util.io.Data
  * SkillAPIKotlin © 2018
  */
 class Settings(private val plugin: ConfigHolder) {
-    val account = AccountSettings(loadConfig("config").getOrCreateSection("Accounts"))
-    val classes = ClassSettings(loadConfig("config").getOrCreateSection("Classes"))
-    val expYields = ExpYieldsConfig(loadConfig("exp"))
-    val mana = ManaSettings(loadConfig("config").getOrCreateSection("Mana"))
-    val saving = SavingSettings(loadConfig("config").getOrCreateSection("Saving"))
-    val skills = SkillSettings(loadConfig("config").getOrCreateSection("Skills"))
-    val targeting = TargetingConfig(loadConfig("config").getOrCreateSection("Targeting"))
+    private val mainConfig = loadConfig("config")
+    private val groupSettings = HashMap<String, GroupSettings>()
 
-    private fun loadConfig(name: String): Data {
+    val account = AccountSettings(mainConfig.getOrCreateSection("Accounts"))
+    val classes = ClassSettings(mainConfig.getOrCreateSection("Classes"))
+    val expYields = ExpYieldsConfig(loadConfig("exp"))
+    val mana = ManaSettings(mainConfig.getOrCreateSection("Mana"))
+    val saving = SavingSettings(mainConfig.getOrCreateSection("Saving"))
+    val skills = SkillSettings(mainConfig.getOrCreateSection("Skills"))
+    val targeting = TargetingConfig(mainConfig.getOrCreateSection("Targeting"))
+    val worlds = WorldSettings(mainConfig.getOrCreateSection("Worlds"))
+
+    fun forGroup(group: String): GroupSettings {
+        return groupSettings.computeIfAbsent(group) {
+            GroupSettings(loadConfig("group/$group", resource = "group"))
+        }
+    }
+
+    private fun loadConfig(name: String, resource: String = name): Data {
         val config = Config(plugin, name)
         config.checkDefaults()
         config.save()

@@ -14,8 +14,8 @@ abstract class Mechanic : Effect() {
 
     override fun initialize() {
         val target = metadata.getString("applyTo", "target").toLowerCase()
-        applyToCaster = !target.equals("target")
-        applyToTarget = !target.equals("caster")
+        applyToCaster = target != "target"
+        applyToTarget = target != "caster"
         casterOnce = metadata.getBoolean("casterOnce", casterOnce)
     }
 

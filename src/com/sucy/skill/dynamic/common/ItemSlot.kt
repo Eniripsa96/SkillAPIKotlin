@@ -31,7 +31,8 @@ enum class ItemSlot(private val accessor: (Actor, Int) -> Item?, private val set
     SLOT(
             { it, slot -> it.inventory[slot] },
             { actor, item, slot -> actor.inventory[slot] = item }
-    );
+    ),
+    ANY({ _, _ -> null }, { _, _, _ -> });
 
     fun getItem(actor: Actor, slot: Int): Item? = accessor.invoke(actor, slot)
     fun setItem(actor: Actor, item: Item?, slot: Int) = setter.invoke(actor, item, slot)

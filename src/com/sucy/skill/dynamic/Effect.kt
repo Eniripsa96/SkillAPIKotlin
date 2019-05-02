@@ -33,6 +33,7 @@ abstract class Effect {
         children.forEach {
             val counts = !it.metadata.getString("counts", "true").equals("false", true)
             val passed = it.execute(context, targets)
+            context.last = passed
             worked = (passed && counts) || worked
         }
         return worked

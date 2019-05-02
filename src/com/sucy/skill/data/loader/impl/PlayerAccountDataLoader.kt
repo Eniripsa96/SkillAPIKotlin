@@ -1,11 +1,9 @@
 package com.sucy.skill.data.loader.impl
 
-import com.sucy.skill.SkillAPI
 import com.sucy.skill.api.player.PlayerAccount
 import com.sucy.skill.data.loader.DataLoader
 import com.sucy.skill.data.loader.transform.DataTransformer
 import com.sucy.skill.util.io.Data
-import com.sucy.skill.util.log.Logger
 
 object PlayerAccountDataLoader : DataLoader<PlayerAccount> {
     private const val HEALTH = "health"
@@ -24,7 +22,7 @@ object PlayerAccountDataLoader : DataLoader<PlayerAccount> {
         val result = PlayerAccount()
 
         result.health = getDouble(data, HEALTH)
-        result.mana = getDouble(data, MANA)
+        result.mana = getDouble(data, MANA) ?: 0.0
         result.food = getDouble(data, FOOD)
         result.location = data.getSection(LOCATION)?.let(LocationDataLoader::load)
         // TODO - inventory saved per account

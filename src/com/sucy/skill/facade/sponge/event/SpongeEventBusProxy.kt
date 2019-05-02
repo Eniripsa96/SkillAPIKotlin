@@ -30,15 +30,16 @@ class SpongeEventBusProxy(private val plugin: Any) : EventBusProxy<Event> {
         return true
     }
 
-    override fun <E : com.sucy.skill.api.event.Event> invoke(event: E): Boolean {
+    override fun <E : com.sucy.skill.api.event.Event> invoke(event: E): E {
         val proxy = proxies[event::class.java] ?: false
 
         @Suppress("UNCHECKED_CAST")
         val typedProxy = proxy as EventProxy<E, Event, Event>
 
-        Sponge.getEventManager().post(typedProxy.proxy(event))
+        val proxied = typedProxy.proxy(event)
+        Sponge.getEventManager().post(proxied)
 
-        return true
+        return typedProxy.proxy(proxied)
     }
 
     private val stepMappings = EnumMap(ImmutableMap.builder<Step, Order>()

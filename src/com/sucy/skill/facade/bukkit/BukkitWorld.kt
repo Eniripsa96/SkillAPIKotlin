@@ -10,6 +10,9 @@ import org.bukkit.Bukkit
 import org.bukkit.Location
 
 class BukkitWorld(private val world: org.bukkit.World) : World {
+    override val name: String
+        get() = world.name
+
     override fun isLoaded(location: com.sucy.skill.facade.api.data.Location): Boolean {
         val coords = location.coords
         return Bukkit.getWorld(location.world).isChunkLoaded(coords.x.toChunk(), coords.z.toChunk())

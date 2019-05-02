@@ -7,6 +7,8 @@ import com.sucy.skill.facade.enums.Shape
 import com.sucy.skill.util.math.Vector3
 
 interface World {
+    val name: String
+
     fun getBlock(x: Int, y: Int, z: Int): Block
     fun getActorsInRadius(center: Vector3, radius: Double): List<Actor>
     fun createExplosion(pos: Vector3, power: Double = 2.0, fire: Boolean = false, damageBlocks: Boolean = false)

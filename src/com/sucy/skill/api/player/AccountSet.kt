@@ -8,10 +8,10 @@ class AccountSet {
     var synchronized: Boolean = true
         private set
 
-    private var active = -1
+    private var active = 0
 
-    val activeAccount: PlayerAccount?
-            get() = data[active]
+    val activeAccount: PlayerAccount
+            get() = data.getOrPut(active) { PlayerAccount() }
 
     companion object {
         val FAKE_ACCOUNT by lazy {

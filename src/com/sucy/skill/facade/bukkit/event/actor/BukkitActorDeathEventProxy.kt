@@ -3,9 +3,9 @@ package com.sucy.skill.facade.bukkit.event.actor
 import com.sucy.skill.facade.api.entity.Actor
 import com.sucy.skill.facade.api.event.EventProxy
 import com.sucy.skill.facade.api.event.actor.ActorDeathEvent
-import com.sucy.skill.facade.bukkit.BukkitUtil
 import com.sucy.skill.facade.bukkit.data.BukkitItem
 import com.sucy.skill.facade.bukkit.skillAPI
+import com.sucy.skill.facade.bukkit.toBukkit
 import org.bukkit.entity.LivingEntity
 import org.bukkit.event.Event
 import org.bukkit.event.entity.EntityDeathEvent
@@ -24,8 +24,8 @@ object BukkitActorDeathEventProxy : EventProxy<ActorDeathEvent, Event, EntityDea
 
     override fun proxy(event: ActorDeathEvent): EntityDeathEvent {
         return EntityDeathEvent(
-                BukkitUtil.toBukkit(event.actor) as LivingEntity,
-                event.drops.map { BukkitUtil.toBukkit(it) },
+                event.actor.toBukkit() as LivingEntity,
+                event.drops.map { it.toBukkit() },
                 event.exp
         )
     }

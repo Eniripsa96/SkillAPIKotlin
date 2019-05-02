@@ -4,11 +4,15 @@ import com.sucy.skill.facade.api.data.Item
 import com.sucy.skill.facade.api.data.inventory.ActorInventory
 import com.sucy.skill.facade.api.entity.Actor
 import com.sucy.skill.util.io.Data
+import com.sucy.skill.util.match
 import com.sucy.skill.util.text.enumName
 import com.sucy.skill.util.text.uncolor
 import java.util.regex.Pattern
 
 data class ItemContext(private val metadata: Data) {
+    private val slotType = ItemSlot::class.match(metadata.getString("slotType", "ANY"), ItemSlot.ANY)
+    private val slot = metadata.getInt("slot", 0)
+
     private val checkMaterial = metadata.getBoolean("check-material")
     private val checkDurability = metadata.getBoolean("check-durability")
     private val checkLore = metadata.getBoolean("check-lore")
@@ -26,6 +30,15 @@ data class ItemContext(private val metadata: Data) {
         Pattern.compile(lore.replace(VALUE_FILTER, DOUBLE_PATTERN))
     } else {
         Pattern.compile(DOUBLE_PATTERN)
+    }
+
+    fun findItems(actor: Actor, caster: Actor, target: Actor, handler: (Item) -> Boolean): Boolean {
+        if (slotType == ItemSlot.ANY) return findSlots(actor, caster, target) {
+            _, item, _ -> handler(item)
+        }
+
+        val item = slotType.getItem(actor, slot) ?: return false
+        return handler.invoke(item)
     }
 
     fun findSlots(actor: Actor, caster: Actor, target: Actor, handler: (ActorInventory, Item, Int) -> Boolean): Boolean {

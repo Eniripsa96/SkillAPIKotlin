@@ -15,7 +15,9 @@ import java.util.List;
 /**
  * SkillAPIKotlin © 2018
  */
-public class SkillAPI {
+public final class SkillAPI {
+    private SkillAPI() { }
+
     public static SkillAPIPlatform plugin;
     public static Settings settings;
     public static EventBus eventBus;

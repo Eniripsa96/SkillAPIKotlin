@@ -1,5 +1,7 @@
 package com.sucy.skill.api.skill
 
+import com.sucy.skill.facade.api.entity.Actor
+
 class SkillSet {
     private val byName = HashMap<String, SkillProgress>()
     private val byKey = HashMap<String, SkillProgress>()
@@ -30,10 +32,15 @@ class SkillSet {
      * Removes all skills provided through the [source]. Skills will not be removed
      * if they either weren't given by the [source] or were also provided by a different source.
      */
-    fun removeSkills(source: String) {
+    fun removeSkills(actor: Actor, source: String) {
         byName.entries.removeIf {
             it.value.sources.remove(source)
-            it.value.sources.isEmpty()
+            val removing = it.value.sources.isEmpty()
+            val skill = it.value.data
+            if (removing && skill is PassiveSkill && it.value.level > 0) {
+                skill.stopEffects(actor, it.value.level)
+            }
+            removing
         }
         byKey.entries.removeIf {
             it.value.sources.remove(source)

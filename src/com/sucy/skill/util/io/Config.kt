@@ -10,6 +10,7 @@ import java.io.File
 class Config(
         private val owner: ConfigHolder,
         val name: String,
+        private val resource: String = name,
         private val parser: Parser = Parsers.YAML.parser
 ) {
     private val file: File = File(owner.getConfigFolder(), "$name.yml")
@@ -34,7 +35,7 @@ class Config(
 
     fun reload() {
         file.parentFile.mkdirs()
-        defaults = parser.load(owner, "$name.yml")
+        defaults = parser.load(owner, "$resource.yml")
         if (!file.exists()) {
             parser.save(defaults, file)
         }
