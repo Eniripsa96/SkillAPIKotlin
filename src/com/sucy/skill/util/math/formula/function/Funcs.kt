@@ -9,9 +9,14 @@ enum class Funcs(val func: Func) {
     COS(Cos),
     FLOOR(Floor),
     LOG(Log),
+    RAND(Rand),
+    RAND_INT(RandInt),
+    ROUND(Round),
     SIGN(Sign),
     SIN(Sin),
     SQ(Sq),
     SQRT(Sqrt),
-    TAN(Tan)
+    TAN(Tan),
+    TRAND(TRand),
+    TRAND_INT(TRandInt)
 }
