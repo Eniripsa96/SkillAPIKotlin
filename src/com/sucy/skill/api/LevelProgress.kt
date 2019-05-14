@@ -1,13 +1,18 @@
 package com.sucy.skill.api
 
+import com.sucy.skill.facade.api.data.Item
 import com.sucy.skill.facade.api.entity.Actor
+import com.sucy.skill.facade.api.entity.Player
+import com.sucy.skill.util.text.DynamicFilter
+import com.sucy.skill.util.text.context.ActorFilterContext
+import com.sucy.skill.util.text.context.FilterContext
 import kotlin.math.max
 
 /**
  * Handles recording experience and levels for [Levelable] objects
  * for a specific [Actor], such as a player's profession.
  */
-open class LevelProgress<T : Levelable>(val data: T) {
+abstract class LevelProgress<T : Levelable>(val data: T) {
     var exp = 0.0
         set(value) { max(0.0, value) }
     var totalExp = 0.0
@@ -26,6 +31,8 @@ open class LevelProgress<T : Levelable>(val data: T) {
             }
             return exp
         }
+
+    abstract val filterContext: FilterContext<*>
 
     fun giveExp(amount: Double, source: String) {
         if (amount <= 0 || isMaxLevel) return
@@ -63,5 +70,16 @@ open class LevelProgress<T : Levelable>(val data: T) {
 
     private fun computeRequiredExp(level: Int): Double {
         return Math.max(0.0, Math.floor(data.expCurve.evaluate(level.toDouble())))
+    }
+
+    fun iconFor(player: Player): Item {
+        val actorFilter = ActorFilterContext("player", player)
+        val context = this.filterContext
+        val icon = data.icon
+
+        return icon.copy(
+                name = icon.name?.let { DynamicFilter.apply(it, context, actorFilter) },
+                lore = icon.lore.map { DynamicFilter.apply(it, context, actorFilter) }
+        )
     }
 }

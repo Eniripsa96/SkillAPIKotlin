@@ -3,6 +3,7 @@ package com.sucy.skill.facade.api.entity
 import com.sucy.skill.SkillAPI
 import com.sucy.skill.api.player.AccountSet
 import com.sucy.skill.api.player.PlayerAccount
+import com.sucy.skill.facade.api.data.GameMode
 import com.sucy.skill.facade.api.event.player.ManaCost
 import com.sucy.skill.facade.api.event.player.ManaSource
 import com.sucy.skill.facade.api.event.player.PlayerManaGainEvent
@@ -13,6 +14,8 @@ import com.sucy.skill.util.math.limit
  * SkillAPIKotlin © 2018
  */
 interface Player : Actor {
+    var gameMode: GameMode
+
     override val mana: Double
         get() = accounts.activeAccount.mana
     override var maxMana: Double

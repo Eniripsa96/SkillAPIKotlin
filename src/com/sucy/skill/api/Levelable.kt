@@ -7,7 +7,7 @@ import com.sucy.skill.util.math.formula.Formula
 /**
  * SkillAPIKotlin © 2018
  */
-open class Levelable(
+abstract class Levelable(
         var name: String,
         var icon: Item,
         var maxLevel: Int) {

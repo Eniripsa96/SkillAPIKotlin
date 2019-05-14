@@ -17,6 +17,7 @@ class Settings(private val plugin: ConfigHolder) {
     val expYields = ExpYieldsConfig(loadConfig("exp"))
     val mana = ManaSettings(mainConfig.getOrCreateSection("Mana"))
     val saving = SavingSettings(mainConfig.getOrCreateSection("Saving"))
+    val skillBar = SkillBarSettings(mainConfig.getOrCreateSection("Skill Bar"))
     val skills = SkillSettings(mainConfig.getOrCreateSection("Skills"))
     val targeting = TargetingConfig(mainConfig.getOrCreateSection("Targeting"))
     val worlds = WorldSettings(mainConfig.getOrCreateSection("Worlds"))
