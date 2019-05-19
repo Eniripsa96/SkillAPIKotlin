@@ -41,7 +41,8 @@ class SkillComponent extends React.PureComponent {
         expanded: true,
         typeDialog: false,
         editSettings: false,
-        componentOptions: null
+        componentOptions: null,
+        lastSelected: 0
     };
 
     componentDidMount() {
@@ -138,7 +139,16 @@ class SkillComponent extends React.PureComponent {
     };
 
     select = () => {
-        this.props.select(this.props.data.id);
+        const {data, select} = this.props;
+        const {lastSelected} = this.state;
+        const time = new Date().getTime();
+
+        if (lastSelected > time - 500) {
+            this.showSettingsDialog();
+        } else {
+            this.setState({ lastSelected: time });
+            select(data.id);
+        }
     };
 
     showTypeDialog = () => {
