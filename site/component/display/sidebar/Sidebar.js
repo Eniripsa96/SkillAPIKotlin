@@ -17,7 +17,7 @@ class Sidebar extends React.PureComponent {
             <List>
                 <ListLink icon="home" link={routes.HOME.path} text="Home" onClick={close}/>
                 <ListExternalLink icon="info" link="https://github.com/Eniripsa96/SkillAPI/wiki" text="Wiki"/>
-                <ListExternalLink icon="contact_support" text="Discord" link="https://discord.gg/NHHVGss"/>
+                <ListExternalLink icon="contact_support" text="Discord" link="https://discord.gg/KX2ygZJ"/>
                 <ListExternalLink icon="code" link="https://github.com/Eniripsa96/SkillAPI" text="Source"/>
             </List>
             <Divider/>
