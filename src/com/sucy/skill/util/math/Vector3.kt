@@ -1,6 +1,7 @@
 package com.sucy.skill.util.math
 
 import java.lang.Math.sqrt
+import kotlin.math.abs
 
 /**
  * SkillAPIKotlin © 2018
@@ -34,6 +35,10 @@ data class Vector3(var x: Double = 0.0, var y: Double = 0.0, var z: Double = 0.0
         return sq(x - vector.x) + sq(y - vector.y) + sq(z - vector.z)
     }
 
+    fun dot(other: Vector3): Double {
+        return x * other.x + y * other.y + z * other.z
+    }
+
     fun cross(other: Vector3): Vector3 {
         return Vector3(
                 x = y * other.z - z * other.y,
@@ -56,5 +61,9 @@ data class Vector3(var x: Double = 0.0, var y: Double = 0.0, var z: Double = 0.0
 
     operator fun div(num: Double): Vector3 {
         return Vector3(x / num, y / num, z / num)
+    }
+
+    fun abs(): Vector3 {
+        return copy(x = abs(x), y = abs(y), z = abs(z))
     }
 }
