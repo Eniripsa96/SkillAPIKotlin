@@ -75,7 +75,14 @@ class SkillComponent extends React.PureComponent {
         const canHaveChildren = this.canHaveChildren(data);
 
         return <div>
-            <ListButton icon={ICONS[type]} text={name} onClick={this.select} active={active}>
+            <ListButton
+                icon={ICONS[type]}
+                text={name}
+                onClick={this.select}
+                active={active}
+                dragTarget={type !== Type.TRIGGER && this}
+                onDrop={canHaveChildren && this.onDrop}>
+
                 {canHaveChildren && <Action icon="add" tooltip="Add a new effect" onClick={this.showTypeDialog}
                                             color={active ? 'default' : 'secondary'}/>}
                 <Action icon="edit" tooltip={`Edit ${name} settings`} onClick={this.showSettingsDialog}
@@ -312,6 +319,52 @@ class SkillComponent extends React.PureComponent {
                 break;
         }
     };
+
+    /**
+     * @param {SkillComponent} dropped
+     */
+    onDrop = (dropped) => {
+        if (this.isParent(dropped)) {
+            return
+        }
+
+        // Remove from where the component was
+        dropped.props.update(null, dropped.props.index);
+
+        setTimeout(() => {
+            const {data, index, generateId, update} = this.props;
+
+            const childData = { ...dropped.props.data, id: generateId() };
+
+            // Add to the current component's children
+            const children = [...data.children, childData];
+
+            update({...data, children}, index);
+            this.props.select(childData.id);
+        }, 100);
+    };
+
+    isChild(component) {
+        return this.isRelated(component.props.data.id, this.props.data);
+    }
+
+    isParent(component) {
+        return this.isRelated(this.props.data.id, component.props.data);
+    }
+
+    isRelated(id, rootData) {
+        let toCheck = [rootData];
+        let index = 0;
+        while (index < toCheck.length) {
+            const current = toCheck[index];
+            if (current.id === id) {
+                return true;
+            }
+            current.children.forEach((child) => toCheck.push(child));
+            index++
+        }
+        return false
+    }
 }
 
 export {Type}
