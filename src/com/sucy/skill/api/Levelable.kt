@@ -14,9 +14,9 @@ abstract class Levelable(
 
     val key = name.toLowerCase()
 
-    protected var description = ArrayList<String>()
-    protected val metadata = Data()
-    protected val conditions = ArrayList<LevelCondition>()
+    val description: MutableList<String> = mutableListOf()
+    var metadata = Data()
+    val conditions: MutableList<LevelCondition> = mutableListOf()
     var expCurve = Formula.const(1.0)
 }
 

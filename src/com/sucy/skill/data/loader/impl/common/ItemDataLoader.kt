@@ -7,12 +7,12 @@ import com.sucy.skill.facade.internal.data.InternalItem
 import com.sucy.skill.util.io.Data
 
 object ItemDataLoader : DataLoader<Item> {
-    private const val TYPE = "type"
-    private const val DURABILITY = "durability"
-    private const val DATA = "data"
+    const val TYPE = "type"
+    const val DURABILITY = "durability"
+    const val DATA = "data"
     private const val AMOUNT = "amount"
     private const val NAME = "name"
-    private const val LORE = "lore"
+    const val LORE = "lore"
     private const val VISIBILITY = "visibility"
     private const val TAGS = "tags"
 

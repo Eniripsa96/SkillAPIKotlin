@@ -13,6 +13,10 @@ interface DataLoader<T> {
 
     fun transformAndLoad(key: String, data: Data): T {
         val version = data.getVersion()
+        return transformAndLoad(key, data, version)
+    }
+
+    fun transformAndLoad(key: String, data: Data, version: Int): T {
         val transformer = transformers.getOrDefault(version, NoOpDataTransformer)
         val config = transformer.transform(key, data)
 

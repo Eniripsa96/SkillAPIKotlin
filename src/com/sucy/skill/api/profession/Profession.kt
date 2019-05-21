@@ -17,9 +17,9 @@ open class Profession(name: String, icon: Item, maxLevel: Int) : Levelable(name,
     val skills: List<Skill>
         get() = skillNames.mapNotNull { SkillAPI.registry.getSkill(it) }
 
-    val skillNames = HashSet<String>()
-    val parentNames = HashSet<String>()
-    val unusableItems = HashSet<String>()
+    val skillNames = mutableSetOf<String>()
+    val parentNames = mutableSetOf<String>()
+    val unusableItems = mutableSetOf<String>()
 
     var group: String = "class"
     var needsPermission: Boolean = false
@@ -31,4 +31,7 @@ open class Profession(name: String, icon: Item, maxLevel: Int) : Levelable(name,
     var prefix: String = name
     var actionBar: String = ""
     var manaName: String = ""
+
+    var skillTreePattern: SkillTreePattern = SkillTreePattern.FLOOD
+    val expSources = mutableSetOf<ExpSource>()
 }
