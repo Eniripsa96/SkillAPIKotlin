@@ -1,4 +1,4 @@
-package com.sucy.skill.data.loader.impl
+package com.sucy.skill.data.loader.impl.account
 
 import com.sucy.skill.api.player.AccountSet
 import com.sucy.skill.data.loader.DataLoader
@@ -12,12 +12,12 @@ object AccountSetDataLoader : DataLoader<AccountSet> {
     override val requiredKeys: Array<String> = arrayOf(ID, ACCOUNTS)
     override val transformers: Map<Int, DataTransformer> = mapOf()
 
-    override fun load(data: Data): AccountSet {
+    override fun load(key: String, data: Data): AccountSet {
         val result = AccountSet()
 
         val accounts = data.getSection(ACCOUNTS)!!
-        accounts.keys().forEach {
-            result.data[it.toInt()] = PlayerAccountDataLoader.load(accounts.getOrCreateSection(it))
+        accounts.forEach {
+            result.data[it.toInt()] = PlayerAccountDataLoader.load(it, accounts.getOrCreateSection(it))
         }
 
         return result

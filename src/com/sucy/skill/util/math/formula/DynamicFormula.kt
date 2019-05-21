@@ -5,7 +5,7 @@ import com.sucy.skill.facade.api.entity.Actor
 import com.sucy.skill.util.math.formula.value.ConstValue
 import com.sucy.skill.util.math.formula.value.VarValue
 
-class DynamicFormula(equation: String) : Formula(equation, ArrayList()) {
+class DynamicFormula(expression: String) : Formula(expression, ArrayList()) {
 
     fun evaluate(caster: Actor, target: Actor = caster): Double {
         formulaCaster = caster

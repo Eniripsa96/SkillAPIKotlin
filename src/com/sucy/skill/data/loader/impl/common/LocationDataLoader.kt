@@ -1,4 +1,4 @@
-package com.sucy.skill.data.loader.impl
+package com.sucy.skill.data.loader.impl.common
 
 import com.sucy.skill.data.loader.DataLoader
 import com.sucy.skill.data.loader.transform.DataTransformer
@@ -8,7 +8,7 @@ import com.sucy.skill.util.io.Data
 import com.sucy.skill.util.math.Vector3
 
 object LocationDataLoader : DataLoader<Location> {
-    private const val WORLD = "workd"
+    private const val WORLD = "world"
     private const val X = "x"
     private const val Y = "y"
     private const val Z = "z"
@@ -18,7 +18,7 @@ object LocationDataLoader : DataLoader<Location> {
     override val requiredKeys: Array<String> = arrayOf()
     override val transformers: Map<Int, DataTransformer> = mapOf()
 
-    override fun load(data: Data): Location {
+    override fun load(key: String, data: Data): Location {
         return InternalLocation(
                 world = data.getString(WORLD, "world"),
                 coords = Vector3(

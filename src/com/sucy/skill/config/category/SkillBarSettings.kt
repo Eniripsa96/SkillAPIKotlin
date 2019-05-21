@@ -1,6 +1,6 @@
 package com.sucy.skill.config.category
 
-import com.sucy.skill.data.loader.impl.ItemDataLoader
+import com.sucy.skill.data.loader.impl.common.ItemDataLoader
 import com.sucy.skill.util.io.Data
 
 class SkillBarSettings(config: Data) {

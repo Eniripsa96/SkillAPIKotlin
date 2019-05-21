@@ -77,7 +77,7 @@ abstract class LevelProgress<T : Levelable>(val data: T) {
         val context = this.filterContext
         val icon = data.icon
 
-        return icon.copy(
+        return icon.copyWith(
                 name = icon.name?.let { DynamicFilter.apply(it, context, actorFilter) },
                 lore = icon.lore.map { DynamicFilter.apply(it, context, actorFilter) }
         )

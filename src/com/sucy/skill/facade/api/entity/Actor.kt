@@ -1,10 +1,7 @@
 package com.sucy.skill.facade.api.entity
 
 import com.sucy.skill.SkillAPI
-import com.sucy.skill.api.skill.SkillProgress
-import com.sucy.skill.api.skill.SkillSet
-import com.sucy.skill.api.skill.SkillShot
-import com.sucy.skill.api.skill.TargetSkill
+import com.sucy.skill.api.skill.*
 import com.sucy.skill.api.values.FlagSet
 import com.sucy.skill.api.values.ValueSet
 import com.sucy.skill.command.CommandSender
@@ -86,12 +83,16 @@ interface Actor : Entity, CommandSender {
     }
 
     fun cast(skill: SkillProgress): Boolean {
-        return when (skill.data) {
-            is SkillShot -> skill.data.cast(this, skill.level)
+        return cast(skill.data, skill.level)
+    }
+
+    fun cast(skill: Skill, level: Int): Boolean {
+        return when (skill) {
+            is SkillShot -> skill.cast(this, level)
             is TargetSkill -> {
                 val target = Targeting.getClosestLineOfSightTarget(location, 5.0) ?: return false
                 val isAlly = false // TODO - add ally detection
-                skill.data.cast(this, target, skill.level, isAlly)
+                skill.cast(this, target, level, isAlly)
             }
             else -> false
         }

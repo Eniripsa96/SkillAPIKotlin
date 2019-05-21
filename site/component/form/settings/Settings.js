@@ -7,7 +7,8 @@ class Settings {
     /**
      * @type {{
      *     premium: string,
-     *     version: string
+     *     version: string,
+     *     server: string
      * }}
      */
     data = loadLocally('settings') || {};
@@ -41,7 +42,7 @@ class Settings {
      *  }}
      */
     getEnumData() {
-        return DataIndex[this.getServer()][this.getVersion()];
+        return DataIndex[this.getServer()][this.getVersion()] || DataIndex.Spigot["1.13"];
     }
 
     applyChanges(changes) {

@@ -6,8 +6,8 @@ import com.sucy.skill.util.io.Data
 /**
  * Main transformer for handling configurations from the original SkillAPI
  */
-object LegacySkillTranformer : DataTransformer {
-    override fun transform(data: Data): Data {
+object LegacySkillTransformer : DataTransformer {
+    override fun transform(key: String, data: Data): Data {
         // TODO - implement
         return data
     }

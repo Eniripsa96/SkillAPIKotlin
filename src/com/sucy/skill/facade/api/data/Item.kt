@@ -15,7 +15,7 @@ interface Item {
     var visibility: Int
     var tags: Map<String, Any>
 
-    fun copy(
+    fun copyWith(
             name: String? = this.name,
             lore: List<String> = this.lore,
             type: String = this.type,

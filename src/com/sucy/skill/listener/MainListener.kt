@@ -5,7 +5,7 @@ import com.sucy.skill.api.event.Listen
 import com.sucy.skill.api.event.Step
 import com.sucy.skill.api.player.AccountSet
 import com.sucy.skill.data.DataType
-import com.sucy.skill.data.loader.impl.AccountSetDataLoader
+import com.sucy.skill.data.loader.impl.account.AccountSetDataLoader
 import com.sucy.skill.data.store.DataLockedException
 import com.sucy.skill.facade.api.entity.Player
 import com.sucy.skill.facade.api.event.player.AsyncPlayerLoginEvent
@@ -59,7 +59,7 @@ class MainListener : SkillAPIListener {
     private fun doLoad(uuid: UUID) {
         try {
             val data = SkillAPI.settings.saving.dataStore.load(uuid, DataType.PLAYERS.key)
-            val accounts = AccountSetDataLoader.load(data, data.getVersion())
+            val accounts = AccountSetDataLoader.transformAndLoad(uuid.toString(), data)
             SkillAPI.entityData.accounts[uuid] = accounts
         } catch (ex: DataLockedException) {
             SkillAPI.entityData.accounts[uuid] = AccountSet.FAKE_ACCOUNT

@@ -1,8 +1,9 @@
-package com.sucy.skill.data.loader.impl
+package com.sucy.skill.data.loader.impl.profession
 
 import com.sucy.skill.SkillAPI
 import com.sucy.skill.api.profession.Profession
 import com.sucy.skill.api.profession.ProfessionProgress
+import com.sucy.skill.data.loader.impl.LevelProgressDataLoader
 import com.sucy.skill.data.loader.transform.DataTransformer
 import com.sucy.skill.facade.internal.data.InternalItem
 import com.sucy.skill.util.io.Data
@@ -14,9 +15,8 @@ object ProfessionProgressDataLoader : LevelProgressDataLoader<ProfessionProgress
     override val requiredKeys: Array<String> = arrayOf()
     override val transformers: Map<Int, DataTransformer> = mapOf()
 
-    override fun load(data: Data): ProfessionProgress {
-        val name = data.getString(NAME)!!
-        val profession = SkillAPI.registry.getProfession(name) ?: MissingProfession(name)
+    override fun load(key: String, data: Data): ProfessionProgress {
+        val profession = SkillAPI.registry.getProfession(key) ?: MissingProfession(key)
         val result = ProfessionProgress(profession)
 
         super.load(result, data)
@@ -28,6 +28,10 @@ object ProfessionProgressDataLoader : LevelProgressDataLoader<ProfessionProgress
         val result = super.serialize(data)
         result.set(NAME, data.data.name)
         return result
+    }
+
+    override fun getKey(data: ProfessionProgress): String? {
+        return data.data.key
     }
 
     class MissingProfession(name: String) : Profession(name, ITEM, 1)

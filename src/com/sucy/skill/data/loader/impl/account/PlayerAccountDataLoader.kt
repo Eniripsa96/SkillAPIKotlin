@@ -1,7 +1,10 @@
-package com.sucy.skill.data.loader.impl
+package com.sucy.skill.data.loader.impl.account
 
 import com.sucy.skill.api.player.PlayerAccount
 import com.sucy.skill.data.loader.DataLoader
+import com.sucy.skill.data.loader.impl.common.LocationDataLoader
+import com.sucy.skill.data.loader.impl.profession.ProfessionProgressDataLoader
+import com.sucy.skill.data.loader.impl.skill.SkillProgressDataLoader
 import com.sucy.skill.data.loader.transform.DataTransformer
 import com.sucy.skill.util.io.Data
 
@@ -18,27 +21,27 @@ object PlayerAccountDataLoader : DataLoader<PlayerAccount> {
     override val requiredKeys: Array<String> = arrayOf()
     override val transformers: Map<Int, DataTransformer> = mapOf()
 
-    override fun load(data: Data): PlayerAccount {
+    override fun load(key: String, data: Data): PlayerAccount {
         val result = PlayerAccount()
 
         result.health = getDouble(data, HEALTH)
-        result.mana = getDouble(data, MANA) ?: 0.0
+        result.mana = getDouble(data, MANA)
         result.food = getDouble(data, FOOD)
-        result.location = data.getSection(LOCATION)?.let(LocationDataLoader::load)
+        result.location = LocationDataLoader.load(LOCATION, data.getOrCreateSection(LOCATION))
         // TODO - inventory saved per account
         //result.inventory = data.getString(INVENTORY)?.let { parse(it) }
 
         val professions = data.getOrCreateSection(PROFESSIONS)
-        professions.keys().forEach { group ->
+        professions.forEach { group ->
             professions.getSection(group)?.let {
-                result.professionSet[group] = ProfessionProgressDataLoader.load(it)
+                result.professionSet[group] = ProfessionProgressDataLoader.load(group, it)
             }
         }
 
         val skills = data.getOrCreateSection(SKILLS)
-        skills.keys().forEach { key ->
-            skills.getSection(key)?.let {
-                result.skillSet.add(SkillProgressDataLoader.load(it))
+        skills.forEach { skillKey ->
+            skills.getSection(skillKey)?.let {
+                result.skillSet.add(SkillProgressDataLoader.load(skillKey, it))
             }
         }
 
@@ -48,10 +51,10 @@ object PlayerAccountDataLoader : DataLoader<PlayerAccount> {
     override fun serialize(data: PlayerAccount): Data {
         val result = Data()
 
-        data.health?.let { result.set(HEALTH, it) }
-        data.mana?.let { result.set(MANA, it) }
-        data.food?.let { result.set(FOOD, it) }
-        data.location?.let { result.set(LOCATION, LocationDataLoader.serialize(it)) }
+        result.set(HEALTH, data.health)
+        result.set(MANA, data.mana)
+        result.set(FOOD, data.food)
+        result.set(LOCATION, LocationDataLoader.serialize(data.location))
         // TODO - inventory saved per account
         //data.inventory?.let { result.set(INVENTORY, serialize(it) }
 
@@ -68,8 +71,7 @@ object PlayerAccountDataLoader : DataLoader<PlayerAccount> {
         return result
     }
 
-    private fun getDouble(data: Data, key: String): Double? {
-        val result = data.getDouble(key, -1.0)
-        return if (result < 0) null else result
+    private fun getDouble(data: Data, key: String): Double {
+        return data.getDouble(key, -1.0)
     }
 }

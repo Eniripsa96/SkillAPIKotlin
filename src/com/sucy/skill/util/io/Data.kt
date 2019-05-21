@@ -23,6 +23,14 @@ class Data internal constructor() {
         }
     }
 
+    fun forEach(ignoredKeys: Set<String> = setOf(), callback: (String) -> Unit) {
+        return keys.forEach {
+            if (it !== VERSION_KEY && !ignoredKeys.contains(it)) {
+                callback(it)
+            }
+        }
+    }
+
     fun getVersion(): Int {
         return getInt(VERSION_KEY, 1)
     }
@@ -73,6 +81,19 @@ class Data internal constructor() {
     fun set(key: String, value: Data) {
         if (!keys.contains(key)) keys.add(key)
         data[key] = value
+    }
+
+    fun set(key: String, value: Map<String, Any>) {
+        val section = getOrCreateSection(key)
+        value.forEach { k, v ->
+            when (v) {
+                is Map<*, *> -> section.set(k, v as Map<String, Any>)
+                is Collection<*> -> section.set(k, v.toList() as List<String>)
+                is Number -> section.set(k, v)
+                is Boolean -> section.set(k, v)
+                else -> section.set(k, v.toString())
+            }
+        }
     }
 
     fun remove(key: String) {

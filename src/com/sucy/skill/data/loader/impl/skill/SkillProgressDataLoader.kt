@@ -1,8 +1,9 @@
-package com.sucy.skill.data.loader.impl
+package com.sucy.skill.data.loader.impl.skill
 
 import com.sucy.skill.SkillAPI
 import com.sucy.skill.api.skill.Skill
 import com.sucy.skill.api.skill.SkillProgress
+import com.sucy.skill.data.loader.impl.LevelProgressDataLoader
 import com.sucy.skill.data.loader.transform.DataTransformer
 import com.sucy.skill.facade.api.entity.Actor
 import com.sucy.skill.facade.internal.data.InternalItem
@@ -18,9 +19,8 @@ object SkillProgressDataLoader : LevelProgressDataLoader<SkillProgress, Skill>()
     override val requiredKeys: Array<String> = arrayOf(NAME)
     override val transformers: Map<Int, DataTransformer> = mapOf()
 
-    override fun load(data: Data): SkillProgress {
-        val name = data.getString(NAME)!!
-        val skill = SkillAPI.registry.getSkill(name) ?: MissingSkill(name)
+    override fun load(key: String, data: Data): SkillProgress {
+        val skill = SkillAPI.registry.getSkill(key) ?: MissingSkill(key)
         val result = SkillProgress(skill)
 
         super.load(result, data)
@@ -37,6 +37,10 @@ object SkillProgressDataLoader : LevelProgressDataLoader<SkillProgress, Skill>()
         result.set(SOURCES, data.sources.toList())
         result.set(COOLDOWN, data.cooldown.time)
         return result
+    }
+
+    override fun getKey(data: SkillProgress): String? {
+        return data.data.key
     }
 
     class MissingSkill(name: String) : Skill(name, ITEM, 1) {

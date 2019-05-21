@@ -13,7 +13,7 @@ import java.util.stream.Collectors
 /**
  * SkillAPIKotlin © 2018
  */
-open class Formula(equation: String, protected val keys: MutableList<String>) {
+open class Formula(val expression: String, protected val keys: MutableList<String>) {
     val tokens = ArrayList<Token>()
 
     fun evaluate(vararg values: Double): Double {
@@ -29,11 +29,11 @@ open class Formula(equation: String, protected val keys: MutableList<String>) {
     init {
         var start = 0
         val operators = Stack<OrderedToken>()
-        for (i in 0 until equation.length) {
-            if (OP_TOKENS.containsKey(equation[i]) || equation[i] == '(' || equation[i] == ')') {
-                val token = equation.substring(start, i).trim()
+        for (i in 0 until expression.length) {
+            if (OP_TOKENS.containsKey(expression[i]) || expression[i] == '(' || expression[i] == ')') {
+                val token = expression.substring(start, i).trim()
                 if (FUNC_TOKENS.containsKey(token)) {
-                    if (equation[i] != '(') {
+                    if (expression[i] != '(') {
                         throw IllegalArgumentException("Functions must be immediately followed by a (")
                     } else {
                         operators.push(FUNC_TOKENS[token])
@@ -44,8 +44,8 @@ open class Formula(equation: String, protected val keys: MutableList<String>) {
                 start = i + 1
 
                 when {
-                    equation[i] == '(' -> operators.push(Parenthesis)
-                    equation[i] == ')' -> {
+                    expression[i] == '(' -> operators.push(Parenthesis)
+                    expression[i] == ')' -> {
                         while (operators.peek() != Parenthesis) {
                             tokens.add(operators.pop())
                         }
@@ -55,7 +55,7 @@ open class Formula(equation: String, protected val keys: MutableList<String>) {
                         }
                     }
                     else -> {
-                        val newOp = OP_TOKENS.getValue(equation[i])
+                        val newOp = OP_TOKENS.getValue(expression[i])
                         while (!operators.isEmpty() && operators.peek().precedence >= newOp.precedence) {
                             tokens.add(operators.pop())
                         }
@@ -64,7 +64,7 @@ open class Formula(equation: String, protected val keys: MutableList<String>) {
                 }
             }
         }
-        parseVal(equation.substring(start, equation.length))
+        parseVal(expression.substring(start, expression.length))
         while (!operators.isEmpty()) {
             tokens.add(operators.pop())
         }

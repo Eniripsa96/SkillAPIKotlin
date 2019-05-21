@@ -84,6 +84,14 @@ const MECHANIC_OPTIONS = [
         type: InputType.DROPDOWN,
         initial: 'Target',
         options: () => ['Both', 'Caster', 'Target']
+    },
+    {
+        key: 'casterOnce',
+        name: 'Caster Once',
+        description: 'If false, each target will cause the effects to apply to the caster an additional time',
+        type: InputType.BOOLEAN,
+        initial: true,
+        condition: ({ target }) => target.toLowerCase() !== 'target'
     }
 ];
 

@@ -32,7 +32,8 @@ abstract class Mechanic : Effect() {
                     result = execute(context, it, context.caster) || result
                 }
             }
-        } else {
+        }
+        if (applyToTarget) {
             targets.forEach {
                 result = (!it.dead && it.exists && execute(context, it, it)) || result
             }

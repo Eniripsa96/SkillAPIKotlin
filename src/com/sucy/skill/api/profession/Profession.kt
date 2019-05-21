@@ -4,27 +4,31 @@ import com.sucy.skill.SkillAPI
 import com.sucy.skill.api.Levelable
 import com.sucy.skill.api.skill.Skill
 import com.sucy.skill.facade.api.data.Item
-import com.sucy.skill.util.math.formula.Formula
+import com.sucy.skill.util.math.formula.DynamicFormula
 
 /**
  * SkillAPIKotlin © 2018
  */
 open class Profession(name: String, icon: Item, maxLevel: Int) : Levelable(name, icon, maxLevel) {
 
-    val parents by lazy { parentNames.map(SkillAPI.registry::getProfession) }
+    val parents: List<Profession>
+        get() = parentNames.mapNotNull(SkillAPI.registry::getProfession)
 
-    val skills = HashSet<Skill>()
+    val skills: List<Skill>
+        get() = skillNames.mapNotNull { SkillAPI.registry.getSkill(it) }
+
+    val skillNames = HashSet<String>()
     val parentNames = HashSet<String>()
-    val blacklist = HashSet<String>()
+    val unusableItems = HashSet<String>()
 
     var group: String = "class"
     var needsPermission: Boolean = false
 
-    var maxMana: Formula = Formula.const(20.0)
-    var maxHealth: Formula = Formula.const(20.0)
-    var manaRegen: Formula = Formula.const(1.0)
+    var maxMana: DynamicFormula = DynamicFormula("20")
+    var maxHealth: DynamicFormula = DynamicFormula("20")
+    var manaRegen: DynamicFormula = DynamicFormula("1.0")
 
     var prefix: String = name
-    var actionBar: String? = null
-    var manaName: String? = null
+    var actionBar: String = ""
+    var manaName: String = ""
 }

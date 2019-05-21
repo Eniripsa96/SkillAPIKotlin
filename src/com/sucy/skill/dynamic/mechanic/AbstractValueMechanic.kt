@@ -6,33 +6,40 @@ import com.sucy.skill.api.values.ValueType
 import com.sucy.skill.dynamic.CastContext
 import com.sucy.skill.facade.api.entity.Actor
 import com.sucy.skill.util.match
+import com.sucy.skill.util.math.formula.DynamicFormula
 import com.sucy.skill.util.text.enumName
+import java.util.*
 
 abstract class AbstractValueMechanic : Mechanic() {
-    private var stack = true
-    private var maxStacks = 100
-    private var duration = 5.0
     private var valueType = ValueType.BONUS
     private var timerType = TimerType.OVERWRITE
     private var stackKey = "default"
+
+    private lateinit var duration: DynamicFormula
+    private lateinit var maxStacks: DynamicFormula
+    private lateinit var value: DynamicFormula
 
     abstract fun getValue(target: Actor): Value
 
     override fun initialize() {
         super.initialize()
 
-        stack = metadata.getBoolean("stack", stack)
-        maxStacks = metadata.getInt("maxStacks", maxStacks)
-        duration = metadata.getDouble("duration", duration)
+        maxStacks = metadata.getFormula("maxStacks", 5.0)
+        duration = metadata.getFormula("duration", 5.0)
+        value = metadata.getFormula("value", 1.0)
         valueType = ValueType::class.match(metadata.getString("valueType", valueType.name), ValueType.BONUS)
         timerType = TimerType::class.match(metadata.getString("timerType", timerType.name), TimerType.OVERWRITE)
         stackKey = metadata.getString("stackKey", stackKey)
+
+        if (stackKey.isEmpty()) stackKey = UUID.randomUUID().toString()
     }
 
     override fun execute(context: CastContext, target: Actor, recipient: Actor): Boolean {
         val value = getValue(recipient)
-        val modifier = compute("value", context.caster, target)
-        if (stack) {
+        val modifier = compute(this.value, context.caster, target)
+        val duration = compute(this.duration, context.caster, target)
+        val maxStacks = compute(this.maxStacks, context.caster, target).toInt()
+        if (duration > 0) {
             when (valueType) {
                 ValueType.BASE -> value.addBaseStack(modifier, duration, maxStacks, timerType, stackKey)
                 ValueType.BONUS -> value.addBonusStack(modifier, duration, maxStacks, timerType, stackKey)
