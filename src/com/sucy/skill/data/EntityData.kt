@@ -1,5 +1,6 @@
 package com.sucy.skill.data
 
+import com.google.common.collect.BiMap
 import com.google.common.collect.HashBiMap
 import com.sucy.skill.api.player.AccountSet
 import com.sucy.skill.api.skill.SkillSet
@@ -18,7 +19,7 @@ class EntityData {
     val metadata = HashMap<UUID, MutableMap<String, Any>>()
     val accounts = HashMap<UUID, AccountSet>()
     val skills = HashMap<UUID, SkillSet>()
-    val playerIds = HashBiMap.create<UUID, String>()
+    val playerIds: BiMap<UUID, String> = HashBiMap.create<UUID, String>()
 
     fun unload(uuid: UUID) {
         attributes.remove(uuid)

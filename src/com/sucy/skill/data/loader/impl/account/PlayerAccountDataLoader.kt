@@ -3,6 +3,7 @@ package com.sucy.skill.data.loader.impl.account
 import com.sucy.skill.api.player.PlayerAccount
 import com.sucy.skill.data.loader.DataLoader
 import com.sucy.skill.data.loader.impl.common.LocationDataLoader
+import com.sucy.skill.data.loader.impl.common.ValueSetDataLoader
 import com.sucy.skill.data.loader.impl.profession.ProfessionProgressDataLoader
 import com.sucy.skill.data.loader.impl.skill.SkillProgressDataLoader
 import com.sucy.skill.data.loader.transform.DataTransformer
@@ -17,6 +18,8 @@ object PlayerAccountDataLoader : DataLoader<PlayerAccount> {
     private const val PROFESSIONS = "professions"
     private const val SKILLS = "skills"
     private const val SKILL_SOURCE = "source"
+    private const val ATTRIBUTES = "attributes"
+    private const val VALUES = "values"
 
     override val requiredKeys: Array<String> = arrayOf()
     override val transformers: Map<Int, DataTransformer> = mapOf()
@@ -28,6 +31,8 @@ object PlayerAccountDataLoader : DataLoader<PlayerAccount> {
         result.mana = getDouble(data, MANA)
         result.food = getDouble(data, FOOD)
         result.location = LocationDataLoader.load(LOCATION, data.getOrCreateSection(LOCATION))
+        result.attributes = ValueSetDataLoader.load(ATTRIBUTES, data.getOrCreateSection(ATTRIBUTES))
+        result.values = ValueSetDataLoader.load(VALUES, data.getOrCreateSection(VALUES))
         // TODO - inventory saved per account
         //result.inventory = data.getString(INVENTORY)?.let { parse(it) }
 
@@ -55,6 +60,8 @@ object PlayerAccountDataLoader : DataLoader<PlayerAccount> {
         result.set(MANA, data.mana)
         result.set(FOOD, data.food)
         result.set(LOCATION, LocationDataLoader.serialize(data.location))
+        result.set(ATTRIBUTES, ValueSetDataLoader.serialize(data.attributes))
+        result.set(VALUES, ValueSetDataLoader.serialize(data.values))
         // TODO - inventory saved per account
         //data.inventory?.let { result.set(INVENTORY, serialize(it) }
 

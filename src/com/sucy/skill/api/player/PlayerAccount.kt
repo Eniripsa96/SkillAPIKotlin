@@ -2,6 +2,7 @@ package com.sucy.skill.api.player
 
 import com.sucy.skill.api.profession.ProfessionSet
 import com.sucy.skill.api.skill.SkillSet
+import com.sucy.skill.api.values.ValueSet
 import com.sucy.skill.facade.api.data.Item
 import com.sucy.skill.facade.api.data.Location
 import com.sucy.skill.facade.internal.data.InternalLocation
@@ -20,4 +21,6 @@ class PlayerAccount {
     var food: Double = 0.0
     var location: Location = InternalLocation("world", Vector3(), 0.0, 0.0)
     var inventory: Array<Item>? = null
+    var attributes = ValueSet()
+    var values = ValueSet()
 }

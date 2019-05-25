@@ -14,10 +14,10 @@ class AccountSet {
             get() = data.getOrPut(active) { PlayerAccount() }
 
     companion object {
-        val FAKE_ACCOUNT by lazy {
+        fun fake(): AccountSet {
             val set = AccountSet()
             set.synchronized = false
-            set
+            return set
         }
     }
 }

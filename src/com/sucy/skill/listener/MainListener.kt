@@ -8,9 +8,7 @@ import com.sucy.skill.data.DataType
 import com.sucy.skill.data.loader.impl.account.AccountSetDataLoader
 import com.sucy.skill.data.store.DataLockedException
 import com.sucy.skill.facade.api.entity.Player
-import com.sucy.skill.facade.api.event.player.AsyncPlayerLoginEvent
-import com.sucy.skill.facade.api.event.player.PlayerJoinEvent
-import com.sucy.skill.facade.api.event.player.PlayerQuitEvent
+import com.sucy.skill.facade.api.event.player.*
 import com.sucy.skill.util.log.Logger
 import java.lang.Exception
 import java.util.*
@@ -20,13 +18,19 @@ import java.util.*
  */
 class MainListener : SkillAPIListener {
 
+    override fun init() {
+        SkillAPI.server.players.onlinePlayers.forEach { player ->
+            loadPlayerData(player.uuid)
+            initialize(player)
+        }
+    }
+
     override fun cleanup() {
-        joinHandlers.clear()
         SkillAPI.server.players.onlinePlayers.forEach(this::cleanUp)
     }
 
     private fun cleanUp(player: Player) {
-        clearHandlers.forEach { it(player) }
+        SkillAPI.eventBus.trigger(PlayerAccountsPreUnloadEvent(player))
         savePlayerData(player)
     }
 
@@ -37,15 +41,10 @@ class MainListener : SkillAPIListener {
 
     @Listen
     fun onJoin(event: PlayerJoinEvent) {
-        // TODO - migrate this logic to after data is done loading in case of async SQL data
         if (event.player.accounts.synchronized) {
-            joinHandlers.forEach { it.invoke(event.player) }
-        }
-
-        val activeAccount = event.player.activeAccount
-        if (activeAccount.health > 0) {
-            event.player.health = activeAccount.health
-            event.player.location = activeAccount.location
+            initialize(event.player)
+        } else {
+            LoadRetries(event.player.uuid, 5, 5, this::doLoad).waitForNext()
         }
     }
 
@@ -59,7 +58,6 @@ class MainListener : SkillAPIListener {
             doLoad(uuid)
         } catch (ex: DataLockedException) {
             // Need to wait for data to sync
-            LoadRetries(uuid, 10, 3, this::doLoad).waitForNext()
         }
     }
 
@@ -81,7 +79,6 @@ class MainListener : SkillAPIListener {
             val accounts = AccountSetDataLoader.transformAndLoad(uuid.toString(), data)
             SkillAPI.entityData.accounts[uuid] = accounts
         } catch (ex: DataLockedException) {
-            SkillAPI.entityData.accounts[uuid] = AccountSet.FAKE_ACCOUNT
             throw ex
         } catch (ex: Exception) {
             Logger.error("Unable to load data for player with UUID $uuid")
@@ -89,19 +86,30 @@ class MainListener : SkillAPIListener {
         }
     }
 
+    /**
+     * Handles retrying SQL loading when the data is still locked by
+     * another server up to a given amount of [retries].
+     */
     data class LoadRetries(
             private var uuid: UUID,
             private var ticks: Long,
             private var retries: Int,
             private val handle: (UUID) -> Unit
     ) {
-        fun waitForNext() {
+        /**
+         * Schedules the next attempt at loading the player data
+         */
+        internal fun waitForNext() {
             retries--
             SkillAPI.scheduler.runAsync(ticks) { next() }
             ticks *= 2
         }
 
-        fun next() {
+        /**
+         * Tries to load player data, calling [waitForNext] if it is still locked
+         * and more retries are available.
+         */
+        private fun next() {
             val player = SkillAPI.server.players.getPlayer(uuid) ?: return
 
             try {
@@ -114,14 +122,25 @@ class MainListener : SkillAPIListener {
                 SkillAPI.entityData.accounts[uuid] = AccountSet()
             }
 
-            SkillAPI.scheduler.run {
-                joinHandlers.forEach { it.invoke(player) }
-            }
+            SkillAPI.scheduler.run { initialize(player) }
         }
     }
 
     companion object {
-        val joinHandlers = ArrayList<(Player) -> Unit>()
-        val clearHandlers = ArrayList<(Player) -> Unit>()
+        private fun initialize(player: Player) {
+            SkillAPI.entityData.playerIds.computeIfAbsent(player.uuid) { player.name }
+
+            SkillAPI.eventBus.trigger(PlayerPreInitializeEvent(player))
+
+            val activeAccount = player.activeAccount
+            if (activeAccount.health > 0) {
+                player.health = activeAccount.health
+                player.location = activeAccount.location
+                SkillAPI.entityData.attributes[player.uuid] = activeAccount.attributes
+                SkillAPI.entityData.values[player.uuid] = activeAccount.values
+            }
+
+            SkillAPI.eventBus.trigger(PlayerPostInitializeEvent(player))
+        }
     }
 }

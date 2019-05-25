@@ -10,9 +10,9 @@ class Value {
     private var bonus = 0.0
     private var multiplier = 1.0
 
-    private val baseSources = HashMap<String, Double>()
-    private val additiveSource = HashMap<String, Double>()
-    private val multiplierSources = HashMap<String, Double>()
+    internal val baseSources = HashMap<String, Double>()
+    internal val additiveSources = HashMap<String, Double>()
+    internal val multiplierSources = HashMap<String, Double>()
 
     private val baseStacks = HashMap<String, ValueStacks>()
     private val bonusStacks = HashMap<String, ValueStacks>()
@@ -53,7 +53,7 @@ class Value {
      * latest application overwriting older bonuses.
      */
     fun addBonus(amount: Double, source: String) {
-        bonus += amount - (additiveSource.put(source, amount) ?: 0.0)
+        bonus += amount - (additiveSources.put(source, amount) ?: 0.0)
         updateTotal()
     }
 
@@ -88,7 +88,7 @@ class Value {
      */
     fun clear(source: String) {
         base -= baseSources.remove(source) ?: 0.0
-        bonus -= additiveSource.remove(source) ?: 0.0
+        bonus -= additiveSources.remove(source) ?: 0.0
         multiplier /= multiplierSources.remove(source) ?: 1.0
         updateTotal()
     }
@@ -98,7 +98,7 @@ class Value {
      */
     fun clearByPrefix(prefix: String) {
         clearKeySet(prefix, baseSources.keys)
-        clearKeySet(prefix, additiveSource.keys)
+        clearKeySet(prefix, additiveSources.keys)
         clearKeySet(prefix, multiplierSources.keys)
         updateTotal()
     }

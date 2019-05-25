@@ -25,7 +25,7 @@ interface Player : Actor {
         }
 
     val accounts: AccountSet
-        get() = SkillAPI.entityData.accounts.getOrDefault(uuid, AccountSet.FAKE_ACCOUNT)
+        get() = SkillAPI.entityData.accounts.getOrDefault(uuid, AccountSet.fake())
     val activeAccount: PlayerAccount
         get() = accounts.activeAccount
 
