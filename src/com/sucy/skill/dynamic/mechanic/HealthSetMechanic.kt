@@ -16,7 +16,7 @@ class HealthSetMechanic : Mechanic() {
     }
 
     override fun execute(context: CastContext, target: Actor, recipient: Actor): Boolean {
-        val result = compute(formula, context.caster, target)
+        val result = compute(formula, context, target)
         recipient.health = result
         return true
     }

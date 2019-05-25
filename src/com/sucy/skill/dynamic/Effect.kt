@@ -12,7 +12,7 @@ abstract class Effect {
     abstract val type: EffectType
 
     private val children = ArrayList<Effect>()
-    protected val metadata = Data()
+    val metadata = Data()
 
     lateinit var parentSkill: DynamicSkill
 
@@ -44,12 +44,12 @@ abstract class Effect {
         children.forEach { it.cleanUp(caster) }
     }
 
-    fun compute(formula: DynamicFormula, caster: Actor, target: Actor): Double {
-        return formula.evaluate(caster, target)
+    fun compute(formula: DynamicFormula, context: CastContext, target: Actor): Double {
+        return formula.evaluate(context.caster, target, context.level.toDouble())
     }
 
-    fun compute(key: String, caster: Actor, target: Actor): Double {
-        return compute(metadata.getFormula(key), caster, target)
+    fun compute(key: String, context: CastContext, target: Actor): Double {
+        return compute(metadata.getFormula(key), context, target)
     }
 
     /**

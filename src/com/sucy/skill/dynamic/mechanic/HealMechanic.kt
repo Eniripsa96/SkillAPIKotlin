@@ -15,7 +15,7 @@ class HealMechanic : Mechanic() {
     }
 
     override fun execute(context: CastContext, target: Actor, recipient: Actor): Boolean {
-        val health = compute(amount, context.caster, target)
+        val health = compute(amount, context, target)
         recipient.heal(health)
         return true
     }

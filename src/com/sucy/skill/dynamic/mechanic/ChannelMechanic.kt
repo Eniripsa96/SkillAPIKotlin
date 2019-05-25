@@ -27,7 +27,7 @@ class ChannelMechanic : Effect() {
         if (context.caster.flags.isActive(Status.CHANNEL.flag)) return false
 
         val caster = context.caster
-        compute(duration, caster, caster)
+        compute(duration, context, caster)
         caster.metadata[CHANNEL_META] = { executeChildren(context, targets) }
         caster.flags.set(Status.CHANNEL.flag)
         caster.metadata[CHANNEL_DAMAGE_BREAK] = breakOnDamage

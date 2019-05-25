@@ -26,9 +26,9 @@ class LaunchMechanic : Mechanic() {
     }
 
     override fun execute(context: CastContext, target: Actor, recipient: Actor): Boolean {
-        val forward = compute(this.forward, context.caster, target)
-        val upward = compute(this.upward, context.caster, target)
-        val right = compute(this.right, context.caster, target)
+        val forward = compute(this.forward, context, target)
+        val upward = compute(this.upward, context, target)
+        val right = compute(this.right, context, target)
 
         val dir = when (relative) {
             Relativity.CASTER -> context.caster.location.forward.flatNormal

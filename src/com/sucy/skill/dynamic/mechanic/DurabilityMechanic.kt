@@ -24,7 +24,7 @@ class DurabilityMechanic : Mechanic() {
 
     override fun execute(context: CastContext, target: Actor, recipient: Actor): Boolean {
         val item = itemSlot.getItem(recipient, slot) ?: return false
-        val change = compute(formula, context.caster, target)
+        val change = compute(formula, context, target)
 
         if (item.durability < change) {
             itemSlot.setItem(recipient, null, slot)

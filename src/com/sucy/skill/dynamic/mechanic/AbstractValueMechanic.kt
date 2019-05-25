@@ -36,9 +36,9 @@ abstract class AbstractValueMechanic : Mechanic() {
 
     override fun execute(context: CastContext, target: Actor, recipient: Actor): Boolean {
         val value = getValue(recipient)
-        val modifier = compute(this.value, context.caster, target)
-        val duration = compute(this.duration, context.caster, target)
-        val maxStacks = compute(this.maxStacks, context.caster, target).toInt()
+        val modifier = compute(this.value, context, target)
+        val duration = compute(this.duration, context, target)
+        val maxStacks = compute(this.maxStacks, context, target).toInt()
         if (duration > 0) {
             when (valueType) {
                 ValueType.BASE -> value.addBaseStack(modifier, duration, maxStacks, timerType, stackKey)

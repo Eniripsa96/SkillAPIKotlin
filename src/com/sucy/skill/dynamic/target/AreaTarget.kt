@@ -16,7 +16,7 @@ class AreaTarget : TargetEffect() {
     }
 
     override fun getTargets(context: CastContext, target: Actor): List<Actor> {
-        val radius = compute(this.radius, context.caster, target)
+        val radius = compute(this.radius, context, target)
         return SkillAPI.server.getWorld(target.location.world).getActorsInRadius(target.location.coords, radius)
     }
 }

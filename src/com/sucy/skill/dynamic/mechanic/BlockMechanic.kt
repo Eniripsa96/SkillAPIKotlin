@@ -34,10 +34,10 @@ class BlockMechanic : Mechanic() {
     }
 
     override fun execute(context: CastContext, target: Actor, recipient: Actor): Boolean {
-        val duration = compute("duration", context.caster, target).toTicks()
-        val radX = compute("radX", context.caster, target).toInt()
-        val radY = compute("radY", context.caster, target).toInt()
-        val radZ = compute("radZ", context.caster, target).toInt()
+        val duration = compute("duration", context, target).toTicks()
+        val radX = compute("radX", context, target).toInt()
+        val radY = compute("radY", context, target).toInt()
+        val radZ = compute("radZ", context, target).toInt()
 
         val world = SkillAPI.server.getWorld(recipient.location.world)
         val affected = ArrayList<Location>()

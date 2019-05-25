@@ -35,7 +35,7 @@ class ItemGiveMechanic : Mechanic() {
     }
 
     override fun execute(context: CastContext, target: Actor, recipient: Actor): Boolean {
-        val number = compute(amount, context.caster, target).toInt()
+        val number = compute(amount, context, target).toInt()
         val copy = item.copy(amount = number)
         return recipient.inventory.give(copy)
     }

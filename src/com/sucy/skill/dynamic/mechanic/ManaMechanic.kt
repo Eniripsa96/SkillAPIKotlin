@@ -18,7 +18,7 @@ class ManaMechanic: Mechanic() {
     }
 
     override fun execute(context: CastContext, target: Actor, recipient: Actor): Boolean {
-        val amount = compute(this.amount, context.caster, target)
+        val amount = compute(this.amount, context, target)
         return if (amount > 0) {
             target.giveMana(amount, ManaSource.SKILL_EFFECT)
         } else {

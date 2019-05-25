@@ -23,7 +23,7 @@ class DamageMechanic : Mechanic() {
     }
 
     override fun execute(context: CastContext, target: Actor, recipient: Actor): Boolean {
-        val damage = compute(formula, context.caster, target)
+        val damage = compute(formula, context, target)
         recipient.damage(
                 amount = damage,
                 attacker = context.caster,

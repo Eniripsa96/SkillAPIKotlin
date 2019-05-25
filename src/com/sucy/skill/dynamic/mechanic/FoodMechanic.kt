@@ -18,8 +18,8 @@ class FoodMechanic : Mechanic() {
     }
 
     override fun execute(context: CastContext, target: Actor, recipient: Actor): Boolean {
-        val foodChange = compute(food, context.caster, target)
-        val saturationChange = compute(saturation, context.caster, target)
+        val foodChange = compute(food, context, target)
+        val saturationChange = compute(saturation, context, target)
 
         recipient.food += foodChange
         recipient.saturation += saturationChange

@@ -1,5 +1,6 @@
 package com.sucy.skill.dynamic.condition
 
+import com.sucy.skill.dynamic.CastContext
 import com.sucy.skill.facade.api.entity.Actor
 
 class AttributeCondition : AbstractNumberCondition() {
@@ -13,5 +14,5 @@ class AttributeCondition : AbstractNumberCondition() {
         attribute = metadata.getString("attribute", attribute)
     }
 
-    override fun getValue(actor: Actor, caster: Actor, target: Actor): Double = actor.attributes[attribute].total
+    override fun getValue(actor: Actor, context: CastContext, target: Actor): Double = actor.attributes[attribute].total
 }

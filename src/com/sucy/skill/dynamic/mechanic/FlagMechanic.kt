@@ -18,7 +18,7 @@ class FlagMechanic : Mechanic() {
     }
 
     override fun execute(context: CastContext, target: Actor, recipient: Actor): Boolean {
-        val ticks = compute(seconds, context.caster, target).toTicks()
+        val ticks = compute(seconds, context, target).toTicks()
         if (ticks > 0) {
             recipient.flags.set(flag, ticks)
         } else {

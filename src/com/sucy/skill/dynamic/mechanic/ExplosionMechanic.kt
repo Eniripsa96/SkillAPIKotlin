@@ -21,7 +21,7 @@ class ExplosionMechanic : Mechanic() {
     }
 
     override fun execute(context: CastContext, target: Actor, recipient: Actor): Boolean {
-        val strength = compute(power, context.caster, target)
+        val strength = compute(power, context, target)
         SkillAPI.server.getWorld(recipient.location.world)
                 .createExplosion(recipient.location.coords, strength, fire, damageBlocks)
         return true

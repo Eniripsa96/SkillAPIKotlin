@@ -22,7 +22,7 @@ class CooldownMechanic : Mechanic() {
     }
 
     override fun execute(context: CastContext, target: Actor, recipient: Actor): Boolean {
-        val change = compute(seconds, context.caster, target)
+        val change = compute(seconds, context, target)
         if (skillName.equals("all", ignoreCase = true)) {
             recipient.skills.forEach { apply(it, change) }
         } else {

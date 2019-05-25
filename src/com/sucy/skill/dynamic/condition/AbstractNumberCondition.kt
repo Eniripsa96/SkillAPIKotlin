@@ -16,11 +16,11 @@ abstract class AbstractNumberCondition : Condition() {
     }
 
     override fun matches(context: CastContext, target: Actor, recipient: Actor): Boolean {
-        val min = compute(this.min, context.caster, target)
-        val max = compute(this.max, context.caster, target)
-        val actual = getValue(recipient, context.caster, target)
+        val min = compute(this.min, context, target)
+        val max = compute(this.max, context, target)
+        val actual = getValue(recipient, context, target)
         return actual in min..max
     }
 
-    abstract fun getValue(actor: Actor, caster: Actor, target: Actor): Double
+    abstract fun getValue(actor: Actor, context: CastContext, target: Actor): Double
 }
