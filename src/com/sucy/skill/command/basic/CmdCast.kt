@@ -7,7 +7,7 @@ import com.sucy.skill.command.CommandSender
 import com.sucy.skill.facade.api.entity.Actor
 import com.sucy.skill.facade.api.entity.Player
 
-object CmdCast : CommandLogic {
+object CmdCast : CommandLogic() {
     private const val CONSOLE = "console"
     private const val INVALID_SKILL = "invalid-skill"
     private const val PROFESSED = "professed"
@@ -15,7 +15,7 @@ object CmdCast : CommandLogic {
     private const val DISABLED = "world-disabled"
     private const val NOT_AVAILABLE = "not-available"
 
-    override var messages = mapOf(
+    override var defaultMessages = mapOf(
             CONSOLE to listOf("&2The console cannot cast a skill"),
             INVALID_SKILL to listOf("&6{skill} &2is not a valid skill"),
             PROFESSED to listOf("&2You are now a &6{class}"),

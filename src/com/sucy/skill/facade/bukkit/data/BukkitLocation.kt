@@ -7,7 +7,7 @@ import org.bukkit.Location
 /**
  * SkillAPIKotlin © 2018
  */
-data class BukkitLocation(private val location: Location) : com.sucy.skill.facade.api.data.Location {
+data class BukkitLocation(val location: Location) : com.sucy.skill.facade.api.data.Location {
     override val forward: Vector3
         get() = location.direction.wrap()
     override val world: String

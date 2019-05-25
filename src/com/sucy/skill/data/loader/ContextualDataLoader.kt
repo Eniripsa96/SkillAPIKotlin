@@ -5,31 +5,23 @@ import com.sucy.skill.data.loader.transform.NoOpDataTransformer
 import com.sucy.skill.util.io.Config
 import com.sucy.skill.util.io.Data
 
-interface DataLoader<T> {
-    val requiredKeys: Array<String>
+interface ContextualDataLoader<T> {
     val transformers: Map<Int, DataTransformer>
     val latestVersion: Int
         get() = 2
 
-    fun transformAndLoad(key: String, data: Data): T {
+    fun transformAndLoad(key: String, data: Data, context: T): T {
         val version = data.getVersion()
-        return transformAndLoad(key, data, version)
+        return transformAndLoad(key, data, version, context)
     }
 
-    fun transformAndLoad(key: String, data: Data, version: Int): T {
+    fun transformAndLoad(key: String, data: Data, version: Int, context: T): T {
         val transformer = transformers.getOrDefault(version, NoOpDataTransformer)
         val config = transformer.transform(key, data)
-
-        requiredKeys.forEach {
-            if (!config.has(it)) {
-                throw InvalidDataException("Key \"$it\" is required")
-            }
-        }
-
-        return load(key, config)
+        return load(key, config, context)
     }
 
-    fun load(key: String, data: Data) : T
+    fun load(key: String, data: Data, context: T) : T
 
     fun writeTo(config: Config, data: T) {
         val serialized = serialize(data)

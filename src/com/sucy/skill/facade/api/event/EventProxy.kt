@@ -11,6 +11,10 @@ interface EventProxy<I : Event, T, E : T> {
     fun proxy(event: I): E
     fun appliesTo(event: E): Boolean
 
+    fun appliesTo(event: I): Boolean {
+        return true
+    }
+
     fun notify(event: T, handler: (I) -> Unit) {
         @Suppress("UNCHECKED_CAST")
         val cast = event as E

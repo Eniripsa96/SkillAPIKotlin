@@ -22,6 +22,12 @@ class MainListener : SkillAPIListener {
 
     override fun cleanup() {
         joinHandlers.clear()
+        SkillAPI.server.players.onlinePlayers.forEach(this::cleanUp)
+    }
+
+    private fun cleanUp(player: Player) {
+        clearHandlers.forEach { it(player) }
+        savePlayerData(player)
     }
 
     @Listen(Step.REACT, true)
@@ -38,8 +44,7 @@ class MainListener : SkillAPIListener {
 
     @Listen
     fun onQuit(event: PlayerQuitEvent) {
-        clearHandlers.forEach { it.invoke(event.player) }
-        savePlayerData(event.player)
+        cleanUp(event.player)
     }
 
     fun loadPlayerData(uuid: UUID) {

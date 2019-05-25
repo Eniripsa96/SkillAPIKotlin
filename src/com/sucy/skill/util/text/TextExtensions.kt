@@ -38,6 +38,20 @@ fun List<String>.color(): List<String> {
 }
 
 /**
+ * Applies [String.uncolor] on each element of the list
+ */
+fun List<String>.uncolor(): List<String> {
+    return this.map { it.uncolor() }
+}
+
+/**
+ * Applies [String.stripColor] on each element of the list
+ */
+fun List<String>.stripColor(): List<String> {
+    return this.map { it.stripColor() }
+}
+
+/**
  * Formats [this] into title case (e.g. This Is Title Case)
  */
 fun String.titleCase(): String {

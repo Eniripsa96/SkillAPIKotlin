@@ -12,34 +12,21 @@ import java.util.*
 /**
  * SkillAPIKotlin © 2018
  */
-class SpongeEventBusProxy(private val plugin: Any) : EventBusProxy<Event> {
-    override val proxies = HashMap<Class<*>, EventProxy<*, Event, *>>()
-
-    override fun <E : com.sucy.skill.api.event.Event> register(eventType: Class<E>, step: Step, handler: (event: E) -> Unit): Boolean {
-        val proxy = proxies[eventType] ?: return false
-
-        @Suppress("UNCHECKED_CAST")
-        val typedProxy = proxy as EventProxy<E, Event, Event>
-
+class SpongeEventBusProxy(private val plugin: Any) : EventBusProxy<Event>() {
+    override fun <I : com.sucy.skill.api.event.Event, E : Event> register(
+            step: Step,
+            proxy: EventProxy<I, Event, E>,
+            handler: (event: I) -> Unit
+    ) {
         Sponge.getEventManager().registerListener(
                 plugin,
                 proxy.targetType,
                 stepMappings[step]!!
-        ) { event: Event -> typedProxy.notify(event, handler) }
-
-        return true
+        ) { event: Event -> proxy.notify(event, handler) }
     }
 
-    override fun <E : com.sucy.skill.api.event.Event> invoke(event: E): E {
-        val proxy = proxies[event::class.java] ?: false
-
-        @Suppress("UNCHECKED_CAST")
-        val typedProxy = proxy as EventProxy<E, Event, Event>
-
-        val proxied = typedProxy.proxy(event)
-        Sponge.getEventManager().post(proxied)
-
-        return typedProxy.proxy(proxied)
+    override fun invoke(event: Event) {
+        Sponge.getEventManager().post(event)
     }
 
     private val stepMappings = EnumMap(ImmutableMap.builder<Step, Order>()

@@ -5,7 +5,15 @@ import com.sucy.skill.api.event.Step
 import com.sucy.skill.facade.api.event.EventBusProxy
 import com.sucy.skill.facade.api.event.EventProxy
 import com.sucy.skill.facade.api.event.actor.ActorDamagedByActorEvent
-import com.sucy.skill.facade.bukkit.event.actor.BukkitActorDamagedByActorEventProxy
+import com.sucy.skill.facade.api.event.actor.ActorDeathEvent
+import com.sucy.skill.facade.api.event.player.AsyncPlayerLoginEvent
+import com.sucy.skill.facade.api.event.player.PlayerJoinEvent
+import com.sucy.skill.facade.api.event.player.PlayerQuitEvent
+import com.sucy.skill.facade.bukkit.event.proxy.actor.BukkitActorDamagedByActorEventProxy
+import com.sucy.skill.facade.bukkit.event.proxy.actor.BukkitActorDeathEventProxy
+import com.sucy.skill.facade.bukkit.event.proxy.player.BukkitAsyncPlayerLoginEventProxy
+import com.sucy.skill.facade.bukkit.event.proxy.player.BukkitPlayerJoinEventProxy
+import com.sucy.skill.facade.bukkit.event.proxy.player.BukkitPlayerQuitEventProxy
 import org.bukkit.event.Event
 import org.bukkit.event.EventPriority
 import org.bukkit.event.Listener
@@ -15,36 +23,24 @@ import java.util.*
 /**
  * SkillAPIKotlin © 2018
  */
-class BukkitEventBusProxy(private val plugin: JavaPlugin) : EventBusProxy<Event>, Listener {
-    override val proxies = HashMap<Class<*>, EventProxy<*, Event, *>>()
-
-    override fun <E : com.sucy.skill.api.event.Event> register(eventType: Class<E>, step: Step, handler: (event: E) -> Unit): Boolean {
-        val proxy = proxies[eventType] ?: return false
-
-        @Suppress("UNCHECKED_CAST")
-        val typedProxy = proxy as EventProxy<E, Event, Event>
-
+class BukkitEventBusProxy(private val plugin: JavaPlugin) : EventBusProxy<Event>(), Listener {
+    override fun <I : com.sucy.skill.api.event.Event, E : Event> register(
+            step: Step,
+            proxy: EventProxy<I, Event, E>,
+            handler: (event: I) -> Unit
+    ) {
         plugin.server.pluginManager.registerEvent(
                 proxy.targetType,
                 this,
                 stepMappings[step],
-                { _: Listener, event: Event -> typedProxy.notify(event, handler) },
+                { _: Listener, event: Event -> proxy.notify(event, handler) },
                 plugin,
                 true
         )
-
-        return true
     }
 
-    override fun <E : com.sucy.skill.api.event.Event> invoke(event: E) : E {
-        val proxy = proxies[event::class.java] ?: return event
-
-        @Suppress("UNCHECKED_CAST")
-        val typedProxy = proxy as EventProxy<E, Event, Event>
-
-        val proxied = typedProxy.proxy(event)
-        plugin.server.pluginManager.callEvent(proxied)
-        return typedProxy.proxy(proxied)
+    override fun invoke(event: Event) {
+        plugin.server.pluginManager.callEvent(event)
     }
 
     private val stepMappings = EnumMap(ImmutableMap.builder<Step, EventPriority>()
@@ -57,6 +53,13 @@ class BukkitEventBusProxy(private val plugin: JavaPlugin) : EventBusProxy<Event>
             .build())
 
     init {
-        proxies[ActorDamagedByActorEvent::class.java] = BukkitActorDamagedByActorEventProxy
+        // Actor Events
+        add(ActorDamagedByActorEvent::class, BukkitActorDamagedByActorEventProxy)
+        add(ActorDeathEvent::class, BukkitActorDeathEventProxy)
+
+        // Player Events
+        add(AsyncPlayerLoginEvent::class, BukkitAsyncPlayerLoginEventProxy)
+        add(PlayerJoinEvent::class, BukkitPlayerJoinEventProxy)
+        add(PlayerQuitEvent::class, BukkitPlayerQuitEventProxy)
     }
 }

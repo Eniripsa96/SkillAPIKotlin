@@ -12,18 +12,29 @@ class CommandNode {
     val keys: Set<String>
         get() = subNodes.keys
 
-    fun execute(sender: CommandSender, args: List<String>) {
+    fun execute(sender: CommandSender, args: List<String>): Boolean {
         val first = args.first()
         val root = if (first.startsWith("/")) first.substring(1) else first
-        subNodes[root]?.execute(sender, args,1)
+        return subNodes[root]?.execute(sender, args,1) ?: false
     }
 
-    fun execute(sender: CommandSender, args: List<String>, index: Int) {
-        val node = subNodes[args[index]]
+    fun execute(sender: CommandSender, args: List<String>, index: Int): Boolean {
+        require(index >= 0) { "Index should not be negative" }
+        require(index <= args.size) { "Index should not be larger than the number of arguments" }
+
+        val node = if (index < args.size) subNodes[args[index]] else null
+
         if (node == null) {
-            command?.logic?.execute(sender, CommandArguments(args.subList(index, args.size)))
+            command?.let { cmd ->
+                val hasPermission = cmd.permission?.let { sender.hasPermission(it) } ?: true
+                if (cmd.condition(sender) && hasPermission) {
+                    cmd.logic.execute(sender, CommandArguments(args.subList(index, args.size)))
+                    return true
+                }
+            }
+            return false
         } else {
-            node.execute(sender, args, index + 1)
+            return node.execute(sender, args, index + 1)
         }
     }
 

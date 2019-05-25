@@ -25,6 +25,10 @@ class Registry {
 
         forEach(plugins) { it.getSkills().forEach(this::addSkill) }
         forEach(plugins) { it.getProfessions().forEach(this::addProfession) }
+
+        Logger.info("Registration Complete")
+        Logger.info(" > ${skillsByName.size} Skills")
+        Logger.info(" > ${professionsByName.size} Classes")
     }
 
     fun isValidSkill(key: String): Boolean = getSkill(key) != null
@@ -86,7 +90,7 @@ class Registry {
     private fun loadDynamicSkills() {
         loadDynamic(
                 rootFile = "dynamic/skill",
-                largeFile = "dynamic/skills.yml",
+                largeFile = "dynamic/skills",
                 handler = this::loadDynamicSkill
         )
     }
@@ -94,7 +98,7 @@ class Registry {
     private fun loadDynamicProfessions() {
         loadDynamic(
                 rootFile = "dynamic/class",
-                largeFile = "dynamic/classes.yml",
+                largeFile = "dynamic/classes",
                 handler = this::loadDynamicProfession
         )
     }
@@ -121,7 +125,9 @@ class Registry {
             if (it.isDirectory) {
                 traverse(configHolder, folder, callback)
             } else if (it.name.endsWith(".yml")) {
-                val config = Config(configHolder, it.absolutePath.substring(root.length + 1))
+                val relative = it.absolutePath.substring(root.length + 1)
+                val withoutExtension = relative.substring(0, relative.length - 4);
+                val config = Config(configHolder, withoutExtension)
                 callback(it.nameWithoutExtension, config)
             }
         }

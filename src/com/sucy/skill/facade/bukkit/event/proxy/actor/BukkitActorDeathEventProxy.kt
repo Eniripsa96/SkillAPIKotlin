@@ -1,4 +1,4 @@
-package com.sucy.skill.facade.bukkit.event.actor
+package com.sucy.skill.facade.bukkit.event.proxy.actor
 
 import com.sucy.skill.facade.api.entity.Actor
 import com.sucy.skill.facade.api.event.EventProxy

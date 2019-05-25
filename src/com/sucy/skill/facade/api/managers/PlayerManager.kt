@@ -8,6 +8,7 @@ import java.util.*
  * SkillAPIKotlin © 2018
  */
 interface PlayerManager {
+    val onlinePlayers: List<Player>
     fun getPlayer(uuid: UUID): Player?
 
     fun getPlayer(name: String): Player? {

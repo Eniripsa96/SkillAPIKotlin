@@ -2,6 +2,7 @@ package com.sucy.skill;
 
 import com.google.common.collect.Lists;
 import com.sucy.skill.api.event.EventBus;
+import com.sucy.skill.command.CommandManager;
 import com.sucy.skill.config.Settings;
 import com.sucy.skill.data.EntityData;
 import com.sucy.skill.facade.api.Scheduler;
@@ -47,6 +48,8 @@ public final class SkillAPI {
         registerListeners();
 
         listeners.forEach(SkillAPIListener::init);
+
+        server.registerCommands(CommandManager.INSTANCE.loadCommands());
     }
 
     public static void disable() {

@@ -21,7 +21,7 @@ class Settings(private val plugin: ConfigHolder) {
     val skills = SkillSettings(mainConfig.getOrCreateSection("Skills"))
     val targeting = TargetingConfig(mainConfig.getOrCreateSection("Targeting"))
     val worlds = WorldSettings(mainConfig.getOrCreateSection("Worlds"))
-    val sizes = ActorSizes(loadConfig("internal/actorSizes.yml"))
+    val sizes = ActorSizes(loadConfig("internal/actorSizes"))
 
     fun forGroup(group: String): GroupSettings {
         return groupSettings.computeIfAbsent(group) {

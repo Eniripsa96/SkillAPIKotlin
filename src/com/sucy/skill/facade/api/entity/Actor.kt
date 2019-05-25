@@ -54,7 +54,6 @@ interface Actor : Entity, CommandSender {
     val size: ActorSizes.Size
         get() = SkillAPI.settings.sizes.sizeOf(type)
 
-    fun hasPermission(permission: String): Boolean
     fun executeCommand(command: String)
 
     fun damage(

@@ -7,6 +7,9 @@ import org.bukkit.Bukkit
 import java.util.*
 
 class BukkitPlayerManager : PlayerManager {
+    override val onlinePlayers: List<Player>
+        get() = Bukkit.getOnlinePlayers().map { BukkitPlayer(it) }
+
     override fun getPlayer(uuid: UUID): Player? {
         val bukkitPlayer = Bukkit.getPlayer(uuid)
         return if (bukkitPlayer == null) null else BukkitPlayer(bukkitPlayer)

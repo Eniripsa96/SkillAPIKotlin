@@ -1,13 +1,14 @@
 package com.sucy.skill.facade.bukkit
 
 import com.sucy.skill.facade.api.data.Item
+import com.sucy.skill.facade.bukkit.data.BukkitLocation
 import com.sucy.skill.facade.bukkit.entity.BukkitActor
 import com.sucy.skill.facade.bukkit.entity.BukkitEntity
 import com.sucy.skill.facade.bukkit.entity.BukkitPlayer
 import com.sucy.skill.util.math.Vector3
+import org.bukkit.Bukkit
 import org.bukkit.Location
 import org.bukkit.Material
-import org.bukkit.World
 import org.bukkit.entity.Entity
 import org.bukkit.entity.LivingEntity
 import org.bukkit.entity.Player
@@ -47,6 +48,16 @@ fun Item.toBukkit(): ItemStack {
     meta.lore = lore
 
     return result
+}
+
+fun com.sucy.skill.facade.api.data.Location.toBukkit(): Location {
+    return when (this) {
+        is BukkitLocation -> this.location
+        else -> {
+            val coords = coords
+            return Location(Bukkit.getWorld(world), coords.x, coords.y, coords.z, yaw.toFloat(), pitch.toFloat())
+        }
+    }
 }
 
 fun Vector3.toBukkit(): Vector {
