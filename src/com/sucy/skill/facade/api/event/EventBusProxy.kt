@@ -3,13 +3,14 @@ package com.sucy.skill.facade.api.event
 import com.sucy.skill.SkillAPI
 import com.sucy.skill.api.event.Event
 import com.sucy.skill.api.event.Step
+import com.sucy.skill.util.log.Logger
 import kotlin.reflect.KClass
 
 /**
  * SkillAPIKotlin © 2018
  */
-abstract class EventBusProxy<T> {
-    val proxies = HashMap<Class<*>, MutableList<EventProxy<*, T, *>>>()
+abstract class EventBusProxy<T : Any> {
+    private val proxies = HashMap<Class<*>, MutableList<EventProxy<*, T, *>>>()
 
     /**
      * Registers the [handler] for the external event system at the specified [step].
@@ -18,10 +19,17 @@ abstract class EventBusProxy<T> {
 
     abstract fun invoke(event: T)
 
+    protected abstract fun registerProxies()
+
+    fun registerEvents() {
+        proxies.clear()
+        registerProxies()
+    }
+
     /**
      * Invokes the [event] for the external system
      */
-    fun <E : Event> invoke(event: E) : E {
+    fun <E : Event> invoke(event: E): E {
         val proxyList = proxies[event::class.java] ?: return event
 
         @Suppress("UNCHECKED_CAST")
@@ -38,6 +46,7 @@ abstract class EventBusProxy<T> {
      * event system and wiring up triggers to the internal event bus.
      */
     protected fun <I : Event, E : T> add(type: KClass<I>, proxy: EventProxy<I, T, E>) {
+        Logger.debug { " > ${type.simpleName}" }
         Step.values().forEach { step ->
             register(step, proxy) { SkillAPI.eventBus.trigger(it, step) }
         }

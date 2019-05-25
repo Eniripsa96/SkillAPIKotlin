@@ -6,16 +6,15 @@ import com.sucy.skill.data.loader.transform.DataTransformer
 import com.sucy.skill.util.io.Data
 
 object AccountSetDataLoader : DataLoader<AccountSet> {
-    private const val ID = "uuid"
     private const val ACCOUNTS = "accounts"
 
-    override val requiredKeys: Array<String> = arrayOf(ID, ACCOUNTS)
+    override val requiredKeys: Array<String> = arrayOf()
     override val transformers: Map<Int, DataTransformer> = mapOf()
 
     override fun load(key: String, data: Data): AccountSet {
         val result = AccountSet()
 
-        val accounts = data.getSection(ACCOUNTS)!!
+        val accounts = data.getOrCreateSection(ACCOUNTS)
         accounts.forEach {
             result.data[it.toInt()] = PlayerAccountDataLoader.load(it, accounts.getOrCreateSection(it))
         }

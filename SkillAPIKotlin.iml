@@ -21,5 +21,7 @@
         <SOURCES />
       </library>
     </orderEntry>
+    <orderEntry type="library" name="com.nhaarman.mockitokotlin2:mockito-kotlin:2.1.0" level="project" />
+    <orderEntry type="library" name="io.kotlintest:kotlintest:2.0.7" level="project" />
   </component>
 </module>

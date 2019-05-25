@@ -45,6 +45,7 @@ public final class SkillAPI {
         entityData = new EntityData();
         registry = new Registry();
 
+        eventBus.registerEvents();
         registerListeners();
 
         listeners.forEach(SkillAPIListener::init);

@@ -5,7 +5,7 @@ import com.sucy.skill.api.event.Event
 /**
  * SkillAPIKotlin © 2018
  */
-interface EventProxy<I : Event, T, E : T> {
+interface EventProxy<I : Event, T : Any, E : T> {
     val targetType: Class<E>
     fun proxy(event: E): I
     fun proxy(event: I): E
@@ -18,7 +18,7 @@ interface EventProxy<I : Event, T, E : T> {
     fun notify(event: T, handler: (I) -> Unit) {
         @Suppress("UNCHECKED_CAST")
         val cast = event as E
-        if (appliesTo(cast)) {
+        if (event::class.java == targetType && appliesTo(cast)) {
             val proxied = proxy(cast)
             handler.invoke(proxied)
         }

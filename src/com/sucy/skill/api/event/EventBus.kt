@@ -4,6 +4,7 @@ import com.sucy.skill.facade.api.event.EventBusProxy
 import java.util.*
 import java.util.function.Consumer
 import kotlin.collections.HashMap
+import kotlin.reflect.KFunction
 import kotlin.reflect.KType
 import kotlin.reflect.full.isSubtypeOf
 import kotlin.reflect.full.memberFunctions
@@ -15,20 +16,31 @@ import kotlin.reflect.full.starProjectedType
 class EventBus(private val proxy: EventBusProxy<*>) {
     private val registry = HashMap<KType, HashMap<Step, MutableCollection<HandlerContext<*>>>>()
 
+    fun registerEvents() = proxy.registerEvents()
+
     /**
      * Registers all event handlers in [listener] denoted with [Listen] annotations
      * for the given [source]. Handlers will continue to receive events until [unregister]
      * is called for the same [source].
      */
     fun register(source: Any, listener: Any) {
+        getAnnotations(listener) { func, listen ->
+            val handler = Consumer { event: Event -> func.call(listener, event) }
+            register(source, func.parameters[1].type, handler, listen.step, listen.ignoreCancelled)
+        }
+    }
+
+    /**
+     * Gets all the function/Listen annotation pairs from the object
+     */
+    internal fun getAnnotations(listener: Any, handler: (KFunction<*>, Listen) -> Unit) {
         listener::class.memberFunctions.forEach { func ->
             func.annotations.forEach { annotation ->
-                if (annotation.annotationClass == Listen::class &&
-                        func.parameters.size == 1 &&
-                        func.parameters[0].type.isSubtypeOf(Event::class.starProjectedType)) {
+                val isListener = annotation.annotationClass == Listen::class
+                val hasOneParameter = func.parameters.size == 2 // one instance parameter, one actual
+                if (isListener && hasOneParameter && func.parameters[1].type.isSubtypeOf(Event::class.starProjectedType)) {
                     val listen = annotation as Listen
-                    val handler = Consumer { event: Event -> func.call(event) }
-                    register(source, func.parameters[0].type, handler, listen.step, listen.ignoreCancelled)
+                    handler(func, listen)
                 }
             }
         }

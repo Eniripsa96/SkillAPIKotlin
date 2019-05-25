@@ -14,6 +14,7 @@ import com.sucy.skill.facade.bukkit.event.proxy.actor.BukkitActorDeathEventProxy
 import com.sucy.skill.facade.bukkit.event.proxy.player.BukkitAsyncPlayerLoginEventProxy
 import com.sucy.skill.facade.bukkit.event.proxy.player.BukkitPlayerJoinEventProxy
 import com.sucy.skill.facade.bukkit.event.proxy.player.BukkitPlayerQuitEventProxy
+import com.sucy.skill.util.log.Logger
 import org.bukkit.event.Event
 import org.bukkit.event.EventPriority
 import org.bukkit.event.Listener
@@ -43,16 +44,9 @@ class BukkitEventBusProxy(private val plugin: JavaPlugin) : EventBusProxy<Event>
         plugin.server.pluginManager.callEvent(event)
     }
 
-    private val stepMappings = EnumMap(ImmutableMap.builder<Step, EventPriority>()
-            .put(Step.FIRST, EventPriority.LOWEST)
-            .put(Step.EARLY, EventPriority.LOW)
-            .put(Step.NORMAL, EventPriority.NORMAL)
-            .put(Step.LATE, EventPriority.HIGH)
-            .put(Step.LAST, EventPriority.HIGHEST)
-            .put(Step.REACT, EventPriority.MONITOR)
-            .build())
+    override fun registerProxies() {
+        Logger.debug("Registering Bukkit event proxies...")
 
-    init {
         // Actor Events
         add(ActorDamagedByActorEvent::class, BukkitActorDamagedByActorEventProxy)
         add(ActorDeathEvent::class, BukkitActorDeathEventProxy)
@@ -62,4 +56,13 @@ class BukkitEventBusProxy(private val plugin: JavaPlugin) : EventBusProxy<Event>
         add(PlayerJoinEvent::class, BukkitPlayerJoinEventProxy)
         add(PlayerQuitEvent::class, BukkitPlayerQuitEventProxy)
     }
+
+    private val stepMappings = EnumMap(ImmutableMap.builder<Step, EventPriority>()
+            .put(Step.FIRST, EventPriority.LOWEST)
+            .put(Step.EARLY, EventPriority.LOW)
+            .put(Step.NORMAL, EventPriority.NORMAL)
+            .put(Step.LATE, EventPriority.HIGH)
+            .put(Step.LAST, EventPriority.HIGHEST)
+            .put(Step.REACT, EventPriority.MONITOR)
+            .build())
 }

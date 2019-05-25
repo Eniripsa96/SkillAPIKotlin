@@ -15,12 +15,12 @@ class LocalStore(private val configHolder: ConfigHolder) : DataStore {
     }
 
     override fun load(uuid: UUID, type: String): Data {
-        val config = Config(configHolder, "db/$type/$uuid.yml")
+        val config = Config(configHolder, "db/$type/$uuid")
         return config.data
     }
 
     override fun save(uuid: UUID, type: String, data: Data) {
-        val config = Config(configHolder, "db/$type/$uuid.yml")
+        val config = Config(configHolder, "db/$type/$uuid")
         config.data = data
         config.save()
     }

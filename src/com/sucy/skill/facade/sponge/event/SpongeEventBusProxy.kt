@@ -29,6 +29,10 @@ class SpongeEventBusProxy(private val plugin: Any) : EventBusProxy<Event>() {
         Sponge.getEventManager().post(event)
     }
 
+    override fun registerProxies() {
+        TODO("not implemented")
+    }
+
     private val stepMappings = EnumMap(ImmutableMap.builder<Step, Order>()
             .put(Step.FIRST, Order.FIRST)
             .put(Step.EARLY, Order.EARLY)

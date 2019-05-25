@@ -37,8 +37,15 @@ class MainListener : SkillAPIListener {
 
     @Listen
     fun onJoin(event: PlayerJoinEvent) {
+        // TODO - migrate this logic to after data is done loading in case of async SQL data
         if (event.player.accounts.synchronized) {
             joinHandlers.forEach { it.invoke(event.player) }
+        }
+
+        val activeAccount = event.player.activeAccount
+        if (activeAccount.health > 0) {
+            event.player.health = activeAccount.health
+            event.player.location = activeAccount.location
         }
     }
 
@@ -57,7 +64,14 @@ class MainListener : SkillAPIListener {
     }
 
     fun savePlayerData(player: Player) {
+        val activeAccount = player.activeAccount
+        activeAccount.health = player.health
+        activeAccount.mana = player.mana
+        activeAccount.food = player.food
+        activeAccount.location = player.location
+
         val data = AccountSetDataLoader.serialize(player.accounts)
+        data.setVersion(AccountSetDataLoader.latestVersion)
         SkillAPI.settings.saving.dataStore.save(player.uuid, DataType.PLAYERS.key, data)
     }
 

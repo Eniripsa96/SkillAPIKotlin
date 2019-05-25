@@ -55,7 +55,7 @@ object Logger {
 
     private fun print(level: Level, message: () -> String) {
         if (this.level.rank >= level.rank) {
-            println("SkillAPI [$level] ${message.invoke()}")
+            println("SkillAPI [$level] ${message()}")
         }
     }
 }

@@ -16,8 +16,5 @@ object BukkitAsyncPlayerLoginEventProxy : EventProxy<AsyncPlayerLoginEvent, Even
         throw UnsupportedOperationException("Cannot fake an async login event")
     }
 
-    override fun appliesTo(event: AsyncPlayerPreLoginEvent): Boolean {
-        TODO("not implemented")
-    }
-
+    override fun appliesTo(event: AsyncPlayerPreLoginEvent): Boolean = true
 }

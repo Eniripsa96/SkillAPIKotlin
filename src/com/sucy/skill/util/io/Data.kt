@@ -37,7 +37,7 @@ class Data internal constructor() {
 
     fun setVersion(version: Int) {
         set(VERSION_KEY, version)
-        addComment(VERSION_KEY, "DATA VERSION - DO NOT MODIFY OR REMOVE")
+        addComment(VERSION_KEY, " DATA VERSION - DO NOT MODIFY OR REMOVE")
     }
 
     fun keys(): List<String> {
