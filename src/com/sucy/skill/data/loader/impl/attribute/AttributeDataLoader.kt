@@ -47,7 +47,7 @@ object AttributeDataLoader : DataLoader<Attribute> {
     private fun loadEffectModifiers(data: Data, type: EffectType): Map<String, List<Modifier>> {
         val section = data.getOrCreateSection(type.name.toLowerCase())
         return section.keys().map {
-            it to section.getStringList(it).map(this::parseModifier)
+            it.toLowerCase() to section.getStringList(it).map(this::parseModifier)
         }.toMap()
     }
 

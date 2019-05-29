@@ -12,7 +12,7 @@ object AttributeDefinitionsDataLoader : DataLoader<AttributeDefinitions> {
 
     override fun load(key: String, data: Data): AttributeDefinitions {
         val attributes = ArrayList<Attribute>()
-        data.forEach { attributes.add(AttributeDataLoader.load(it, data.createSection(it))) }
+        data.forEach { attributes.add(AttributeDataLoader.load(it, data.getOrCreateSection(it))) }
         return AttributeDefinitions(attributes.toList())
     }
 

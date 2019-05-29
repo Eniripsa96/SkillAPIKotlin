@@ -158,7 +158,11 @@ class Data internal constructor() {
     fun getStringList(key: String, fallback: List<String> = emptyList()): List<String> {
         val found = get(key)
         @Suppress("UNCHECKED_CAST")
-        return if (found is List<*>) found as List<String> else fallback
+        return when (found) {
+            is List<*> -> found as List<String>
+            is String -> listOf(found)
+            else -> fallback
+        }
     }
 
     fun getItem(key: String): Item {

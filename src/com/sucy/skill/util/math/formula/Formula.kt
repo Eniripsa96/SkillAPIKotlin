@@ -5,6 +5,7 @@ import com.sucy.skill.util.math.formula.function.Funcs
 import com.sucy.skill.util.math.formula.operator.Operator
 import com.sucy.skill.util.math.formula.operator.Operators
 import com.sucy.skill.util.math.formula.operator.Parenthesis
+import com.sucy.skill.util.math.formula.operator.Times
 import com.sucy.skill.util.math.formula.value.ConstValue
 import com.sucy.skill.util.math.formula.value.VarValue
 import java.util.*
@@ -14,7 +15,7 @@ import java.util.stream.Collectors
  * SkillAPIKotlin © 2018
  */
 open class Formula(val expression: String, protected val keys: MutableList<String>) {
-    val tokens = ArrayList<Token>()
+    internal val tokens by lazy { parseTokens() }
 
     fun evaluate(vararg values: Double): Double {
         if (values.size != keys.size) {
@@ -26,9 +27,10 @@ open class Formula(val expression: String, protected val keys: MutableList<Strin
         return stack.pop()
     }
 
-    init {
+    private fun parseTokens(): List<Token> {
         var start = 0
         val operators = Stack<OrderedToken>()
+        val result = ArrayList<Token>()
         for (i in 0 until expression.length) {
             if (OP_TOKENS.containsKey(expression[i]) || expression[i] == '(' || expression[i] == ')') {
                 val token = expression.substring(start, i).trim()
@@ -39,46 +41,50 @@ open class Formula(val expression: String, protected val keys: MutableList<Strin
                         operators.push(FUNC_TOKENS[token])
                     }
                 } else if (start < i) {
-                    parseVal(token)
+                    parseVal(token)?.let(result::add)
                 }
                 start = i + 1
 
                 when {
-                    expression[i] == '(' -> operators.push(Parenthesis)
+                    expression[i] == '(' -> {
+                        if (!FUNC_TOKENS.containsKey(token) && token.isNotBlank()) operators.push(Times)
+                        operators.push(Parenthesis)
+                    }
                     expression[i] == ')' -> {
                         while (operators.peek() != Parenthesis) {
-                            tokens.add(operators.pop())
+                            result.add(operators.pop())
                         }
                         operators.pop()
                         if (!operators.isEmpty() && operators.peek() is Func) {
-                            tokens.add(operators.pop())
+                            result.add(operators.pop())
                         }
                     }
                     else -> {
                         val newOp = OP_TOKENS.getValue(expression[i])
                         while (!operators.isEmpty() && operators.peek().precedence >= newOp.precedence) {
-                            tokens.add(operators.pop())
+                            result.add(operators.pop())
                         }
                         operators.push(newOp)
                     }
                 }
             }
         }
-        parseVal(expression.substring(start, expression.length))
+        parseVal(expression.substring(start, expression.length))?.let(result::add)
         while (!operators.isEmpty()) {
-            tokens.add(operators.pop())
+            result.add(operators.pop())
         }
+        return result.toList()
     }
 
-    protected open fun parseVal(token: String) {
-        if (token.isBlank()) return
+    protected open fun parseVal(token: String): Token? {
+        if (token.isBlank()) return null
 
-        try {
-            tokens.add(ConstValue(token.toDouble()))
+        return try {
+            ConstValue(token.toDouble())
         } catch (ex: NumberFormatException) {
             val index = keys.indexOf(token.trim())
             if (index < 0) throw IllegalArgumentException("Invalid formula: $token is not a valid token")
-            tokens.add(VarValue(index))
+            VarValue(index)
         }
     }
 

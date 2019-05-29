@@ -21,18 +21,18 @@ class DynamicFormula(expression: String) : Formula(expression, ArrayList()) {
         return evaluate(*values)
     }
 
-    override fun parseVal(token: String) {
-        if (token.isBlank()) return
+    override fun parseVal(token: String): Token? {
+        if (token.isBlank()) return null
 
-        try {
-            tokens.add(ConstValue(token.toDouble()))
+        return try {
+            ConstValue(token.toDouble())
         } catch (ex: NumberFormatException) {
             val index = keys.indexOf(token.trim())
             if (index < 0) {
-                tokens.add(VarValue(keys.size))
                 keys.add(token.trim())
+                VarValue(keys.size - 1)
             } else {
-                tokens.add(VarValue(index))
+                VarValue(index)
             }
         }
     }

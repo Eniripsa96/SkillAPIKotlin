@@ -5,24 +5,24 @@ import com.sucy.skill.dynamic.Effect
 data class AttributeDefinitions(val attributes: List<Attribute>) {
     private val byKey = attributes.map { it.key to it }.toMap()
     private val byKeyOrName = byKey + attributes.map { it.displayName.toLowerCase() to it }
-    private val byStat: Map<String, List<Attribute>>
-    private val byComponent: Map<String, List<Attribute>>
+    private val byStat: Map<String, StatAttributeSet>
+    private val byComponent: Map<String, DynamicAttributeSet>
 
     operator fun get(key: String): Attribute? {
         return byKeyOrName[key.toLowerCase()]
     }
 
-    fun forStat(key: String): List<Attribute> {
-        return byStat[key.toLowerCase()] ?: emptyList()
+    fun forStat(key: String): StatAttributeSet {
+        return byStat[key.toLowerCase()] ?: StatAttributeSet.EMPTY
     }
 
-    fun forEffect(effect: Effect, valueKey: String): List<Attribute> {
-        val id = "${effect.type.name.toLowerCase()}-${effect.key}-${valueKey.toLowerCase()}"
-        return byComponent[id] ?: emptyList()
+    fun forEffect(effect: Effect, valueKey: String): DynamicAttributeSet {
+        val id = "${effect.type.name}-${effect.key}-$valueKey".toLowerCase()
+        return byComponent[id] ?: DynamicAttributeSet.EMPTY
     }
 
     fun toKey(keyOrName: String): String {
-        return byKeyOrName[keyOrName]?.key ?: keyOrName
+        return byKeyOrName[keyOrName]?.key ?: keyOrName.toLowerCase()
     }
 
     init {
@@ -30,6 +30,7 @@ data class AttributeDefinitions(val attributes: List<Attribute>) {
                 .map { it.statModifiers.keys.map { key -> key to it } }
                 .flatten()
                 .groupBy({ it.first }) { it.second }
+                .mapValues { StatAttributeSet(it.key, it.value) }
 
         val byComponent = HashMap<String, List<Attribute>>()
         attributes.forEach { attribute ->
@@ -40,6 +41,8 @@ data class AttributeDefinitions(val attributes: List<Attribute>) {
                 }
             }
         }
-        this.byComponent = byComponent
+        this.byComponent = byComponent.mapValues {
+            DynamicAttributeSet(it.key.substring(it.key.indexOf('-') + 1), it.value)
+        }
     }
 }

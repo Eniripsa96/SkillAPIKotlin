@@ -9,6 +9,7 @@ import com.sucy.skill.util.math.formula.operator.Plus
 import com.sucy.skill.util.math.formula.operator.Times
 import com.sucy.skill.util.math.formula.value.ConstValue
 import com.sucy.skill.util.math.formula.value.VarValue
+import io.kotlintest.matchers.shouldEqual
 import org.junit.Test
 import kotlin.test.assertEquals
 
@@ -124,5 +125,17 @@ class FormulaTest {
     fun evaluateVariables() {
         val formula = Formula("x * z + y", ImmutableList.of("x", "y", "z"))
         assertEquals(19.0, formula.evaluate(3.0, 4.0, 5.0))
+    }
+
+    @Test
+    fun evaluateParenthesisImpliedMultiplication() {
+        val formula = Formula("2 ( 3 + 4 )", ImmutableList.of())
+        formula.evaluate() shouldEqual 14.0
+    }
+
+    @Test
+    fun evaluateParenthesisImpliedMultiplicationWithMultipleParts() {
+        val formula = Formula("2(3+4*5)", ImmutableList.of())
+        formula.evaluate() shouldEqual 46.0
     }
 }

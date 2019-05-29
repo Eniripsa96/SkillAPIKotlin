@@ -14,9 +14,8 @@ data class Attribute(
         val statModifiers: Map<String, Formula>
 ) {
     fun modify(effect: Effect, key: String, value: Double, amount: Int): Double {
-        val id = "${effect.key}-$key"
         val applicable = dynamicModifiers[effect.type] ?: return value
-        val modifiers = applicable[id] ?: return value
+        val modifiers = applicable[key] ?: return value
 
         var result = value
         modifiers.filter { it.appliesTo(effect) }.forEach { result = it.formula.evaluate(value, amount.toDouble()) }

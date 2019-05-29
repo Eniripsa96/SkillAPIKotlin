@@ -30,14 +30,15 @@
 vitality:
   display: 'Vitality'
   max: 999
-  icon: 'ink sack'
-  icon-data: 1
-  icon-lore:
-  - '&6Vitality &7(&2{amount}&7)'
-  - ''
-  - '&7Grants 1 health per'
-  - '&7point invested.'
-  global:
+  icon:
+    type: 'ink sack'
+    data: 1
+    lore:
+    - '&6Vitality &7(&2{amount}&7)'
+    - ''
+    - '&7Grants 1 health per'
+    - '&7point invested.'
+  skillEffects:
     condition: {}
     mechanic: {}
     target: {}
@@ -46,70 +47,74 @@ vitality:
 spirit:
   display: 'Spirit'
   max: 999
-  icon: 'ink sack'
-  icon-data: 6
-  icon-lore:
-  - '&6Spirit &7(&2{amount}&7)'
-  - ''
-  - '&7Grants 1 mana and 2.5%'
-  - '&7mana regeneration per'
-  - '&7point invested.'
-  global:
+  icon:
+    type: 'ink sack'
+    data: 6
+    lore:
+    - '&6Spirit &7(&2{amount}&7)'
+    - ''
+    - '&7Grants 1 mana and 2.5%'
+    - '&7mana regeneration per'
+    - '&7point invested.'
+  skillEffects:
     condition: {}
     mechanic: {}
     target: {}
   stats:
     mana: 'a+v'
-    mana-regen: 'a*0.025+1*v'
+    mana-regen: 'v(1+a*0.025)'
 intelligence:
   display: 'Intelligence'
   max: 999
-  icon: 'ink sack'
-  icon-data: 5
-  icon-lore:
-  - '&6Intelligence &7(&2{amount}&7)'
-  - ''
-  - '&7Grants 2.5% increased'
-  - '&7skill damage per point'
-  - '&7invested.'
-  global:
+  icon:
+    type: 'ink sack'
+    data: 5
+    lore:
+    - '&6Intelligence &7(&2{amount}&7)'
+    - ''
+    - '&7Grants 2.5% increased'
+    - '&7skill damage per point'
+    - '&7invested.'
+  skillEffects:
     condition: {}
     mechanic:
-      Damage-value: 'a*0.025+1*v'
+      Damage-value: 'v(1+a*0.025)'
     target: {}
 dexterity:
   display: 'Dexterity'
   max: 999
-  icon: 'ink sack'
-  icon-data: 10
-  icon-lore:
-  - '&6Dexterity &7(&2{amount}&7)'
-  - ''
-  - '&7Grants 2.5% increased'
-  - '&7range per point invested.'
-  global:
+  icon:
+    type: 'ink sack'
+    data: 10
+    lore:
+    - '&6Dexterity &7(&2{amount}&7)'
+    - ''
+    - '&7Grants 2.5% increased'
+    - '&7range per point invested.'
+  skillEffects:
     condition: {}
     mechanic: {}
     target:
-      Cone-range: 'a*0.025+1*v'
-      Linear-range: 'a*0.025+1*v'
-      Location-range: 'a*0.025+1*v'
-      Nearest-radius: 'a*0.025+1*v'
-      Single-range: 'a*0.025+1*v'
+      Cone-range: 'v(1+a*0.025)'
+      Linear-range: 'v(1+a*0.025)'
+      Location-range: 'v(1+a*0.025)'
+      Nearest-radius: 'v(1+a*0.025)'
+      Single-range: 'v(1+a*0.025)'
 strength:
   display: 'Strength'
   max: 999
-  icon: 'ink sack'
-  icon-data: 14
-  icon-lore:
-  - '&6Strength &7(&2{amount}&7)'
-  - ''
-  - '&7Grants 2.5% increased'
-  - '&7non-skill damage per'
-  - '&7point invested.'
-  global:
+  icon:
+    type: 'ink sack'
+    data: 14
+    lore:
+    - '&6Strength &7(&2{amount}&7)'
+    - ''
+    - '&7Grants 2.5% increased'
+    - '&7non-skill damage per'
+    - '&7point invested.'
+  skillEffects:
     condition: {}
     mechanic: {}
     target: {}
   stats:
-    physical-damage: 'a*0.025+1*v'
+    physical-damage: 'v(1+a*0.025)'
