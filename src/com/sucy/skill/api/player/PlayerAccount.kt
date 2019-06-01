@@ -23,4 +23,9 @@ class PlayerAccount {
     var inventory: Array<Item>? = null
     var attributes = ValueSet()
     var values = ValueSet()
+
+    val manaRegen: Double
+        get() {
+            return professionSet.all.map { it.manaRegen }.sum()
+        }
 }

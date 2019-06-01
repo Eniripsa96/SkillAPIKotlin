@@ -10,4 +10,9 @@ class ProfessionProgress(data: Profession) : LevelProgress<Profession>(data) {
 
     override val filterContext: FilterContext<*>
         get() = ProfessionFilterContext(this)
+
+    val manaRegen: Double
+        get() {
+            return data.manaRegen.evaluate(level.toDouble())
+        }
 }

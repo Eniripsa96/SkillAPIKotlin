@@ -14,18 +14,6 @@ class BukkitScheduler(val plugin: Plugin) : Scheduler {
         Bukkit.getScheduler().runTaskTimer(plugin, task, delayInTicks, intervalInTicks)
     }
 
-    override fun runAsnyc(task: () -> Unit) {
-        Bukkit.getScheduler().runTaskAsynchronously(plugin, task)
-    }
-
-    override fun runAsync(delayInMillis: Long, task: () -> Unit) {
-        Bukkit.getScheduler().runTaskLaterAsynchronously(plugin, task, delayInMillis / 50)
-    }
-
-    override fun runAsync(delayInMillis: Long, intervalInMillis: Long, task: () -> Unit) {
-        Bukkit.getScheduler().runTaskTimerAsynchronously(plugin, task, delayInMillis / 50, intervalInMillis / 50)
-    }
-
     override fun clearTasks() {
         Bukkit.getScheduler().cancelTasks(plugin)
     }

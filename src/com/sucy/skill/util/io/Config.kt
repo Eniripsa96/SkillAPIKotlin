@@ -36,7 +36,7 @@ class Config(
     fun reload() {
         file.parentFile.mkdirs()
         defaults = parser.load(owner, "$resource.yml")
-        if (!file.exists()) {
+        if (!file.exists() && defaults.keys().isNotEmpty()) {
             parser.save(defaults, file)
         }
         data = parser.load(file)

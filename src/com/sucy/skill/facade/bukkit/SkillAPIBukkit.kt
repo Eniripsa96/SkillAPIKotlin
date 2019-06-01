@@ -3,6 +3,7 @@ package com.sucy.skill.facade.bukkit
 import com.sucy.skill.SkillAPI
 import com.sucy.skill.SkillAPIPlatform
 import com.sucy.skill.facade.bukkit.event.BukkitEventBusProxy
+import org.bukkit.event.HandlerList
 import org.bukkit.plugin.java.JavaPlugin
 
 /**
@@ -20,6 +21,7 @@ class SkillAPIBukkit : JavaPlugin(), SkillAPIPlatform {
 
     override fun onDisable() {
         SkillAPI.disable()
+        HandlerList.unregisterAll(this)
     }
 
     override fun reload() {

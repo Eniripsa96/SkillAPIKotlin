@@ -92,7 +92,7 @@ class MainListener : SkillAPIListener {
      */
     data class LoadRetries(
             private var uuid: UUID,
-            private var ticks: Long,
+            private var ticks: Int,
             private var retries: Int,
             private val handle: (UUID) -> Unit
     ) {

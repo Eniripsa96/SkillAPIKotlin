@@ -9,6 +9,7 @@ import com.sucy.skill.facade.api.Scheduler;
 import com.sucy.skill.facade.api.Server;
 import com.sucy.skill.listener.MainListener;
 import com.sucy.skill.listener.SkillAPIListener;
+import com.sucy.skill.task.ManaRegenTask;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -47,13 +48,16 @@ public final class SkillAPI {
 
         eventBus.registerEvents();
         registerListeners();
+        scheduler.initialize();
 
         listeners.forEach(SkillAPIListener::init);
-
         server.registerCommands(CommandManager.INSTANCE.loadCommands());
+        registerTasks();
     }
 
     public static void disable() {
+        scheduler.clearTasks();
+        scheduler.tearDown();
 
         Lists.reverse(listeners).forEach(SkillAPIListener::cleanup);
         eventBus.unregister(plugin);
@@ -69,6 +73,10 @@ public final class SkillAPI {
 
     private static void registerListeners() {
         listen(new MainListener(), true);
+    }
+
+    private static void registerTasks() {
+        scheduler.runAsync(new ManaRegenTask());
     }
 
     private static void listen(final SkillAPIListener listener, boolean condition) {
