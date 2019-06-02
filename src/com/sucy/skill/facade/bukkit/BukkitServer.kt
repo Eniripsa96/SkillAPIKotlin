@@ -4,11 +4,14 @@ import com.sucy.skill.command.CommandNode
 import com.sucy.skill.command.CommandSender
 import com.sucy.skill.facade.api.Server
 import com.sucy.skill.facade.api.entity.Actor
+import com.sucy.skill.facade.api.entity.Player
 import com.sucy.skill.facade.bukkit.entity.BukkitActor
 import com.sucy.skill.facade.bukkit.entity.BukkitCommandSender
+import com.sucy.skill.facade.bukkit.entity.BukkitPlayer
 import com.sucy.skill.facade.bukkit.listeners.CommandListener
 import com.sucy.skill.facade.bukkit.managers.BukkitPlayerManager
 import com.sucy.skill.facade.bukkit.managers.BukkitTaskManager
+import com.sucy.skill.facade.bukkit.reflect.ActionBar
 import com.sucy.skill.util.log.Logger
 import org.bukkit.Bukkit
 import org.bukkit.command.Command
@@ -57,6 +60,14 @@ class BukkitServer(private val plugin: SkillAPIBukkit) : Server {
         }
         commandListener = CommandListener(commands)
         if (failed) Bukkit.getPluginManager().registerEvents(commandListener, plugin)
+    }
+
+    override fun showActionBar(player: Player, content: String) {
+        ActionBar.show((player as BukkitPlayer).entity, content)
+    }
+
+    override fun hideActionBar(player: Player) {
+        ActionBar.show((player as BukkitPlayer).entity, "")
     }
 
     data class BukkitCommand(private val node: CommandNode, private val key: String) : Command(

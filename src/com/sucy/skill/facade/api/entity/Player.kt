@@ -15,6 +15,8 @@ import com.sucy.skill.util.math.limit
  */
 interface Player : Actor {
     var gameMode: GameMode
+    var enchantingLevel: Int
+    var enchantingExp: Double
 
     override val mana: Double
         get() = accounts.activeAccount.mana
