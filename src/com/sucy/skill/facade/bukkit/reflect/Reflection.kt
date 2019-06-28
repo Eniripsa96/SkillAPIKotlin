@@ -7,7 +7,6 @@ import java.lang.reflect.Field
 import java.lang.reflect.Method
 
 /**
- *
  * Utility class for performing reflection operations. Only use
  * this class if you know what you're doing.
  */
