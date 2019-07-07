@@ -19,6 +19,7 @@ class PlayerAccount {
     var mana: Double = 0.0
     var maxMana: Double = 0.0
     var food: Double = 0.0
+    var attributePoints = 0
     var location: Location = InternalLocation("world", Vector3(), 0.0, 0.0)
     var inventory: Array<Item>? = null
     var attributes = ValueSet()
