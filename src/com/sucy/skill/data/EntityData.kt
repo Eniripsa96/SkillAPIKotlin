@@ -7,18 +7,19 @@ import com.sucy.skill.api.skill.SkillSet
 import com.sucy.skill.api.values.FlagSet
 import com.sucy.skill.api.values.ValueSet
 import java.util.*
-import kotlin.collections.HashMap
+import kotlin.collections.mutableMapOf
 
 /**
  * SkillAPIKotlin © 2018
  */
 class EntityData {
-    val attributes = HashMap<UUID, ValueSet>()
-    val values = HashMap<UUID, ValueSet>()
-    val flags = HashMap<UUID, FlagSet>()
-    val metadata = HashMap<UUID, MutableMap<String, Any>>()
-    val accounts = HashMap<UUID, AccountSet>()
-    val skills = HashMap<UUID, SkillSet>()
+    val attributes = mutableMapOf<UUID, ValueSet>()
+    val values = mutableMapOf<UUID, ValueSet>()
+    val flags = mutableMapOf<UUID, FlagSet>()
+    val metadata = mutableMapOf<UUID, MutableMap<String, Any>>()
+    val accounts = mutableMapOf<UUID, AccountSet>()
+    val skills = mutableMapOf<UUID, SkillSet>()
+    val combatTimers = mutableMapOf<UUID, Long>()
     val playerIds: BiMap<UUID, String> = HashBiMap.create<UUID, String>()
 
     fun unload(uuid: UUID) {

@@ -16,7 +16,7 @@ import java.util.*
 /**
  * SkillAPIKotlin © 2018
  */
-class MainListener : SkillAPIListener {
+class PlayerListener : SkillAPIListener {
 
     override fun init() {
         SkillAPI.server.players.onlinePlayers.forEach { player ->

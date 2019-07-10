@@ -38,4 +38,6 @@ open class BukkitPlayer(override val entity: Player) : BukkitActor(entity), com.
         set(value) {
             entity.saturation = limit(value, 0.0, food).toFloat()
         }
+    override val isCrouching: Boolean
+        get() = entity.isSneaking
 }

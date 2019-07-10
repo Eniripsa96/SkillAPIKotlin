@@ -17,6 +17,7 @@ interface Player : Actor {
     var gameMode: GameMode
     var enchantingLevel: Int
     var enchantingExp: Double
+    val isCrouching: Boolean
 
     override val mana: Double
         get() = accounts.activeAccount.mana

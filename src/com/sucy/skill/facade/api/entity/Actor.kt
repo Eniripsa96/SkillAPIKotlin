@@ -97,6 +97,16 @@ interface Actor : Entity, CommandSender {
         }
     }
 
+    fun markInCombat() {
+        SkillAPI.entityData.combatTimers[uuid] = System.currentTimeMillis()
+    }
+
+    fun isInCombat(seconds: Double): Boolean {
+        val lastMark = SkillAPI.entityData.combatTimers[uuid] ?: return false
+        val elapsed = System.currentTimeMillis() - lastMark
+        return elapsed < seconds * 1000
+    }
+
     fun playSound(from: Location, sound: String, volume: Float, pitch: Float) {}
     fun giveMana(amount: Double, reason: ManaSource): Boolean = false
     fun takeMana(amount: Double, reason: ManaCost): Boolean = false

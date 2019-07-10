@@ -7,7 +7,8 @@ import com.sucy.skill.config.Settings;
 import com.sucy.skill.data.EntityData;
 import com.sucy.skill.facade.api.Scheduler;
 import com.sucy.skill.facade.api.Server;
-import com.sucy.skill.listener.MainListener;
+import com.sucy.skill.listener.CombatListener;
+import com.sucy.skill.listener.PlayerListener;
 import com.sucy.skill.listener.SkillAPIListener;
 import com.sucy.skill.task.ManaRegenTask;
 
@@ -72,7 +73,8 @@ public final class SkillAPI {
     }
 
     private static void registerListeners() {
-        listen(new MainListener(), true);
+        listen(new PlayerListener(), true);
+        listen(new CombatListener(), true);
     }
 
     private static void registerTasks() {
