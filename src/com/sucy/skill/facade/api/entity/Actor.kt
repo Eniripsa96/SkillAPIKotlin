@@ -32,6 +32,7 @@ interface Actor : Entity, CommandSender {
     var food: Double
     var saturation: Double
     val level: Int
+        get() = 0
     val dead: Boolean
     val exists: Boolean
     val inventory: ActorInventory

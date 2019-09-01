@@ -24,6 +24,9 @@ class ActorFilterContext(
                 .put("lvl") { it.level.toString() }
                 .put("level") { it.level.toString() }
                 .put("caster") { it.name }
+                .put("posX") { it.location.coords.x.toInt().toString() }
+                .put("posY") { it.location.coords.y.toInt().toString() }
+                .put("posZ") { it.location.coords.z.toInt().toString() }
 
                 // Player-only filters
                 .put("class") { getProfession(it)?.data?.name ?: "" }

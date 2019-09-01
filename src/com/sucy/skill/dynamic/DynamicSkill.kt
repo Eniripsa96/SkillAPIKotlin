@@ -4,9 +4,8 @@ import com.sucy.skill.api.skill.PassiveSkill
 import com.sucy.skill.api.skill.Skill
 import com.sucy.skill.api.skill.SkillShot
 import com.sucy.skill.dynamic.trigger.Trigger
-import com.sucy.skill.facade.api.data.Item
+import com.sucy.skill.facade.api.data.inventory.Item
 import com.sucy.skill.facade.api.entity.Actor
-import com.sucy.skill.util.math.formula.DynamicFormula
 import com.sucy.skill.util.math.formula.Formula
 import java.util.*
 

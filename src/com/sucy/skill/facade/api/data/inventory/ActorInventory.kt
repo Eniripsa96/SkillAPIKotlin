@@ -1,6 +1,5 @@
 package com.sucy.skill.facade.api.data.inventory
 
-import com.sucy.skill.facade.api.data.Item
 import kotlin.math.max
 import kotlin.math.min
 

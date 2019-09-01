@@ -1,9 +1,8 @@
 package com.sucy.skill.facade.bukkit.data.inventory
 
-import com.sucy.skill.facade.api.data.Item
+import com.sucy.skill.facade.api.data.inventory.Item
 import com.sucy.skill.facade.api.data.inventory.ActorInventory
 import com.sucy.skill.facade.bukkit.*
-import com.sucy.skill.facade.bukkit.data.BukkitItem
 import org.bukkit.inventory.EntityEquipment
 
 data class BukkitMobInventory(private val equipment: EntityEquipment): ActorInventory {

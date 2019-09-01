@@ -40,7 +40,7 @@ class BlockCondition : Condition() {
             block = world.getBlock(x, y + 1, z)
         }
 
-        return types.contains(block.type.enumName())
+        return types.contains(block.type.id)
     }
 
     private fun isOnBlock(actor: Actor): Boolean {
@@ -77,7 +77,7 @@ class BlockCondition : Condition() {
             }
         }
 
-        return types.contains(block.type.enumName())
+        return types.contains(block.type.id)
     }
 
     private fun getOffset(diff: Double, num: Double): Int {

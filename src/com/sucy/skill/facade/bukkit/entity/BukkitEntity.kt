@@ -2,6 +2,8 @@ package com.sucy.skill.facade.bukkit.entity
 
 import com.sucy.skill.facade.api.World
 import com.sucy.skill.facade.api.data.Location
+import com.sucy.skill.facade.api.entity.EntityType
+import com.sucy.skill.facade.api.entity.VanillaEntityType
 import com.sucy.skill.facade.bukkit.BukkitWorld
 import com.sucy.skill.facade.bukkit.data.BukkitLocation
 import com.sucy.skill.facade.bukkit.wrap
@@ -14,11 +16,17 @@ import org.bukkit.util.Vector
  * SkillAPIKotlin © 2018
  */
 open class BukkitEntity(open val entity: Entity) : com.sucy.skill.facade.api.entity.Entity {
-    override val type: String
-        get() = entity.type.name
+    // TODO - do proper mapping and fall back to unknown types
+    override val type: EntityType
+        get() = VanillaEntityType.valueOf(entity.type.name)
     override val world: World
         get() = BukkitWorld(entity.world)
-    
+    override var fireTicks: Int
+        get() = entity.fireTicks
+        set(value) {
+            entity.fireTicks = value
+        }
+
     override var location: Location
         get() = BukkitLocation(entity.location)
         set(it) {
@@ -43,11 +51,7 @@ open class BukkitEntity(open val entity: Entity) : com.sucy.skill.facade.api.ent
             entity.customName = it
         }
 
-    override fun setOnFire(duration: Long) {
-        entity.fireTicks = duration.toInt()
-    }
-
-    override fun clearFire() {
-        entity.fireTicks = 0
+    override fun isOnGround(): Boolean {
+        return entity.isOnGround
     }
 }

@@ -19,6 +19,8 @@ interface Player : Actor {
     var enchantingExp: Double
     val isCrouching: Boolean
 
+    override val level: Int
+        get() = if (activeAccount.professionSet.isProfessed()) activeAccount.professionSet.main!!.level else 0
     override val mana: Double
         get() = accounts.activeAccount.mana
     override var maxMana: Double

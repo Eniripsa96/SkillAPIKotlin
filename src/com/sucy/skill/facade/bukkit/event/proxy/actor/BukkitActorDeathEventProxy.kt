@@ -3,7 +3,7 @@ package com.sucy.skill.facade.bukkit.event.proxy.actor
 import com.sucy.skill.facade.api.entity.Actor
 import com.sucy.skill.facade.api.event.EventProxy
 import com.sucy.skill.facade.api.event.actor.ActorDeathEvent
-import com.sucy.skill.facade.bukkit.data.BukkitItem
+import com.sucy.skill.facade.bukkit.data.inventory.BukkitItem
 import com.sucy.skill.facade.bukkit.skillAPI
 import com.sucy.skill.facade.bukkit.toBukkit
 import org.bukkit.entity.LivingEntity

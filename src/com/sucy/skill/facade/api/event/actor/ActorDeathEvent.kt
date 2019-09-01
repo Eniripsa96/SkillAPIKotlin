@@ -1,7 +1,7 @@
 package com.sucy.skill.facade.api.event.actor
 
 import com.sucy.skill.api.event.Event
-import com.sucy.skill.facade.api.data.Item
+import com.sucy.skill.facade.api.data.inventory.Item
 import com.sucy.skill.facade.api.entity.Actor
 
 /**

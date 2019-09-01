@@ -1,5 +1,6 @@
 package com.sucy.skill.facade.bukkit.entity
 
+import com.sucy.skill.SkillAPI
 import com.sucy.skill.facade.api.data.GameMode
 import com.sucy.skill.facade.api.data.inventory.ActorInventory
 import com.sucy.skill.facade.bukkit.data.inventory.BukkitPlayerInventory

@@ -1,7 +1,7 @@
-package com.sucy.skill.facade.api.data
+package com.sucy.skill.facade.api.data.block
 
 interface BlockState {
-    var type: String
+    var type: BlockType
     var data: Int
 
     fun update(applyPhysics: Boolean)

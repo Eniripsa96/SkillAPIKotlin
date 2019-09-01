@@ -2,7 +2,7 @@ package com.sucy.skill.api.player
 
 import com.sucy.skill.SkillAPI
 import com.sucy.skill.facade.api.data.GameMode
-import com.sucy.skill.facade.api.data.Item
+import com.sucy.skill.facade.api.data.inventory.Item
 import com.sucy.skill.facade.api.entity.Player
 import java.lang.IllegalStateException
 

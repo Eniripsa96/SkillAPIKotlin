@@ -3,7 +3,7 @@ package com.sucy.skill.api.profession
 import com.sucy.skill.SkillAPI
 import com.sucy.skill.api.Levelable
 import com.sucy.skill.api.skill.Skill
-import com.sucy.skill.facade.api.data.Item
+import com.sucy.skill.facade.api.data.inventory.Item
 import com.sucy.skill.util.math.formula.Formula
 
 /**

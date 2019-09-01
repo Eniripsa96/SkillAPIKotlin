@@ -10,10 +10,11 @@ import com.sucy.skill.util.math.Vector3
 interface Entity {
     var location: Location
     var velocity: Vector3
-    val type: String
+    val type: EntityType
     var name: String
     val world: World
+    var fireTicks: Int
 
-    fun setOnFire(duration: Long)
-    fun clearFire()
+    fun clearFire() { fireTicks = 0 }
+    fun isOnGround(): Boolean
 }

@@ -1,6 +1,6 @@
 package com.sucy.skill.facade.api
 
-import com.sucy.skill.facade.api.data.Block
+import com.sucy.skill.facade.api.data.block.Block
 import com.sucy.skill.facade.api.data.Location
 import com.sucy.skill.facade.api.entity.Actor
 import com.sucy.skill.facade.enums.Shape

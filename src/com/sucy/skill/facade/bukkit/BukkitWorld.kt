@@ -1,9 +1,9 @@
 package com.sucy.skill.facade.bukkit
 
 import com.sucy.skill.facade.api.World
-import com.sucy.skill.facade.api.data.Block
+import com.sucy.skill.facade.api.data.block.Block
 import com.sucy.skill.facade.api.entity.Actor
-import com.sucy.skill.facade.bukkit.data.BukkitBlock
+import com.sucy.skill.facade.bukkit.data.block.BukkitBlock
 import com.sucy.skill.util.math.Vector3
 import com.sucy.skill.util.math.toChunk
 import org.bukkit.Bukkit

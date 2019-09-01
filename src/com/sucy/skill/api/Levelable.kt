@@ -1,6 +1,6 @@
 package com.sucy.skill.api
 
-import com.sucy.skill.facade.api.data.Item
+import com.sucy.skill.facade.api.data.inventory.Item
 import com.sucy.skill.util.io.Data
 import com.sucy.skill.util.math.formula.Formula
 

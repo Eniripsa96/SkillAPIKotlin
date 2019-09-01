@@ -1,7 +1,7 @@
 package com.sucy.skill.api.skill
 
 import com.sucy.skill.api.Levelable
-import com.sucy.skill.facade.api.data.Item
+import com.sucy.skill.facade.api.data.inventory.Item
 import com.sucy.skill.facade.api.entity.Actor
 
 abstract class Skill(name: String, icon: Item, maxLevel: Int) : Levelable(name, icon, maxLevel) {

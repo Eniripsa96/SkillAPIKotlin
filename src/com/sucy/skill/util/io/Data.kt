@@ -1,7 +1,7 @@
 package com.sucy.skill.util.io
 
 import com.google.common.collect.ImmutableSet
-import com.sucy.skill.facade.api.data.Item
+import com.sucy.skill.facade.api.data.inventory.Item
 import com.sucy.skill.facade.internal.data.InternalItem
 import com.sucy.skill.util.math.formula.DynamicFormula
 import com.sucy.skill.util.text.color

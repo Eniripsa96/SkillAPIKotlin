@@ -1,6 +1,6 @@
 package com.sucy.skill.dynamic.common
 
-import com.sucy.skill.facade.api.data.Item
+import com.sucy.skill.facade.api.data.inventory.Item
 import com.sucy.skill.facade.api.data.inventory.ActorInventory
 import com.sucy.skill.facade.api.entity.Actor
 import com.sucy.skill.util.io.Data

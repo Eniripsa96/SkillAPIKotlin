@@ -2,14 +2,13 @@ package com.sucy.skill.dynamic.mechanic
 
 import com.sucy.skill.SkillAPI
 import com.sucy.skill.dynamic.CastContext
-import com.sucy.skill.facade.api.data.BlockState
+import com.sucy.skill.facade.api.data.block.BlockState
 import com.sucy.skill.facade.api.data.Location
 import com.sucy.skill.facade.api.entity.Actor
 import com.sucy.skill.facade.api.managers.Task
 import com.sucy.skill.facade.enums.Shape
 import com.sucy.skill.util.match
 import com.sucy.skill.util.math.toTicks
-import com.sucy.skill.util.text.enumName
 
 class BlockMechanic : Mechanic() {
     override val key = "block"

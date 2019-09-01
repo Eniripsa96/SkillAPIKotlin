@@ -37,7 +37,6 @@ open class BukkitActor(override val entity: LivingEntity) : BukkitEntity(entity)
     override var saturation: Double
         get() = 0.0
         set(_) {}
-    override val level = 1
     
     override fun hasPermission(permission: String): Boolean {
         return entity.hasPermission(permission)

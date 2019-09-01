@@ -2,7 +2,7 @@ package com.sucy.skill.data.loader.impl.common
 
 import com.sucy.skill.data.loader.DataLoader
 import com.sucy.skill.data.loader.transform.DataTransformer
-import com.sucy.skill.facade.api.data.Item
+import com.sucy.skill.facade.api.data.inventory.Item
 import com.sucy.skill.facade.internal.data.InternalItem
 import com.sucy.skill.util.io.Data
 

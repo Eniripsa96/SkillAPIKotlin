@@ -2,7 +2,7 @@ package com.sucy.skill.api.attribute
 
 import com.sucy.skill.dynamic.Effect
 import com.sucy.skill.dynamic.EffectType
-import com.sucy.skill.facade.api.data.Item
+import com.sucy.skill.facade.api.data.inventory.Item
 import com.sucy.skill.util.math.formula.Formula
 
 data class Attribute(

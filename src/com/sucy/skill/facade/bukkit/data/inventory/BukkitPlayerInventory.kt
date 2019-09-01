@@ -1,8 +1,7 @@
 package com.sucy.skill.facade.bukkit.data.inventory
 
-import com.sucy.skill.facade.api.data.Item
+import com.sucy.skill.facade.api.data.inventory.Item
 import com.sucy.skill.facade.api.data.inventory.ActorInventory
-import com.sucy.skill.facade.bukkit.data.BukkitItem
 import com.sucy.skill.facade.bukkit.toBukkit
 import org.bukkit.inventory.PlayerInventory
 

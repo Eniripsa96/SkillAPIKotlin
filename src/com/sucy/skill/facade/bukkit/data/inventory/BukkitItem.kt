@@ -1,6 +1,8 @@
-package com.sucy.skill.facade.bukkit.data
+package com.sucy.skill.facade.bukkit.data.inventory
 
-import com.sucy.skill.facade.api.data.Item
+import com.sucy.skill.facade.api.data.inventory.Item
+import com.sucy.skill.facade.api.data.inventory.ItemType
+import com.sucy.skill.facade.api.data.inventory.UnknownItemType
 import org.bukkit.Material
 import org.bukkit.inventory.ItemStack
 
@@ -13,9 +15,10 @@ data class BukkitItem(private val item: ItemStack) : Item {
     override var lore: List<String>
         get() = meta.lore
         set(value) { meta.lore = value }
-    override var type: String
-        get() = item.type.name
-        set(value) { item.type = Material.matchMaterial(value) }
+    // TODO - map to/from vanilla types, supporting new/old names
+    override var type: ItemType
+        get() = UnknownItemType(item.type.name)
+        set(value) { item.type = Material.matchMaterial(value.id) }
     override var amount: Int
         get() = item.amount
         set(value) { item.amount = value }

@@ -1,9 +1,9 @@
-package com.sucy.skill.facade.bukkit.data
+package com.sucy.skill.facade.bukkit.data.block
 
 import org.bukkit.Material
 import org.bukkit.block.BlockState
 
-data class BukkitBlockState(private val state: BlockState) : com.sucy.skill.facade.api.data.BlockState {
+data class BukkitBlockState(private val state: BlockState) : com.sucy.skill.facade.api.data.block.BlockState {
     override var type: String
         get() = state.type.name
         set(value) { state.type = Material.matchMaterial(value) }

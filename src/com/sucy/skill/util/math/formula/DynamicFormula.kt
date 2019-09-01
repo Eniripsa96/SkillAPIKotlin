@@ -61,6 +61,9 @@ class DynamicFormula(expression: String) : Formula(expression, ArrayList()) {
                 .put("maxMana") { it.maxMana }
                 .put("lvl") { it.level.toDouble() }
                 .put("level") { it.level.toDouble() }
+                .put("posX") { it.location.coords.x }
+                .put("posY") { it.location.coords.y }
+                .put("posZ") { it.location.coords.z }
                 .build()
     }
 }

@@ -3,7 +3,7 @@ package com.sucy.skill.api.player
 import com.sucy.skill.api.profession.ProfessionSet
 import com.sucy.skill.api.skill.SkillSet
 import com.sucy.skill.api.values.ValueSet
-import com.sucy.skill.facade.api.data.Item
+import com.sucy.skill.facade.api.data.inventory.Item
 import com.sucy.skill.facade.api.data.Location
 import com.sucy.skill.facade.internal.data.InternalLocation
 import com.sucy.skill.util.math.Vector3

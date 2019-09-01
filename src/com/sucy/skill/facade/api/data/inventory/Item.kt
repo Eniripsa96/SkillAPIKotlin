@@ -1,4 +1,4 @@
-package com.sucy.skill.facade.api.data
+package com.sucy.skill.facade.api.data.inventory
 
 import com.sucy.skill.facade.internal.data.InternalItem
 
@@ -8,7 +8,7 @@ import com.sucy.skill.facade.internal.data.InternalItem
 interface Item {
     var name: String?
     var lore: List<String>
-    var type: String
+    var type: ItemType
     var amount: Int
     var durability: Short
     var data: Byte
@@ -18,7 +18,7 @@ interface Item {
     fun copyWith(
             name: String? = this.name,
             lore: List<String> = this.lore,
-            type: String = this.type,
+            type: ItemType = this.type,
             amount: Int = this.amount,
             durability: Short = this.durability,
             data: Byte = this.data,
