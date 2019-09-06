@@ -24,7 +24,7 @@ interface ActorInventory {
 
     fun isEmpty(slot: Int): Boolean {
         val item = this[slot]
-        return item == null || item.type.equals("AIR", ignoreCase = true)
+        return item == null || item.type.id.equals("AIR", ignoreCase = true)
     }
 
     fun getOpenSlots(min: Int = 0, max: Int = size - 1): Int {

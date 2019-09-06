@@ -66,4 +66,8 @@ data class Vector3(var x: Double = 0.0, var y: Double = 0.0, var z: Double = 0.0
     fun abs(): Vector3 {
         return copy(x = abs(x), y = abs(y), z = abs(z))
     }
+
+    fun toInt(): IntVector3 {
+        return IntVector3(x.toInt(), y.toInt(), z.toInt())
+    }
 }

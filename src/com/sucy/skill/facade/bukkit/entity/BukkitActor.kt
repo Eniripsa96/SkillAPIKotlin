@@ -1,7 +1,11 @@
 package com.sucy.skill.facade.bukkit.entity
 
+import com.sucy.skill.facade.api.data.effect.PotionEffect
+import com.sucy.skill.facade.api.data.effect.PotionType
 import com.sucy.skill.facade.api.data.inventory.ActorInventory
 import com.sucy.skill.facade.api.entity.Actor
+import com.sucy.skill.facade.bukkit.data.effect.bukkit
+import com.sucy.skill.facade.bukkit.data.effect.internal
 import com.sucy.skill.facade.bukkit.data.inventory.BukkitMobInventory
 import com.sucy.skill.util.math.limit
 import org.bukkit.Bukkit.dispatchCommand
@@ -37,6 +41,8 @@ open class BukkitActor(override val entity: LivingEntity) : BukkitEntity(entity)
     override var saturation: Double
         get() = 0.0
         set(_) {}
+    override val potionEffects: List<PotionEffect>
+        get() = entity.activePotionEffects.map { PotionEffect(it.type.internal(), it.duration, it.amplifier) }
     
     override fun hasPermission(permission: String): Boolean {
         return entity.hasPermission(permission)
@@ -51,5 +57,16 @@ open class BukkitActor(override val entity: LivingEntity) : BukkitEntity(entity)
 
     override fun sendMessage(message: String) {
         entity.sendMessage(message)
+    }
+
+    override fun applyPotionEffect(effect: PotionEffect) {
+        entity.addPotionEffect(effect.bukkit())
+    }
+
+    override fun removePotionEffect(type: PotionType) {
+        val bukkitType = type.bukkit()
+        if (entity.hasPotionEffect(bukkitType)) {
+            entity.removePotionEffect(bukkitType)
+        }
     }
 }

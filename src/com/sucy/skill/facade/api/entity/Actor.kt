@@ -7,6 +7,8 @@ import com.sucy.skill.api.values.ValueSet
 import com.sucy.skill.command.CommandSender
 import com.sucy.skill.config.category.ActorSizes
 import com.sucy.skill.facade.api.data.Location
+import com.sucy.skill.facade.api.data.effect.PotionEffect
+import com.sucy.skill.facade.api.data.effect.PotionType
 import com.sucy.skill.facade.api.data.inventory.ActorInventory
 import com.sucy.skill.facade.api.event.actor.ActorDamagedByActorEvent
 import com.sucy.skill.facade.api.event.actor.DamageSource
@@ -36,6 +38,7 @@ interface Actor : Entity, CommandSender {
     val dead: Boolean
     val exists: Boolean
     val inventory: ActorInventory
+    val potionEffects: List<PotionEffect>
 
     val attributes: ValueSet
         get() = SkillAPI.entityData.attributes.computeIfAbsent(uuid) { ValueSet() }
@@ -111,5 +114,7 @@ interface Actor : Entity, CommandSender {
     fun playSound(from: Location, sound: String, volume: Float, pitch: Float) {}
     fun giveMana(amount: Double, reason: ManaSource): Boolean = false
     fun takeMana(amount: Double, reason: ManaCost): Boolean = false
+    fun applyPotionEffect(effect: PotionEffect)
+    fun removePotionEffect(type: PotionType)
 }
 

@@ -2,15 +2,19 @@ package com.sucy.skill.facade.api
 
 import com.sucy.skill.facade.api.data.block.Block
 import com.sucy.skill.facade.api.data.Location
+import com.sucy.skill.facade.api.data.Weather
 import com.sucy.skill.facade.api.entity.Actor
 import com.sucy.skill.facade.enums.Shape
 import com.sucy.skill.util.math.Vector3
 
 interface World {
     val name: String
+    var time: Long
 
     fun getBlock(x: Int, y: Int, z: Int): Block
     fun getBiome(x: Int, y: Int, z: Int): String
+    fun getTemperature(x: Int, y: Int, z: Int): Double
+    fun getWeather(x: Int, y: Int, z: Int): Weather
     fun getActorsInRadius(center: Vector3, radius: Double): List<Actor>
     fun createExplosion(pos: Vector3, power: Double = 2.0, fire: Boolean = false, damageBlocks: Boolean = false)
     fun strikeLightning(pos: Vector3)
