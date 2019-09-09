@@ -1,5 +1,5 @@
 import React from "react";
-import {MECHANIC_OPTIONS, Type} from "../commonOptions";
+import {CONDITION_OPTIONS, Type} from "../commonOptions";
 import InputType from "../../../component/input/dynamic/InputType";
 
 const AttributeCondition = {
@@ -8,7 +8,7 @@ const AttributeCondition = {
     description: 'Applies child effects if the current target has an attribute value in the required range',
     children: true,
     metadata: [
-        ...MECHANIC_OPTIONS,
+        ...CONDITION_OPTIONS,
         {
             key: 'attribute',
             name: 'Attribute',

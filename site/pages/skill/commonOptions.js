@@ -95,4 +95,15 @@ const MECHANIC_OPTIONS = [
     }
 ];
 
-export {Type, TRIGGER_OPTIONS, MECHANIC_OPTIONS, TARGET_OPTIONS, MULTI_TARGET_OPTIONS}
+const CONDITION_OPTIONS = [
+    {
+        key: 'target',
+        name: 'Apply To',
+        description: 'Who to apply the condition to',
+        type: InputType.DROPDOWN,
+        initial: 'Target',
+        options: () => ['Caster', 'Target']
+    }
+];
+
+export {Type, TRIGGER_OPTIONS, MECHANIC_OPTIONS, CONDITION_OPTIONS, TARGET_OPTIONS, MULTI_TARGET_OPTIONS}

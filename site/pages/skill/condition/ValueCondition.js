@@ -1,5 +1,5 @@
 import React from "react";
-import {MECHANIC_OPTIONS, Type} from "../commonOptions";
+import {CONDITION_OPTIONS, Type} from "../commonOptions";
 import InputType from "../../../component/input/dynamic/InputType";
 
 const ValueCondition = {
@@ -8,7 +8,7 @@ const ValueCondition = {
     description: 'Checks whether or not a given value is within the required range',
     children: true,
     metadata: [
-        ...MECHANIC_OPTIONS,
+        ...CONDITION_OPTIONS,
         {
             key: 'key',
             name: 'Key',

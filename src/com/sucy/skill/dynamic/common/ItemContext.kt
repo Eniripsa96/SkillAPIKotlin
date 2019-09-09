@@ -46,7 +46,7 @@ data class ItemContext(private val metadata: Data) {
         for (i in 0 until inventory.size) {
             val item = inventory[i]
             if (item != null
-                    && (!checkMaterial || item.type.enumName() == material)
+                    && (!checkMaterial || item.type.id == material)
                     && (!checkDurability || item.durability == durability)
                     && (!checkLore || checkLore(item))
                     && (!checkName || checkName(item))) {

@@ -1,5 +1,5 @@
 import React from "react";
-import {MECHANIC_OPTIONS, Type} from "../commonOptions";
+import {CONDITION_OPTIONS, Type} from "../commonOptions";
 import InputType from "../../../component/input/dynamic/InputType";
 
 const ItemCondition = {
@@ -8,7 +8,14 @@ const ItemCondition = {
     description: 'Applies child effects if the current target has items matching the specified options',
     children: true,
     metadata: [
-        ...MECHANIC_OPTIONS,
+        ...CONDITION_OPTIONS,
+        {
+            key: 'check-material',
+            name: 'Check Material',
+            description: 'Whether or not to require a specific material',
+            type: InputType.BOOLEAN,
+            initial: false
+        },
         {
             key: 'material',
             name: 'Material',

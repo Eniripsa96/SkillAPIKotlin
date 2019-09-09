@@ -5,12 +5,13 @@ import com.sucy.skill.api.skill.Skill
 import com.sucy.skill.api.skill.SkillProgress
 import com.sucy.skill.data.loader.impl.LevelProgressDataLoader
 import com.sucy.skill.data.loader.transform.DataTransformer
+import com.sucy.skill.facade.api.data.inventory.VanillaItemType
 import com.sucy.skill.facade.api.entity.Actor
 import com.sucy.skill.facade.internal.data.InternalItem
 import com.sucy.skill.util.io.Data
 
 object SkillProgressDataLoader : LevelProgressDataLoader<SkillProgress, Skill>() {
-    private val ITEM = InternalItem("PUMPKIN")
+    private val ITEM = InternalItem(VanillaItemType.PUMPKIN)
 
     private const val NAME = "name"
     private const val SOURCES = "sources"

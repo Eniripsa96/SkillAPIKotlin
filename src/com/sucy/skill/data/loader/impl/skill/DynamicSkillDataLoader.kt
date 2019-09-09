@@ -21,7 +21,6 @@ object DynamicSkillDataLoader : DataLoader<Skill> {
                 data.getString(NAME)!!,
                 ItemDataLoader.loadOrDefault(data.getSection(ICON)),
                 data.getInt(MAX_LEVEL, 1))
-        // TODO - implement
         return result
     }
 

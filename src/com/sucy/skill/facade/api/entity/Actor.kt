@@ -15,6 +15,9 @@ import com.sucy.skill.facade.api.event.actor.DamageSource
 import com.sucy.skill.facade.api.event.player.ManaCost
 import com.sucy.skill.facade.api.event.player.ManaSource
 import com.sucy.skill.util.math.Targeting
+import com.sucy.skill.util.math.Vector3
+import com.sucy.skill.util.math.limit
+import com.sucy.skill.util.math.sq
 import java.util.*
 import kotlin.collections.HashMap
 import kotlin.math.min
@@ -109,6 +112,19 @@ interface Actor : Entity, CommandSender {
         val lastMark = SkillAPI.entityData.combatTimers[uuid] ?: return false
         val elapsed = System.currentTimeMillis() - lastMark
         return elapsed < seconds * 1000
+    }
+
+    fun dSq(pos: Vector3): Double {
+        val (x, y, z) = location.coords
+        val (i, j, k) = pos
+        val (diameter, height) = this.size
+        val rad = diameter / 2
+
+        val a = limit(i, x - rad, x + rad)
+        val b = limit(j, y, y + height)
+        val c = limit(k, z - rad, z + rad)
+
+        return sq(a - i) + sq(b - j) + sq(c - k)
     }
 
     fun playSound(from: Location, sound: String, volume: Float, pitch: Float) {}

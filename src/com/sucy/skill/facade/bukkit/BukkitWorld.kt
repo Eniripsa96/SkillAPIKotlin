@@ -6,6 +6,8 @@ import com.sucy.skill.facade.api.data.block.Block
 import com.sucy.skill.facade.api.entity.Actor
 import com.sucy.skill.facade.bukkit.data.block.BukkitBlock
 import com.sucy.skill.util.math.Vector3
+import com.sucy.skill.util.math.dSq
+import com.sucy.skill.util.math.sq
 import com.sucy.skill.util.math.toChunk
 import org.bukkit.Bukkit
 import org.bukkit.Location
@@ -25,12 +27,12 @@ class BukkitWorld(private val world: org.bukkit.World) : World {
     }
 
     override fun getActorsInRadius(center: Vector3, radius: Double): List<Actor> {
-        val loc = Location(world, center.x, center.y, center.z)
+        val rSq = sq(radius)
         val result = ArrayList<Actor>()
         forEachChunkPos(center, radius) { i, j ->
             world.getChunkAt(i, j).entities.forEach {
                 val actor = it.toActor()
-                if (actor != null && it.location.distanceSquared(loc) <= radius) {
+                if (actor != null && actor.dSq(center) <= rSq) {
                     result.add(actor)
                 }
             }

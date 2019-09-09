@@ -9,12 +9,10 @@ abstract class Condition : Effect() {
     override val type = EffectType.CONDITION
 
     private var applyToCaster = false
-    private var applyToTarget = true
 
     override fun initialize() {
         val target = metadata.getString("applyTo", "target").toLowerCase()
         applyToCaster = target != "target"
-        applyToTarget = target != "caster"
     }
 
     override fun execute(context: CastContext, targets: List<Actor>): Boolean {
