@@ -6,7 +6,6 @@ import com.sucy.skill.facade.api.data.block.Block
 import com.sucy.skill.facade.api.entity.Actor
 import com.sucy.skill.facade.bukkit.data.block.BukkitBlock
 import com.sucy.skill.util.math.Vector3
-import com.sucy.skill.util.math.dSq
 import com.sucy.skill.util.math.sq
 import com.sucy.skill.util.math.toChunk
 import org.bukkit.Bukkit

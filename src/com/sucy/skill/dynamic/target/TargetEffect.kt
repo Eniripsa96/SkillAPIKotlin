@@ -31,25 +31,26 @@ abstract class TargetEffect : Effect() {
 
     override fun execute(context: CastContext, targets: List<Actor>): Boolean {
         val newTargets = if (fromCaster) {
-            selectTargets(context, getTargets(context, context.caster))
+            selectTargets(context, targets.flatMap { getTargets(context.caster, context, it) })
         } else {
-            selectTargets(context, targets.flatMap { getTargets(context, it) })
+            selectTargets(context, targets.flatMap { getTargets(it, context, it) })
         }
         return newTargets.isNotEmpty() && executeChildren(context, newTargets)
     }
 
     fun selectTargets(context: CastContext, pool: Collection<Actor>): List<Actor> {
-        val validTargets = pool.filterTo(ArrayList()) { isValidTarget(context, it) }
-        if (alwaysCaster) validTargets.add(context.caster)
-
-        return when {
-            validTargets.size <= max -> validTargets
-            random -> validTargets.shuffled().subList(0, max)
+        val byId = pool.groupBy { it.uuid }.filter { isValidTarget(context, it.value.first()) }
+        val reduced = if (distinct) byId.map { it.value.first() } else byId.flatMap { it.value }
+        val capped = when {
+            reduced.size <= max -> reduced
+            random -> reduced.shuffled().subList(0, max)
             else -> {
                 val casterLoc = context.caster.location.coords
-                validTargets.sortedBy { it.location.coords.dSq(casterLoc) }.subList(0, max)
+                reduced.sortedBy { it.location.coords.dSq(casterLoc) }.subList(0, max)
             }
         }
+
+        return if (alwaysCaster) capped + context.caster else capped
     }
 
     fun isValidTarget(context: CastContext, target: Actor): Boolean {
@@ -57,5 +58,5 @@ abstract class TargetEffect : Effect() {
         // TODO - wall and ally checks
     }
 
-    abstract fun getTargets(context: CastContext, target: Actor): List<Actor>
+    abstract fun getTargets(from: Actor, context: CastContext, target: Actor): List<Actor>
 }
