@@ -9,6 +9,7 @@ import com.sucy.skill.facade.api.event.player.ManaSource
 import com.sucy.skill.facade.api.event.player.PlayerManaGainEvent
 import com.sucy.skill.facade.api.event.player.PlayerManaLossEvent
 import com.sucy.skill.util.math.limit
+import kotlin.math.max
 
 /**
  * SkillAPIKotlin © 2018
@@ -21,12 +22,15 @@ interface Player : Actor {
 
     override val level: Int
         get() = if (activeAccount.professionSet.isProfessed()) activeAccount.professionSet.main!!.level else 0
-    override val mana: Double
+    override var mana: Double
         get() = accounts.activeAccount.mana
+        set(value) {
+            accounts.activeAccount.mana = limit(value, 0.0, maxMana)
+        }
     override var maxMana: Double
         get() = accounts.activeAccount.maxMana
         set(value) {
-            accounts.activeAccount.maxMana = value
+            accounts.activeAccount.maxMana = max(0.0, value)
         }
 
     val accounts: AccountSet

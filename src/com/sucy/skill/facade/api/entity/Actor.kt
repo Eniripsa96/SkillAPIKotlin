@@ -29,8 +29,9 @@ interface Actor : Entity, CommandSender {
     val uuid: UUID
     var health: Double
     var maxHealth: Double
-    val mana: Double
+    var mana: Double
         get() = 0.0
+        set(_) {}
     var maxMana: Double
         get() = 0.0
         set(_) {}

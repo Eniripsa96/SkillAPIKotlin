@@ -33,5 +33,4 @@ open class Profession(name: String, icon: Item, maxLevel: Int) : Levelable(name,
     var manaName: String = ""
 
     var skillTreePattern: SkillTreePattern = SkillTreePattern.FLOOD
-    val expSources = mutableSetOf<ExpSource>()
 }

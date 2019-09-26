@@ -2,8 +2,8 @@ package com.sucy.skill.api.profession
 
 import com.sucy.skill.SkillAPI
 import com.sucy.skill.facade.api.entity.Player
-import com.sucy.skill.facade.api.event.player.PlayerClassChangeEvent
-import com.sucy.skill.facade.api.event.player.PlayerPreClassChangeEvent
+import com.sucy.skill.facade.api.event.player.PlayerPreProfessionChangedEvent
+import com.sucy.skill.facade.api.event.player.PlayerProfessionChangedEvent
 
 class ProfessionSet {
     private val professions = HashMap<String, ProfessionProgress>()
@@ -47,13 +47,29 @@ class ProfessionSet {
         return setClassForGroup(player, profession, profession.group)
     }
 
+    fun giveExp(player: Player, amount: Double, source: ExpSource, overrides: Map<String, Double>) {
+        // TODO - level up events
+        var leveledUp = false
+        professions.values.forEach { leveledUp = it.giveExp(amount, source, overrides = emptyMap()) || leveledUp }
+        if (leveledUp) updateStats(player)
+    }
+
+    fun giveExp(player: Player, amount: Double, group: String, overrides: Map<String, Double> = emptyMap()) {
+        // TODO - level up events
+        professions[group]?.let {
+            if (it.forceGiveExp(amount, overrides)) {
+                updateStats(player)
+            }
+        }
+    }
+
     private fun setClassForGroup(player: Player, profession: Profession?, group: String): Boolean {
         val progress = get(group)
         val previous = progress?.data
 
         if (previous == profession) return false
 
-        val event = PlayerPreClassChangeEvent(
+        val event = PlayerPreProfessionChangedEvent(
                 player,
                 progress,
                 previous,
@@ -83,7 +99,9 @@ class ProfessionSet {
             }
         }
 
-        SkillAPI.eventBus.trigger(PlayerClassChangeEvent(
+        updateStats(player)
+
+        SkillAPI.eventBus.trigger(PlayerProfessionChangedEvent(
                 player,
                 professions[group],
                 previous,
@@ -91,5 +109,29 @@ class ProfessionSet {
         ))
 
         return true
+    }
+
+    fun updateStats(player: Player) {
+        val (maxHealth, health) = resolve(player.maxHealth, player.health, SkillAPI.settings.classes.defaultHealth) { it.maxHealth }
+        val (maxMana, mana) = resolve(player.maxMana, player.mana, SkillAPI.settings.classes.defaultMana) { it.maxMana }
+
+        player.maxHealth = maxHealth
+        player.maxMana = maxMana
+        player.health = health
+        player.mana = mana
+    }
+
+    private fun resolve(
+            max: Double,
+            current: Double,
+            default: Int,
+            getter: (ProfessionProgress) -> Double
+    ): Pair<Double, Double> {
+        val base = main?.let(getter) ?: default.toDouble()
+        val otherProfessions = professions.values.filter { it != main }
+        val total = base + otherProfessions.map(getter).sum()
+        val diff = total - max
+
+        return total to current + diff
     }
 }

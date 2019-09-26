@@ -5,7 +5,6 @@ import com.sucy.skill.command.CommandArguments
 import com.sucy.skill.command.CommandLogic
 import com.sucy.skill.command.CommandSender
 import com.sucy.skill.facade.api.entity.Actor
-import com.sucy.skill.facade.api.entity.Player
 
 object CmdCast : CommandLogic() {
     private const val CONSOLE = "console"

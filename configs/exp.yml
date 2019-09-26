@@ -1,10 +1,42 @@
-# Whether or not to enable controlling experience from broken/placed blocks or crafted items
-enabled: false
-
-# Experience yields for anything except combat. Combat experience is either controlled
-# via vanilla experience dropped or the yields defined in config.yml.
+# Experience yields for killing mobs. You can add additional mobs to this list
+# to support new/custom mobs.
 #
-# These are experience values provided when a player breaks a world.
+# These values will be ignored if the "useDroppedExp" option is enabled in config.yml.
+kill:
+  #
+  # You can define yields per class by adding new sections here. This can be used
+  # to have different classes benefit from killing certain mobs more than others.
+  default:
+    blaze: '10'
+    cavespider: '5'
+    creeper: '3'
+    elderguardian: '10'
+    enderdragon: '400'
+    enderman: '5'
+    endermite: '3'
+    evoker: '10'
+    ghast: '5'
+    giant: '20'
+    guardian: '10'
+    husk: '2'
+    irongolem: '10'
+    magmacube: '1'
+    pigzombie: '5'
+    player: '5'
+    shulker: '5'
+    silverfish: '2'
+    skeleton: '3'
+    slime: '1'
+    spider: '3'
+    stray: '5'
+    vex: '3'
+    vindicator: '5'
+    witch: '3'
+    wither: '500'
+    witherskeleton: '5'
+    zombie: '2'
+
+# These are experience values provided when a player breaks a block.
 break:
   #
   # Whether or not to allow players to place a world back down and break it again
@@ -42,8 +74,8 @@ break:
       DIAMOND_ORE: 50
       EMERALD_ORE: 100
 #
-# Experience yields when a player places a world. There's not a built-in way to check
-# for players repeatedly placing down the same world, so use this type of experience
+# Experience yields when a player places a block. There's not a built-in way to check
+# for players repeatedly placing down the same block, so use this type of experience
 # with caution. Works similar to break, just without the replace option.
 place:
   default:

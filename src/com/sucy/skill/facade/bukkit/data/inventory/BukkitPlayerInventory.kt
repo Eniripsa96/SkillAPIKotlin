@@ -41,7 +41,8 @@ data class BukkitPlayerInventory(private val inventory: PlayerInventory) : Actor
         inventory.setItem(index, bukkitItem)
     }
 
-    override fun give(item: Item): Boolean {
-        return inventory.addItem(item.toBukkit()).isEmpty()
+    override fun give(item: Item): Item? {
+        val failed = inventory.addItem(item.toBukkit())
+        return if (failed.isEmpty()) null else failed[0]?.let { BukkitItem(it) }
     }
 }

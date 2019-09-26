@@ -6,7 +6,7 @@ import com.sucy.skill.api.profession.Profession
 import com.sucy.skill.api.profession.ProfessionProgress
 import com.sucy.skill.facade.api.entity.Player
 
-data class PlayerPreClassChangeEvent(
+data class PlayerPreProfessionChangedEvent(
         val player: Player,
         val progress: ProfessionProgress?,
         val from: Profession?,

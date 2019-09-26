@@ -2,11 +2,12 @@ package com.sucy.skill.facade.api.data.inventory
 
 interface ItemType {
     val id: String
+    val maxStack: Int
 }
 
-data class UnknownItemType(override val id: String) : ItemType
+data class UnknownItemType(override val id: String, override val maxStack: Int = 64) : ItemType
 
-enum class VanillaItemType : ItemType {
+enum class VanillaItemType(override val maxStack: Int = 64) : ItemType {
     ACACIA_BOAT,
     ACACIA_BUTTON,
     ACACIA_DOOR,

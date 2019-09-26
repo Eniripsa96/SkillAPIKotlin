@@ -1,7 +1,7 @@
 package com.sucy.skill.api.profession
 
 enum class ExpSource {
-    MOB,
+    KILL,
     BLOCK_BREAK,
     BLOCK_PLACE,
     CRAFT,

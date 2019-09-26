@@ -1,5 +1,6 @@
 package com.sucy.skill.api
 
+import com.sucy.skill.api.profession.ExpSource
 import com.sucy.skill.facade.api.data.inventory.Item
 import com.sucy.skill.util.io.Data
 import com.sucy.skill.util.math.formula.Formula
@@ -17,6 +18,7 @@ abstract class Levelable(
     val description: MutableList<String> = mutableListOf()
     var metadata = Data()
     val conditions: MutableList<LevelCondition> = mutableListOf()
+    val expSources = mutableSetOf<ExpSource>()
     var expCurve = Formula.const(1.0)
 }
 

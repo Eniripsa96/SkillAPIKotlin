@@ -11,8 +11,7 @@ class ProfessionProgress(data: Profession) : LevelProgress<Profession>(data) {
     override val filterContext: FilterContext<*>
         get() = ProfessionFilterContext(this)
 
-    val manaRegen: Double
-        get() {
-            return data.manaRegen.evaluate(level.toDouble())
-        }
+    val maxHealth = data.maxHealth.evaluate(level.toDouble())
+    val maxMana = data.maxMana.evaluate(level.toDouble())
+    val manaRegen = data.manaRegen.evaluate(level.toDouble())
 }

@@ -98,6 +98,9 @@ Classes:
   # The default health for players without a class
   classless-hp: 20
   #
+  # The default mana for players without a class
+  classless-mana: 20
+  #
   # Whether or not non-castable auto-leveled skills are shown
   show-auto-skills: false
   #

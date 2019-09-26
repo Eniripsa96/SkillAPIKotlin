@@ -8,6 +8,7 @@ import com.sucy.skill.util.io.Data
 class ClassSettings(config: Data) {
     val enableCustomHealth = config.getBoolean("modify-health")
     val defaultHealth = config.getInt("classless-hp")
+    val defaultMana = config.getInt("classless-mana")
     val displayAutoUnlockedSkills = config.getBoolean("show-auto-skills")
     val enableAttributes = config.getBoolean("attributes-enabled")
     val enableDowngradingAttributes = config.getBoolean("attributes-downgrade")

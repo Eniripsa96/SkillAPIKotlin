@@ -15,6 +15,17 @@ interface Item {
     var visibility: Int
     var tags: Map<String, Any>
 
+    fun canStack(item: Item): Boolean {
+        return type == item.type &&
+                name == item.name &&
+                data == item.data &&
+                durability == item.durability &&
+                lore == item.lore &&
+                visibility == item.visibility &&
+                tags == item.tags &&
+                amount < type.maxStack
+    }
+
     fun copyWith(
             name: String? = this.name,
             lore: List<String> = this.lore,

@@ -1,11 +1,13 @@
 package com.sucy.skill.api
 
+import com.sucy.skill.api.profession.ExpSource
 import com.sucy.skill.facade.api.data.inventory.Item
 import com.sucy.skill.facade.api.entity.Actor
 import com.sucy.skill.facade.api.entity.Player
 import com.sucy.skill.util.text.DynamicFilter
 import com.sucy.skill.util.text.context.ActorFilterContext
 import com.sucy.skill.util.text.context.FilterContext
+import com.sucy.skill.util.text.enumName
 import kotlin.math.max
 
 /**
@@ -34,12 +36,21 @@ abstract class LevelProgress<T : Levelable>(val data: T) {
 
     abstract val filterContext: FilterContext<*>
 
-    fun giveExp(amount: Double, source: String) {
-        if (amount <= 0 || isMaxLevel) return
+    fun giveExp(amount: Double, source: ExpSource, overrides: Map<String, Double> = emptyMap()): Boolean {
+        return if (data.expSources.contains(source)) forceGiveExp(amount, overrides) else false
+    }
 
-        exp += amount
-        totalExp += amount
-        checkLevelUp()
+    fun forceGiveExp(amount: Double, overrides: Map<String, Double> = emptyMap()): Boolean {
+        val actual = if (overrides.isEmpty()) {
+            amount
+        } else {
+            overrides[data.key.toLowerCase()] ?: overrides[data.name.toLowerCase()] ?: amount
+        }
+
+        if (actual <= 0 || isMaxLevel) return false
+        exp += actual
+        totalExp += actual
+        return checkLevelUp()
     }
 
     fun giveLevels(amount: Int) {
@@ -56,7 +67,7 @@ abstract class LevelProgress<T : Levelable>(val data: T) {
         exp = 0.0
     }
 
-    private fun checkLevelUp() {
+    private fun checkLevelUp(): Boolean {
         var levels = -1
         var required = 0.0
         do {
@@ -66,6 +77,7 @@ abstract class LevelProgress<T : Levelable>(val data: T) {
         } while (exp >= required)
 
         giveLevels(levels)
+        return levels > 0
     }
 
     private fun computeRequiredExp(level: Int): Double {

@@ -14,6 +14,7 @@ class Settings(private val plugin: ConfigHolder) {
 
     val account = AccountSettings(mainConfig.getOrCreateSection("Accounts"))
     val classes = ClassSettings(mainConfig.getOrCreateSection("Classes"))
+    val exp = ExpSettings(mainConfig.getOrCreateSection("Experience"))
     val expYields = ExpYieldsConfig(loadConfig("exp"))
     val mana = ManaSettings(mainConfig.getOrCreateSection("Mana"))
     val saving = SavingSettings(mainConfig.getOrCreateSection("Saving"))
