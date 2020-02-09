@@ -10,10 +10,11 @@ import com.sucy.skill.util.io.Data
  */
 class Settings(private val plugin: ConfigHolder) {
     private val mainConfig = loadConfig("config")
-    private val groupSettings = HashMap<String, GroupSettings>()
+    private val groupSettings = mutableMapOf<String, GroupSettings>()
 
     val account = AccountSettings(mainConfig.getOrCreateSection("Accounts"))
     val classes = ClassSettings(mainConfig.getOrCreateSection("Classes"))
+    val classification = ClassificationSettings(loadConfig("classification"))
     val exp = ExpSettings(mainConfig.getOrCreateSection("Experience"))
     val expYields = ExpYieldsConfig(loadConfig("exp"))
     val mana = ManaSettings(mainConfig.getOrCreateSection("Mana"))

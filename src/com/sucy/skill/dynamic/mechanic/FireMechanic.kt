@@ -16,7 +16,7 @@ class FireMechanic : Mechanic() {
     }
 
     override fun execute(context: CastContext, target: Actor, recipient: Actor): Boolean {
-        recipient.setOnFire(compute(seconds, context, target).toTicks())
+        recipient.fireTicks = compute(seconds, context, target).toTicks()
         return true
     }
 }

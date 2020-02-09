@@ -1,6 +1,7 @@
 package com.sucy.skill.dynamic.mechanic
 
 import com.sucy.skill.dynamic.CastContext
+import com.sucy.skill.facade.api.data.inventory.ItemType
 import com.sucy.skill.facade.api.entity.Actor
 import com.sucy.skill.facade.internal.data.InternalItem
 import com.sucy.skill.util.math.formula.DynamicFormula
@@ -25,7 +26,7 @@ class ItemGiveMechanic : Mechanic() {
         amount = metadata.getFormula("amount")
 
         item = InternalItem(
-                type = material,
+                type = ItemType.of(material),
                 durability = durability.toShort(),
                 data = data.toByte(),
                 amount = 1,
@@ -37,6 +38,6 @@ class ItemGiveMechanic : Mechanic() {
     override fun execute(context: CastContext, target: Actor, recipient: Actor): Boolean {
         val number = compute(amount, context, target).toInt()
         val copy = item.copy(amount = number)
-        return recipient.inventory.give(copy)
+        return recipient.inventory.give(copy)?.amount != copy.amount
     }
 }

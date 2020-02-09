@@ -3,8 +3,8 @@ package com.sucy.skill.api.skill
 import com.sucy.skill.facade.api.entity.Actor
 
 class SkillSet {
-    private val byName = HashMap<String, SkillProgress>()
-    private val byKey = HashMap<String, SkillProgress>()
+    private val byName = mutableMapOf<String, SkillProgress>()
+    private val byKey = mutableMapOf<String, SkillProgress>()
 
     operator fun get(skillKey: String): SkillProgress? {
         val lower = skillKey.toLowerCase()

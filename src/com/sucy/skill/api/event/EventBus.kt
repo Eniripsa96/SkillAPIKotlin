@@ -3,7 +3,7 @@ package com.sucy.skill.api.event
 import com.sucy.skill.facade.api.event.EventBusProxy
 import java.util.*
 import java.util.function.Consumer
-import kotlin.collections.HashMap
+import kotlin.collections.mutableMapOf
 import kotlin.reflect.KFunction
 import kotlin.reflect.KType
 import kotlin.reflect.full.isSubtypeOf
@@ -14,7 +14,7 @@ import kotlin.reflect.full.starProjectedType
  * SkillAPIKotlin © 2018
  */
 class EventBus(private val proxy: EventBusProxy<*>) {
-    private val registry = HashMap<KType, HashMap<Step, MutableCollection<HandlerContext<*>>>>()
+    private val registry = mutableMapOf<KType, MutableMap<Step, MutableCollection<HandlerContext<*>>>>()
 
     fun registerEvents() = proxy.registerEvents()
 
@@ -53,8 +53,8 @@ class EventBus(private val proxy: EventBusProxy<*>) {
      * Handlers will continue to receive events until [unregister] is called for the same [source].
      */
     fun <T : Event> register(source: Any, event: KType, handler: Consumer<T>, step: Step = Step.NORMAL, ignoreCancelled: Boolean = true) {
-        val byStep = registry.computeIfAbsent(event) { HashMap() }
-        val handlers = byStep.computeIfAbsent(step) { ArrayList() }
+        val byStep = registry.computeIfAbsent(event) { mutableMapOf() }
+        val handlers = byStep.computeIfAbsent(step) { mutableListOf() }
         handlers.add(HandlerContext(source, handler, step, ignoreCancelled))
     }
 

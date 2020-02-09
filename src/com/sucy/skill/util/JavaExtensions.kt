@@ -9,10 +9,14 @@ import com.sucy.skill.facade.api.managers.PlayerManager
 import com.sucy.skill.util.text.enumName
 import kotlin.reflect.KClass
 
-private val enumCache: MutableMap<KClass<*>, Map<String, Enum<*>>> = HashMap()
+private val enumCache: MutableMap<KClass<*>, Map<String, Enum<*>>> = mutableMapOf()
 
 fun <T : Enum<*>> KClass<T>.match(name: String?, default: T): T {
     return name?.let { byName.getOrDefault(it.enumName(), default) } ?: default
+}
+
+fun <T : Enum<*>> KClass<T>.match(name: String?): T? {
+    return name?.let { byName[it.enumName()] }
 }
 
 val <T : Enum<*>> KClass<T>.byName: Map<String, T>

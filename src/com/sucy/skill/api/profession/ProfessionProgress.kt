@@ -14,4 +14,9 @@ class ProfessionProgress(data: Profession) : LevelProgress<Profession>(data) {
     val maxHealth = data.maxHealth.evaluate(level.toDouble())
     val maxMana = data.maxMana.evaluate(level.toDouble())
     val manaRegen = data.manaRegen.evaluate(level.toDouble())
+
+    fun matches(profession: String, exact: Boolean = false): Boolean {
+        val lower = profession.toLowerCase()
+        return data.key == lower || (!exact && history.any { it.key == lower })
+    }
 }

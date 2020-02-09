@@ -5,6 +5,7 @@ import com.sucy.skill.facade.api.managers.Task
 import com.sucy.skill.util.math.toTicks
 import java.util.*
 import java.util.function.Consumer
+import kotlin.collections.LinkedHashMap
 
 /**
  * Handles keeping tack of stacks for a [Value], whether it is a base, bonus, or
@@ -13,7 +14,7 @@ import java.util.function.Consumer
  * updated stack value.
  */
 class ValueStacks(val default: Double, val onChange: Consumer<Double>) {
-    private val tasks = HashMap<UUID, Task>()
+    private val tasks = mutableMapOf<UUID, Task>()
     private val values = LinkedHashMap<UUID, Double>()
     private var value = default
     private var maxStacks = Int.MAX_VALUE

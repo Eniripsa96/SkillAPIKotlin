@@ -8,7 +8,7 @@ import com.sucy.skill.util.Constants.NO_OP_TASK
  * SkillAPIKotlin © 2018
  */
 class FlagSet {
-    private val flags = HashMap<String, Task>()
+    private val flags = mutableMapOf<String, Task>()
 
     fun isActive(flag: String): Boolean {
         return flags.contains(flag)

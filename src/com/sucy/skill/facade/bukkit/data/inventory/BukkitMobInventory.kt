@@ -47,16 +47,18 @@ data class BukkitMobInventory(private val equipment: EntityEquipment): ActorInve
         }
     }
 
-    override fun give(item: Item): Boolean {
+    override fun give(item: Item): Item? {
         val bukkit = item.toBukkit()
         val type = bukkit.type
-        if (equipment.helmet == null && type.isHelmet()) equipment.helmet = bukkit
-        else if (equipment.chestplate == null && type.isChestplate()) equipment.chestplate = bukkit
-        else if (equipment.leggings == null && type.isLeggings()) equipment.leggings = bukkit
-        else if (equipment.boots == null && type.isBoots()) equipment.boots = bukkit
-        else if (equipment.itemInMainHand == null) equipment.itemInMainHand = bukkit
-        else if (equipment.itemInOffHand == null) equipment.itemInOffHand = bukkit
-        else return false
-        return true
+        when {
+            equipment.helmet == null && type.isHelmet() -> equipment.helmet = bukkit
+            equipment.chestplate == null && type.isChestplate() -> equipment.chestplate = bukkit
+            equipment.leggings == null && type.isLeggings() -> equipment.leggings = bukkit
+            equipment.boots == null && type.isBoots() -> equipment.boots = bukkit
+            equipment.itemInMainHand == null -> equipment.itemInMainHand = bukkit
+            equipment.itemInOffHand == null -> equipment.itemInOffHand = bukkit
+            else -> return item
+        }
+        return null
     }
 }

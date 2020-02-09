@@ -6,7 +6,6 @@ import org.bukkit.inventory.meta.ItemMeta
 import java.lang.reflect.Constructor
 import java.lang.reflect.Field
 import java.lang.reflect.Method
-import java.util.HashMap
 
 /**
  * Wrapper for NBT management
@@ -28,7 +27,7 @@ class CraftNBTWrapper(private val item: ItemStack) {
             val currentTags = tagsField.get(meta)?.let { it as MutableMap<String, Any> }
 
             if (currentTags == null) {
-                tags = HashMap()
+                tags = mutableMapOf()
                 tagsField.set(meta, tags)
             } else {
                 tags = currentTags

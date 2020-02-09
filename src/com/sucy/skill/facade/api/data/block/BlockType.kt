@@ -1,10 +1,16 @@
 package com.sucy.skill.facade.api.data.block
 
+import com.sucy.skill.util.match
+
 interface BlockType {
     val id: String
+
+    companion object {
+        fun of(name: String) = VanillaBlockType::class.match(name) ?: UnknownBlockType(name.toUpperCase())
+    }
 }
 
-data class UnknownBlockType(override val id: String) : BlockType
+private class UnknownBlockType(override val id: String) : BlockType
 
 enum class VanillaBlockType : BlockType {
     ACACIA_BUTTON,

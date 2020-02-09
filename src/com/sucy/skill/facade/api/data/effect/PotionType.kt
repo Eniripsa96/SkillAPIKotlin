@@ -1,7 +1,14 @@
 package com.sucy.skill.facade.api.data.effect
 
+import com.sucy.skill.util.match
+import com.sucy.skill.util.text.enumName
+
 interface PotionType {
     val id: String
+
+    companion object {
+        fun of(name: String): PotionType = VanillaPotionType::class.match(name) ?: UnknownPotionType(name.enumName())
+    }
 }
 
 data class UnknownPotionType(override val id: String) : PotionType

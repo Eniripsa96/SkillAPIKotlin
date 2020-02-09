@@ -21,7 +21,7 @@ abstract class Trigger<E : Event> : Effect() {
     var running = false
         private set
 
-    private val active = HashMap<UUID, Int>()
+    private val active = mutableMapOf<UUID, Int>()
 
     /**
      * @return class of the event related to the trigger

@@ -19,7 +19,7 @@ class LaunchTrigger : Trigger<ProjectileLaunchEvent>() {
     /** {@inheritDoc}  */
     override fun shouldTrigger(event: ProjectileLaunchEvent, level: Int): Boolean {
         val type = metadata.getString("type", "any")
-        return type.equals("ANY", true) || type.equals(event.projectile.type, true)
+        return type.equals("ANY", true) || type.equals(event.projectile.type.id, true)
     }
 
     /** {@inheritDoc}  */

@@ -1,0 +1,55 @@
+Potions:
+
+  # Potions able to be removed by the "Cleanse" mechanic.
+  # Typically is something you do not want applied to an ally.
+  Cleansable:
+  - SLOW
+  - SLOW_DIGGING
+  - HARM
+  - CONFUSION
+  - BLINDNESS
+  - HUNGER
+  - WEAKNESS
+  - POISON
+  - WITHER
+  - LEVITATION
+  - UNLUCK
+  - SLOW_FALLING
+
+  # Potions able to be removed by the "Purge" mechanic.
+  # Typically is something you do not want applied to an enemy
+  Purgable:
+  - SPEED
+  - FAST_DIGGING
+  - INCREASE_DAMAGE
+  - HEAL
+  - JUMP
+  - REGENERATION
+  - DAMAGE_RESISTANCE
+  - FIRE_RESISTANCE
+  - WATER_BREATHING
+  - INVISIBILITY
+  - NIGHT_VISION
+  - HEALTH_BOOST
+  - ABSORPTION
+  - SATURATION
+  - GLOWING
+  - LUCK
+  - CONDUIT_POWER
+  - DOLPHINS_GRACE
+
+Statuses:
+
+  # Statuses able to be removed by the "Cleanse" mechanic.
+  # Typically is something you do not want applied to an ally.
+  Cleansable:
+  - DISARM
+  - ROOT
+  - SILENCE
+  - STUN
+
+  # Statuses able to be removed by the "Purge" mechanic.
+  # Typically is something you do not want applied to an enemy
+  Purgable:
+  - ABSORB
+  - INVINCIBLE

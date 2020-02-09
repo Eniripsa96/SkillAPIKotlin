@@ -12,7 +12,7 @@ data class InternalItem(
         override var data: Byte = 0,
         override var amount: Int = 1,
         override var name: String? = null,
-        override var lore: List<String> = ArrayList(),
+        override var lore: List<String> = mutableListOf(),
         override var visibility: Int = 0,
-        override var tags: Map<String, Any> = HashMap()
+        override var tags: Map<String, Any> = mutableMapOf()
 ) : Item

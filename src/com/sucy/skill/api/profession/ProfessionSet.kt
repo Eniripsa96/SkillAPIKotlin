@@ -5,8 +5,8 @@ import com.sucy.skill.facade.api.entity.Player
 import com.sucy.skill.facade.api.event.player.PlayerPreProfessionChangedEvent
 import com.sucy.skill.facade.api.event.player.PlayerProfessionChangedEvent
 
-class ProfessionSet {
-    private val professions = HashMap<String, ProfessionProgress>()
+class ProfessionSet : Iterable<ProfessionProgress> {
+    private val professions = mutableMapOf<String, ProfessionProgress>()
 
     val all: Collection<ProfessionProgress>
         get() = professions.values
@@ -134,4 +134,6 @@ class ProfessionSet {
 
         return total to current + diff
     }
+
+    override fun iterator() = all.iterator()
 }

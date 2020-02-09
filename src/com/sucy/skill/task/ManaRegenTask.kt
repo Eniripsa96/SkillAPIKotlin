@@ -12,6 +12,7 @@ class ManaRegenTask : Task(
             players.onlinePlayers.forEach {
                 val toGain = it.activeAccount.manaRegen
                 it.giveMana(toGain, ManaSource.REGEN)
+                Logger.trace("${it.name} was given $toGain mana")
             }
         }
 )

@@ -3,7 +3,7 @@ package com.sucy.skill.util.io.parser
 import com.sucy.skill.util.io.Data
 import java.util.*
 import java.util.regex.Pattern
-import kotlin.collections.ArrayList
+import kotlin.collections.mutableListOf
 
 /**
  * SkillAPIKotlin © 2018
@@ -101,7 +101,7 @@ class YAMLParser : Parser() {
     override fun parse(data: String, quote: Char): Data {
         val lines = data.lines()
 
-        val comments = ArrayList<String>()
+        val comments = mutableListOf<String>()
         val stack = Stack<Data>()
 
         var indent = 0
@@ -132,7 +132,7 @@ class YAMLParser : Parser() {
 
             val key = parseKey(trimmed, index)
 
-            target.comments[key] = ArrayList(comments)
+            target.comments[key] = comments.toMutableList()
             comments.clear()
 
             if (emptyObject.matcher(trimmed).matches()) {
@@ -145,7 +145,7 @@ class YAMLParser : Parser() {
                     stack.push(target)
                     target = section
                 } else {
-                    val list = ArrayList<String>()
+                    val list = mutableListOf<String>()
                     while (next < lines.size && countSpaces(lines[next]) == indent && lines[next][indent] == '-') {
                         val raw = lines[next].substring(indent + 1)
                         index = next + 1

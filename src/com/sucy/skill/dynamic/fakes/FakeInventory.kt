@@ -15,5 +15,5 @@ object FakeInventory : ActorInventory {
     override val contents: List<Item?> = emptyList()
     override fun get(index: Int): Item? = null
     override fun set(index: Int, item: Item?) {}
-    override fun give(item: Item): Boolean = false
+    override fun give(item: Item): Item? = null
 }

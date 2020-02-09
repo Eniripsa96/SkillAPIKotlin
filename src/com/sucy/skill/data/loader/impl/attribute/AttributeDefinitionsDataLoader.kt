@@ -11,7 +11,7 @@ object AttributeDefinitionsDataLoader : DataLoader<AttributeDefinitions> {
     override val transformers = mapOf(1 to LegacyAttributeDefinitionsTransformer)
 
     override fun load(key: String, data: Data): AttributeDefinitions {
-        val attributes = ArrayList<Attribute>()
+        val attributes = mutableListOf<Attribute>()
         data.forEach { attributes.add(AttributeDataLoader.load(it, data.getOrCreateSection(it))) }
         return AttributeDefinitions(attributes.toList())
     }

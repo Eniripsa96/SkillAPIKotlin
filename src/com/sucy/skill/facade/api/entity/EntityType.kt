@@ -1,10 +1,16 @@
 package com.sucy.skill.facade.api.entity
 
+import com.sucy.skill.util.match
+
 interface EntityType {
     val id: String
+
+    companion object {
+        fun of(name: String) = VanillaEntityType::class.match(name) ?: UnknownEntityType(name.toUpperCase())
+    }
 }
 
-data class UnknownEntityType(override val id: String): EntityType
+private data class UnknownEntityType(override val id: String): EntityType
 
 enum class VanillaEntityType : EntityType {
     AREA_EFFECT_CLOUD,

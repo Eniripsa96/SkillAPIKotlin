@@ -10,7 +10,7 @@ import kotlin.reflect.KClass
  * SkillAPIKotlin © 2018
  */
 abstract class EventBusProxy<T : Any> {
-    private val proxies = HashMap<Class<*>, MutableList<EventProxy<*, T, *>>>()
+    private val proxies = mutableMapOf<Class<*>, MutableList<EventProxy<*, T, *>>>()
 
     /**
      * Registers the [handler] for the external event system at the specified [step].
@@ -50,6 +50,6 @@ abstract class EventBusProxy<T : Any> {
         Step.values().forEach { step ->
             register(step, proxy) { SkillAPI.eventBus.trigger(it, step) }
         }
-        proxies.computeIfAbsent(type.java) { ArrayList() }.add(proxy)
+        proxies.computeIfAbsent(type.java) { mutableListOf() }.add(proxy)
     }
 }

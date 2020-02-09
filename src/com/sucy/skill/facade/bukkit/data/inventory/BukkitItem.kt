@@ -2,7 +2,6 @@ package com.sucy.skill.facade.bukkit.data.inventory
 
 import com.sucy.skill.facade.api.data.inventory.Item
 import com.sucy.skill.facade.api.data.inventory.ItemType
-import com.sucy.skill.facade.api.data.inventory.UnknownItemType
 import org.bukkit.Material
 import org.bukkit.inventory.ItemStack
 
@@ -17,7 +16,7 @@ data class BukkitItem(private val item: ItemStack) : Item {
         set(value) { meta.lore = value }
     // TODO - map to/from vanilla types, supporting new/old names
     override var type: ItemType
-        get() = UnknownItemType(item.type.name)
+        get() = ItemType.of(item.type.name)
         set(value) { item.type = Material.matchMaterial(value.id) }
     override var amount: Int
         get() = item.amount
@@ -30,8 +29,8 @@ data class BukkitItem(private val item: ItemStack) : Item {
         set(value) { item.data.data = value }
     override var visibility: Int
         get() = 0
-        set(value) {}
+        set(_) {}
     override var tags: Map<String, Any>
         get() = mapOf()
-        set(value) {}
+        set(_) {}
 }

@@ -21,7 +21,7 @@ interface Player : Actor {
     val isCrouching: Boolean
 
     override val level: Int
-        get() = if (activeAccount.professionSet.isProfessed()) activeAccount.professionSet.main!!.level else 0
+        get() = activeAccount.professionSet.main?.level ?: 0
     override var mana: Double
         get() = accounts.activeAccount.mana
         set(value) {

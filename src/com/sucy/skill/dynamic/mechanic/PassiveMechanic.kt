@@ -16,7 +16,7 @@ class PassiveMechanic : Effect() {
     private var delay = 40L
     private var interval = 40L
 
-    private val tasks = HashMap<UUID, Task>()
+    private val tasks = mutableMapOf<UUID, Task>()
 
     override fun initialize() {
         delay = metadata.getDouble("delay", 2.0).toTicks()
@@ -32,7 +32,7 @@ class PassiveMechanic : Effect() {
 
         var task: Task? = null
 
-        val taskTargets = ArrayList(targets)
+        val taskTargets = targets.toMutableList()
         task = SkillAPI.server.taskManager.schedule(delay, interval) {
             taskTargets.removeIf { it.dead || !it.exists }
             if (taskTargets.isEmpty()) {

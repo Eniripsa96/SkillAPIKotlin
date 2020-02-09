@@ -5,12 +5,13 @@ import com.sucy.skill.api.profession.Profession
 import com.sucy.skill.api.profession.ProfessionProgress
 import com.sucy.skill.data.loader.impl.LevelProgressDataLoader
 import com.sucy.skill.data.loader.transform.DataTransformer
+import com.sucy.skill.facade.api.data.inventory.VanillaItemType
 import com.sucy.skill.facade.internal.data.InternalItem
 import com.sucy.skill.util.io.Data
 
 object ProfessionProgressDataLoader : LevelProgressDataLoader<ProfessionProgress, Profession>() {
     const val NAME = "name"
-    val ITEM = InternalItem("PUMPKIN")
+    val ITEM = InternalItem(VanillaItemType.PUMPKIN)
 
     override val requiredKeys: Array<String> = arrayOf()
     override val transformers: Map<Int, DataTransformer> = mapOf()

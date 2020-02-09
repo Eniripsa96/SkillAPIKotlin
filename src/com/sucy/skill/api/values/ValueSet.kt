@@ -4,7 +4,7 @@ package com.sucy.skill.api.values
  * SkillAPIKotlin © 2018
  */
 class ValueSet {
-    internal val values = HashMap<String, Value>()
+    internal val values = mutableMapOf<String, Value>()
 
     /**
      * Fetches data for an attribute using a given [key]

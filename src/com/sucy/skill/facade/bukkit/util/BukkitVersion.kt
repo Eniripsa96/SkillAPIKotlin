@@ -8,7 +8,6 @@ import org.bukkit.permissions.Permission
 import org.bukkit.permissions.PermissionAttachment
 import org.bukkit.permissions.PermissionAttachmentInfo
 import org.bukkit.plugin.Plugin
-import java.lang.Exception
 
 object BukkitVersion {
     const val v1_8 = 1_08_00
@@ -25,6 +24,8 @@ object BukkitVersion {
     fun isAtLeast(target: Int): Boolean {
         return target >= version
     }
+
+    fun getMajorVersion(): Int = version / 100
 
     private fun initialize(vs: String) {
         try {

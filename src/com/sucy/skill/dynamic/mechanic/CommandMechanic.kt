@@ -11,6 +11,7 @@ class CommandMechanic : Mechanic() {
     private var command: String = "say Hello World!"
 
     override fun initialize() {
+        super.initialize()
         command = metadata.getString("command", command)
     }
 

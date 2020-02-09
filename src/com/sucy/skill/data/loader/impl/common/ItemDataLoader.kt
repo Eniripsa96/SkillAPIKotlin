@@ -3,6 +3,8 @@ package com.sucy.skill.data.loader.impl.common
 import com.sucy.skill.data.loader.DataLoader
 import com.sucy.skill.data.loader.transform.DataTransformer
 import com.sucy.skill.facade.api.data.inventory.Item
+import com.sucy.skill.facade.api.data.inventory.ItemType
+import com.sucy.skill.facade.api.data.inventory.VanillaItemType
 import com.sucy.skill.facade.internal.data.InternalItem
 import com.sucy.skill.util.io.Data
 
@@ -16,14 +18,14 @@ object ItemDataLoader : DataLoader<Item> {
     private const val VISIBILITY = "visibility"
     private const val TAGS = "tags"
 
-    private val DEFAULT_ITEM = InternalItem("PUMPKIN")
+    private val DEFAULT_ITEM = InternalItem(VanillaItemType.PUMPKIN)
 
     override val transformers = emptyMap<Int, DataTransformer>()
     override val requiredKeys = arrayOf<String>()
 
     override fun load(key: String, data: Data): Item {
         return InternalItem(
-                type = data.getString(TYPE, DEFAULT_ITEM.type),
+                type = data.getString(TYPE)?.let { ItemType.of(it) } ?: DEFAULT_ITEM.type,
                 durability = data.getInt(DURABILITY, 0).toShort(),
                 data = data.getInt(DATA, 0).toByte(),
                 amount = data.getInt(AMOUNT, 1),
@@ -45,7 +47,7 @@ object ItemDataLoader : DataLoader<Item> {
     override fun serialize(data: Item): Data {
         val result = Data()
 
-        result.set(TYPE, data.type)
+        result.set(TYPE, data.type.id)
         result.set(DURABILITY, data.durability)
         result.set(DATA, data.data)
         result.set(AMOUNT, data.amount)

@@ -4,7 +4,7 @@ package com.sucy.skill.api.player
  * SkillAPIKotlin © 2018
  */
 class AccountSet {
-    val data = HashMap<Int, PlayerAccount>()
+    val data = mutableMapOf<Int, PlayerAccount>()
     var synchronized: Boolean = true
         private set
 

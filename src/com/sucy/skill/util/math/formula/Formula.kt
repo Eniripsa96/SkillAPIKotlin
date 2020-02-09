@@ -30,7 +30,7 @@ open class Formula(val expression: String, protected val keys: MutableList<Strin
     private fun parseTokens(): List<Token> {
         var start = 0
         val operators = Stack<OrderedToken>()
-        val result = ArrayList<Token>()
+        val result = mutableListOf<Token>()
         for (i in 0 until expression.length) {
             if (OP_TOKENS.containsKey(expression[i]) || expression[i] == '(' || expression[i] == ')') {
                 val token = expression.substring(start, i).trim()

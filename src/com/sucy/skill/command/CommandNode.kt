@@ -4,7 +4,7 @@ package com.sucy.skill.command
  * Handles building out relations between commands and handles delegating between them
  */
 class CommandNode {
-    private val subNodes = HashMap<String, CommandNode>()
+    private val subNodes = mutableMapOf<String, CommandNode>()
 
     var command: ConfigurableCommand? = null
         private set

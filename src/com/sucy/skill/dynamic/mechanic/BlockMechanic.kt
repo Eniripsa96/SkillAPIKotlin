@@ -2,8 +2,10 @@ package com.sucy.skill.dynamic.mechanic
 
 import com.sucy.skill.SkillAPI
 import com.sucy.skill.dynamic.CastContext
-import com.sucy.skill.facade.api.data.block.BlockState
 import com.sucy.skill.facade.api.data.Location
+import com.sucy.skill.facade.api.data.block.BlockState
+import com.sucy.skill.facade.api.data.block.BlockType
+import com.sucy.skill.facade.api.data.block.VanillaBlockType
 import com.sucy.skill.facade.api.entity.Actor
 import com.sucy.skill.facade.api.managers.Task
 import com.sucy.skill.facade.enums.Shape
@@ -16,7 +18,7 @@ class BlockMechanic : Mechanic() {
     private var air = false
     private var solid = true
     private var shape = Shape.BOX
-    private var blockType = "dirt"
+    private var blockType: BlockType = VanillaBlockType.DIRT
     private var blockData = 0
 
     override fun initialize() {
@@ -24,7 +26,7 @@ class BlockMechanic : Mechanic() {
 
         casterOnce = false
         shape = Shape::class.match(metadata.getString("shape", "box"), Shape.BOX)
-        blockType = metadata.getString("blockType", blockType)
+        blockType = metadata.getString("blockType")?.let { BlockType.of(it) } ?: blockType
         blockData = metadata.getInt("blockData", blockData)
 
         val affected = metadata.getString("affectedBlocks", "solid").toLowerCase()
@@ -39,9 +41,9 @@ class BlockMechanic : Mechanic() {
         val radZ = compute("radZ", context, target).toInt()
 
         val world = SkillAPI.server.getWorld(recipient.location.world)
-        val affected = ArrayList<Location>()
+        val affected = mutableListOf<Location>()
         world.forEachBlock(recipient.location.coords, radX, radY, radZ, shape) {
-            if ((!solid || it.isSolid) && (!air || it.isAir)) {
+            if ((solid || !it.isSolid) && (air || !it.isAir)) {
                 if (pending.containsKey(it.location)) {
                     pending[it.location] = pending[it.location]!! + 1
                 } else {
@@ -69,12 +71,12 @@ class BlockMechanic : Mechanic() {
             }
         }
 
-        return !affected.isEmpty()
+        return affected.isNotEmpty()
     }
 
     companion object {
         val tasks = HashSet<Task>()
-        val pending = HashMap<Location, Int>()
-        val original = HashMap<Location, BlockState>()
+        val pending = mutableMapOf<Location, Int>()
+        val original = mutableMapOf<Location, BlockState>()
     }
 }

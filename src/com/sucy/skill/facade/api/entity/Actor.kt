@@ -19,7 +19,7 @@ import com.sucy.skill.util.math.Vector3
 import com.sucy.skill.util.math.limit
 import com.sucy.skill.util.math.sq
 import java.util.*
-import kotlin.collections.HashMap
+import kotlin.collections.mutableMapOf
 import kotlin.math.min
 
 /**
@@ -54,7 +54,7 @@ interface Actor : Entity, CommandSender {
         get() = SkillAPI.entityData.flags.computeIfAbsent(uuid) { FlagSet() }
 
     val metadata: MutableMap<String, Any>
-        get() = SkillAPI.entityData.metadata.computeIfAbsent(uuid) { HashMap() }
+        get() = SkillAPI.entityData.metadata.computeIfAbsent(uuid) { mutableMapOf() }
 
     val skills: SkillSet
         get() = SkillAPI.entityData.skills.computeIfAbsent(uuid) { SkillSet() }

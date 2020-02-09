@@ -21,10 +21,10 @@ open class BukkitEntity(open val entity: Entity) : com.sucy.skill.facade.api.ent
         get() = VanillaEntityType.valueOf(entity.type.name)
     override val world: World
         get() = BukkitWorld(entity.world)
-    override var fireTicks: Int
-        get() = entity.fireTicks
+    override var fireTicks: Long
+        get() = entity.fireTicks.toLong()
         set(value) {
-            entity.fireTicks = value
+            entity.fireTicks = value.toInt()
         }
 
     override var location: Location

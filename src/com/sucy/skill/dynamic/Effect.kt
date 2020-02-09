@@ -11,7 +11,7 @@ abstract class Effect {
     abstract val key: String
     abstract val type: EffectType
 
-    private val children = ArrayList<Effect>()
+    private val children = mutableListOf<Effect>()
     val metadata = Data()
 
     lateinit var parentSkill: DynamicSkill
@@ -30,12 +30,14 @@ abstract class Effect {
         if (targets.isEmpty()) return false
 
         var worked = false
+        context.failures.push(emptyList())
         children.forEach {
             val counts = !it.metadata.getString("counts", "true").equals("false", true)
             val passed = it.execute(context, targets)
             context.last = passed
             worked = (passed && counts) || worked
         }
+        context.failures.pop()
         return worked
     }
 

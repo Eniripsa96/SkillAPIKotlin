@@ -5,6 +5,7 @@ import com.sucy.skill.facade.bukkit.data.BukkitLocation
 import com.sucy.skill.facade.bukkit.entity.BukkitActor
 import com.sucy.skill.facade.bukkit.entity.BukkitEntity
 import com.sucy.skill.facade.bukkit.entity.BukkitPlayer
+import com.sucy.skill.facade.bukkit.util.BukkitConversion
 import com.sucy.skill.util.math.Vector3
 import org.bukkit.Bukkit
 import org.bukkit.Location
@@ -36,7 +37,7 @@ fun com.sucy.skill.facade.api.entity.Entity.toBukkit(): Entity {
 }
 
 fun Item.toBukkit(): ItemStack {
-    val material = Material.matchMaterial(type) ?: DEFAULT_MATERIAL
+    val material = BukkitConversion.convertToMaterial(type) ?: DEFAULT_MATERIAL
     val result = try {
         ItemStack(material, amount, durability, data)
     } catch (ex: Exception) {

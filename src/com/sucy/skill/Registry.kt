@@ -12,13 +12,13 @@ import com.sucy.skill.util.log.Logger
 import java.io.File
 
 class Registry {
-    private val skillsByKey = HashMap<String, Skill>()
-    private val skillsByName = HashMap<String, Skill>()
-    private val professionsByKey = HashMap<String, Profession>()
-    private val professionsByName = HashMap<String, Profession>()
+    private val skillsByKey = mutableMapOf<String, Skill>()
+    private val skillsByName = mutableMapOf<String, Skill>()
+    private val professionsByKey = mutableMapOf<String, Profession>()
+    private val professionsByName = mutableMapOf<String, Profession>()
 
     init {
-        val plugins = SkillAPI.server.plugins.filter { it is SkillPlugin }.map { it as SkillPlugin }
+        val plugins = SkillAPI.server.plugins.filterIsInstance<SkillPlugin>()
 
         loadDynamicSkills()
         loadDynamicProfessions()

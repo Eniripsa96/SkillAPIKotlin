@@ -32,11 +32,11 @@ data class AttributeDefinitions(val attributes: List<Attribute>) {
                 .groupBy({ it.first }) { it.second }
                 .mapValues { StatAttributeSet(it.key, it.value) }
 
-        val byComponent = HashMap<String, List<Attribute>>()
+        val byComponent = mutableMapOf<String, List<Attribute>>()
         attributes.forEach { attribute ->
             attribute.dynamicModifiers.forEach { type, modifiers ->
                 modifiers.forEach {
-                    val list = byComponent.computeIfAbsent("$type-${it.key}".toLowerCase()) { ArrayList() }
+                    val list = byComponent.computeIfAbsent("$type-${it.key}".toLowerCase()) { mutableListOf() }
                     (list as MutableList<Attribute>).add(attribute)
                 }
             }

@@ -10,13 +10,13 @@ class Value {
     private var bonus = 0.0
     private var multiplier = 1.0
 
-    internal val baseSources = HashMap<String, Double>()
-    internal val additiveSources = HashMap<String, Double>()
-    internal val multiplierSources = HashMap<String, Double>()
+    internal val baseSources = mutableMapOf<String, Double>()
+    internal val additiveSources = mutableMapOf<String, Double>()
+    internal val multiplierSources = mutableMapOf<String, Double>()
 
-    private val baseStacks = HashMap<String, ValueStacks>()
-    private val bonusStacks = HashMap<String, ValueStacks>()
-    private val multiplierStacks = HashMap<String, ValueStacks>()
+    private val baseStacks = mutableMapOf<String, ValueStacks>()
+    private val bonusStacks = mutableMapOf<String, ValueStacks>()
+    private val multiplierStacks = mutableMapOf<String, ValueStacks>()
 
     var total = 0.0
         private set

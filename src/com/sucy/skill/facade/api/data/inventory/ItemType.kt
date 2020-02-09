@@ -1,11 +1,17 @@
 package com.sucy.skill.facade.api.data.inventory
 
+import com.sucy.skill.util.match
+
 interface ItemType {
     val id: String
     val maxStack: Int
+
+    companion object {
+        fun of(name: String) = VanillaItemType::class.match(name) ?: UnknownItemType(name.toUpperCase())
+    }
 }
 
-data class UnknownItemType(override val id: String, override val maxStack: Int = 64) : ItemType
+private data class UnknownItemType(override val id: String, override val maxStack: Int = 64) : ItemType
 
 enum class VanillaItemType(override val maxStack: Int = 64) : ItemType {
     ACACIA_BOAT,

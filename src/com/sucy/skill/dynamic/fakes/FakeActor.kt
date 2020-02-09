@@ -7,7 +7,6 @@ import com.sucy.skill.facade.api.data.effect.PotionEffect
 import com.sucy.skill.facade.api.data.effect.PotionType
 import com.sucy.skill.facade.api.entity.Actor
 import com.sucy.skill.facade.api.entity.EntityType
-import com.sucy.skill.facade.api.entity.UnknownEntityType
 import com.sucy.skill.util.math.Vector3
 import java.util.*
 
@@ -28,14 +27,14 @@ class FakeActor(override var location: Location) : Actor {
     override val type: EntityType = TYPE
     override var name: String = NAME
     override val world: World = SkillAPI.server.getWorld(location.world)
-    override var fireTicks: Int = 0
+    override var fireTicks: Long = 0L
     override fun isOnGround(): Boolean = false
     override fun sendMessage(message: String) {}
     override fun hasPermission(permission: String): Boolean = true
 
     companion object {
         private const val NAME = "Fake Entity"
-        private val TYPE = UnknownEntityType("FAKE")
+        private val TYPE = EntityType.of("FAKE")
         private val ID = UUID.fromString("00000000-0000-0000-0000-000000000000")
     }
 }

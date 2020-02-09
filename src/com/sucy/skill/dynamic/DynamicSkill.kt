@@ -15,9 +15,9 @@ import java.util.*
 class DynamicSkill(name: String, icon: Item, maxLevel: Int)
     : Skill(name, icon, maxLevel), SkillShot, PassiveSkill {
 
-    private val triggers = ArrayList<Trigger<*>>()
-    private val iconKeyMapping = HashMap<String, Effect>()
-    private val activeLevels = HashMap<UUID, Int>()
+    private val triggers = mutableListOf<Trigger<*>>()
+    private val iconKeyMapping = mutableMapOf<String, Effect>()
+    private val activeLevels = mutableMapOf<UUID, Int>()
 
     private var castEffect: Trigger<*>? = null
     private var initializeEffect: Trigger<*>? = null

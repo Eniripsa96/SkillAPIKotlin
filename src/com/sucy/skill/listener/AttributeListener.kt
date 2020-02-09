@@ -36,7 +36,7 @@ class AttributeListener : SkillAPIListener {
     }
 
     private fun modifyDamage(event: ActorDamagedByActorEvent, actor: Actor, physicalStat: Stat, skillStat: Stat) {
-        val stats = ArrayList<String>()
+        val stats = mutableListOf<String>()
         when {
             event.damageType.equals(PHYSICAL, ignoreCase = true) -> {
                 stats.add(physicalStat.key)

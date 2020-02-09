@@ -7,7 +7,7 @@ import com.sucy.skill.facade.api.entity.Player
 import java.lang.IllegalStateException
 
 class SkillBar(private val account: PlayerAccount) {
-    val slots = HashMap<Int, Slot>()
+    val slots = mutableMapOf<Int, Slot>()
     var enabled = true
         private set
     var shown = false

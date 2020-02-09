@@ -11,7 +11,7 @@ class SQLDatabase(
         private val username: String,
         private val password: String
 ) {
-    private val tables = HashMap<String, SQLTable>()
+    private val tables = mutableMapOf<String, SQLTable>()
 
     private val connectionURL = "jdbc:mysql://$host:$port/$database"
     private var connection: Connection? = null

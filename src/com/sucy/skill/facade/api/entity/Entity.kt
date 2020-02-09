@@ -13,7 +13,7 @@ interface Entity {
     val type: EntityType
     var name: String
     val world: World
-    var fireTicks: Int
+    var fireTicks: Long
 
     fun clearFire() { fireTicks = 0 }
     fun isOnGround(): Boolean

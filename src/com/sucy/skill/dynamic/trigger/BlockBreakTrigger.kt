@@ -19,8 +19,8 @@ class BlockBreakTrigger : Trigger<BlockBreakEvent>() {
     /** {@inheritDoc}  */
     override fun shouldTrigger(event: BlockBreakEvent, level: Int): Boolean {
         val types = metadata.getStringList("material")
-        return (types.isEmpty() || types.size == 1 && types.get(0).equals("ANY", true)
-                || types.stream().anyMatch { mat -> event.block.type.equals(mat, true) })
+        return (types.isEmpty() || types.size == 1 && types[0].equals("ANY", true)
+                || types.stream().anyMatch { mat -> event.block.type.id.equals(mat, true) })
     }
 
     /** {@inheritDoc}  */

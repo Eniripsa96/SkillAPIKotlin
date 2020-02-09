@@ -27,7 +27,7 @@ class BukkitWorld(private val world: org.bukkit.World) : World {
 
     override fun getActorsInRadius(center: Vector3, radius: Double): List<Actor> {
         val rSq = sq(radius)
-        val result = ArrayList<Actor>()
+        val result = mutableListOf<Actor>()
         forEachChunkPos(center, radius) { i, j ->
             world.getChunkAt(i, j).entities.forEach {
                 val actor = it.toActor()

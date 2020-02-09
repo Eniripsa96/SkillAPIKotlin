@@ -2,6 +2,7 @@ package com.sucy.skill.util.io
 
 import com.google.common.collect.ImmutableSet
 import com.sucy.skill.facade.api.data.inventory.Item
+import com.sucy.skill.facade.api.data.inventory.ItemType
 import com.sucy.skill.facade.internal.data.InternalItem
 import com.sucy.skill.util.math.formula.DynamicFormula
 import com.sucy.skill.util.text.color
@@ -11,10 +12,10 @@ import java.util.stream.Collectors
  * SkillAPIKotlin © 2018
  */
 class Data internal constructor() {
-    val comments = HashMap<String, MutableList<String>>()
-    private val data = HashMap<String, Any>()
-    private val formulas = HashMap<String, DynamicFormula>()
-    private val keys = ArrayList<String>()
+    val comments = mutableMapOf<String, MutableList<String>>()
+    private val data = mutableMapOf<String, Any>()
+    private val formulas = mutableMapOf<String, DynamicFormula>()
+    private val keys = mutableListOf<String>()
 
     constructor(initial: Map<String, Any>) : this() {
         initial.forEach { key, value ->
@@ -41,7 +42,7 @@ class Data internal constructor() {
     }
 
     fun keys(): List<String> {
-        return ArrayList(keys)
+        return keys.toList()
     }
 
     fun clear() {
@@ -51,7 +52,7 @@ class Data internal constructor() {
     }
 
     fun addComment(key: String, comment: String) {
-        comments.computeIfAbsent(key) { ArrayList() }.add(comment)
+        comments.computeIfAbsent(key) { mutableListOf() }.add(comment)
     }
 
     fun has(key: String): Boolean {
@@ -85,7 +86,7 @@ class Data internal constructor() {
 
     fun set(key: String, value: Map<String, Any>) {
         val section = getOrCreateSection(key)
-        value.forEach { k, v ->
+        value.forEach { (k, v) ->
             when (v) {
                 is Map<*, *> -> section.set(k, v as Map<String, Any>)
                 is Collection<*> -> section.set(k, v.toList() as List<String>)
@@ -168,7 +169,7 @@ class Data internal constructor() {
     fun getItem(key: String): Item {
         val data = getOrCreateSection(key)
         return InternalItem(
-                data.getString("type", "DIRT").toUpperCase().replace(' ', '_'),
+                ItemType.of(data.getString("type", "DIRT")),
                 data.getInt("durability").toShort(),
                 data.getInt("data").toByte(),
                 data.getInt("amount", 1),
