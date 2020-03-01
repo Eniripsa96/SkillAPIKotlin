@@ -10,11 +10,13 @@ abstract class Condition : Effect() {
 
     protected var applyToCaster = false
     protected var elseIf = false
+    protected var negated = false
 
     override fun initialize() {
-        val target = metadata.getString("applyTo", "target").toLowerCase()
+        val target = metadata.getString("apply-to", "target").toLowerCase()
         applyToCaster = target != "target"
-        elseIf = metadata.getBoolean("elseIf", elseIf)
+        elseIf = metadata.getBoolean("else-if", elseIf)
+        negated = metadata.getBoolean("negated", negated)
     }
 
     override fun execute(context: CastContext, targets: List<Actor>): Boolean {
@@ -23,7 +25,7 @@ abstract class Condition : Effect() {
 
         val (passed, failed) = actorSet.partition {
             val recipient = if (applyToCaster) context.caster else it
-            recipient.exists && !recipient.dead && matches(context, it, recipient)
+            recipient.exists && !recipient.dead && (matches(context, it, recipient) != negated)
         }
 
         context.failures.push(failed)

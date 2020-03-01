@@ -86,14 +86,16 @@ class Data internal constructor() {
 
     fun set(key: String, value: Map<String, Any>) {
         val section = getOrCreateSection(key)
-        value.forEach { (k, v) ->
-            when (v) {
-                is Map<*, *> -> section.set(k, v as Map<String, Any>)
-                is Collection<*> -> section.set(k, v.toList() as List<String>)
-                is Number -> section.set(k, v)
-                is Boolean -> section.set(k, v)
-                else -> section.set(k, v.toString())
-            }
+        value.forEach { (k, v) -> section.set(k, v) }
+    }
+
+    fun set(key: String, value: Any) {
+        when (value) {
+            is Map<*, *> -> set(key, value as Map<String, Any>)
+            is Collection<*> -> set(key, value.toList() as List<String>)
+            is Number -> set(key, value)
+            is Boolean -> set(key, value)
+            else -> set(key, value.toString())
         }
     }
 

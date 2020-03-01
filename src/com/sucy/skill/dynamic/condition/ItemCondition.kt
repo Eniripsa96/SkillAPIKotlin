@@ -19,8 +19,8 @@ class ItemCondition : Condition() {
     }
 
     override fun matches(context: CastContext, target: Actor, recipient: Actor): Boolean {
-        var required = amount.evaluate(context.caster, target)
-        return itemContext.findItems(recipient, context.caster, target) {
+        var required = amount.evaluate(context.caster, target).toInt()
+        return itemContext.findItems(recipient) {
             required -= it.amount
             required <= 0
         }

@@ -13,14 +13,16 @@ object DynamicSkillDataLoader : DataLoader<Skill> {
     private const val MAX_LEVEL = "maxLevel"
     private const val ICON = "icon"
 
-    override val transformers: Map<Int, DataTransformer> = mapOf(1 to LegacySkillTransformer)
+    override val transformers: Map<Int, DataTransformer> = mapOf<Int, DataTransformer>(1 to LegacySkillTransformer)
     override val requiredKeys: Array<String> = arrayOf(NAME)
 
     override fun load(key: String, data: Data): Skill {
         val result = DynamicSkill(
                 data.getString(NAME)!!,
                 ItemDataLoader.loadOrDefault(data.getSection(ICON)),
-                data.getInt(MAX_LEVEL, 1))
+                data.getInt(MAX_LEVEL, 1),
+                emptyList()
+        )
         return result
     }
 

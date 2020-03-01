@@ -12,10 +12,14 @@ import java.util.*
 /**
  * SkillAPIKotlin © 2018
  */
-class DynamicSkill(name: String, icon: Item, maxLevel: Int)
-    : Skill(name, icon, maxLevel), SkillShot, PassiveSkill {
+class DynamicSkill(
+        name: String,
+        icon: Item,
+        maxLevel: Int,
+        private val triggers: List<Trigger<*>>
+) : Skill(name, icon, maxLevel), SkillShot, PassiveSkill {
 
-    private val triggers = mutableListOf<Trigger<*>>()
+
     private val iconKeyMapping = mutableMapOf<String, Effect>()
     private val activeLevels = mutableMapOf<UUID, Int>()
 

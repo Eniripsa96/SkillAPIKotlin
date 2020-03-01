@@ -27,7 +27,7 @@ abstract class AbstractValueMechanic : Mechanic() {
         maxStacks = metadata.getFormula("maxStacks", 5.0)
         duration = metadata.getFormula("duration", 5.0)
         value = metadata.getFormula("value", 1.0)
-        valueType = ValueType::class.match(metadata.getString("valueType", valueType.name), ValueType.BONUS)
+        valueType = ValueType::class.match(metadata.getString("valueType", valueType.name), ValueType.SET)
         timerType = TimerType::class.match(metadata.getString("timerType", timerType.name), TimerType.OVERWRITE)
         stackKey = metadata.getString("stackKey", stackKey)
 
@@ -41,12 +41,16 @@ abstract class AbstractValueMechanic : Mechanic() {
         val maxStacks = compute(this.maxStacks, context, target).toInt()
         if (duration > 0) {
             when (valueType) {
+                ValueType.SET -> {
+                    value
+                }
                 ValueType.BASE -> value.addBaseStack(modifier, duration, maxStacks, timerType, stackKey)
                 ValueType.BONUS -> value.addBonusStack(modifier, duration, maxStacks, timerType, stackKey)
                 ValueType.MULTIPLIER -> value.addMultiplierStack(modifier, duration, maxStacks, timerType, stackKey)
             }
         } else {
             when (valueType) {
+                ValueType.SET ->
                 ValueType.BASE -> value.addBase(modifier, stackKey)
                 ValueType.BONUS -> value.addBonus(modifier, stackKey)
                 ValueType.MULTIPLIER -> value.addMultiplier(modifier, stackKey)

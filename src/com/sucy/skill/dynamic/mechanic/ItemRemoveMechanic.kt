@@ -20,7 +20,7 @@ class ItemRemoveMechanic : Mechanic() {
 
     override fun execute(context: CastContext, target: Actor, recipient: Actor): Boolean {
         var remaining = compute(amount, context, target).toInt()
-        return itemContext.findSlots(recipient, context.caster, target) { inventory, item, slot ->
+        return itemContext.findSlots(recipient) { inventory, item, slot ->
             if (item.amount < remaining) {
                 remaining -= item.amount
                 inventory[slot] = null

@@ -1,5 +1,6 @@
 package com.sucy.skill.facade.bukkit
 
+import com.sucy.skill.facade.api.data.block.Block
 import com.sucy.skill.facade.api.data.inventory.Item
 import com.sucy.skill.facade.bukkit.data.BukkitLocation
 import com.sucy.skill.facade.bukkit.entity.BukkitActor

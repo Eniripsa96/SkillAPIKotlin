@@ -9,16 +9,19 @@ class StatusCondition : Condition() {
     override val key = "status"
 
     private var statuses = listOf(Status.STUN)
-    private var set = true
 
     override fun initialize() {
         super.initialize()
 
-        statuses = metadata.getStringList("status", statuses.map { it.name }).mapNotNull { Status::class.match(it) }
-        set = metadata.getBoolean("set", set)
+        val names = metadata.getStringList("status", statuses.map { it.name }).map { it.toLowerCase() }
+        statuses = if (names.contains("any")) {
+            Status.values().toList()
+        } else {
+            names.mapNotNull { Status::class.match(it) }
+        }
     }
 
     override fun matches(context: CastContext, target: Actor, recipient: Actor): Boolean {
-        return statuses.any { recipient.flags.isActive(it.name) } == set
+        return statuses.any { recipient.flags.isActive(it.name) }
     }
 }

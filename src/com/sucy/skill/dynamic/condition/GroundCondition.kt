@@ -10,7 +10,7 @@ class GroundCondition : Condition() {
 
     override fun initialize() {
         super.initialize()
-        onGround = metadata.getBoolean("onGround", onGround)
+        onGround = metadata.getBoolean("on-ground", onGround)
     }
 
     override fun matches(context: CastContext, target: Actor, recipient: Actor): Boolean {

@@ -1,7 +1,7 @@
 package com.sucy.skill.util.math
 
-import java.lang.Math.sqrt
 import kotlin.math.abs
+import kotlin.math.sqrt
 
 /**
  * SkillAPIKotlin © 2018

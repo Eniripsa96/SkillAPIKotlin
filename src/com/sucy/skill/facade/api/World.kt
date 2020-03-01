@@ -3,7 +3,9 @@ package com.sucy.skill.facade.api
 import com.sucy.skill.facade.api.data.block.Block
 import com.sucy.skill.facade.api.data.Location
 import com.sucy.skill.facade.api.data.Weather
+import com.sucy.skill.facade.api.data.effect.Particle
 import com.sucy.skill.facade.api.entity.Actor
+import com.sucy.skill.facade.api.entity.Player
 import com.sucy.skill.facade.enums.Shape
 import com.sucy.skill.util.math.Vector3
 
@@ -20,6 +22,18 @@ interface World {
     fun strikeLightning(pos: Vector3)
     fun playLightningEffect(pos: Vector3)
     fun isLoaded(location: Location): Boolean
+
+    fun playParticle(
+        particle: Particle,
+        location: Location,
+        offsetX: Float = 0f,
+        offsetY: Float = 0f,
+        offsetZ: Float = 0f,
+        speed: Float = 1f,
+        amount: Int = 0,
+        data: Any? = null,
+        players: List<Player> = emptyList()
+    )
 
     fun getBlock(pos: Vector3): Block {
         return getBlock(pos.x.toInt(), pos.y.toInt(), pos.z.toInt())

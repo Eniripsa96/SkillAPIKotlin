@@ -3,13 +3,29 @@ package com.sucy.skill.facade.bukkit
 import com.sucy.skill.facade.api.World
 import com.sucy.skill.facade.api.data.Weather
 import com.sucy.skill.facade.api.data.block.Block
+import com.sucy.skill.facade.api.data.block.BlockType
+import com.sucy.skill.facade.api.data.effect.Color
+import com.sucy.skill.facade.api.data.effect.Particle
+import com.sucy.skill.facade.api.data.inventory.Item
+import com.sucy.skill.facade.api.data.inventory.ItemType
 import com.sucy.skill.facade.api.entity.Actor
+import com.sucy.skill.facade.api.entity.Player
 import com.sucy.skill.facade.bukkit.data.block.BukkitBlock
+import com.sucy.skill.facade.bukkit.util.BukkitConversion
+import com.sucy.skill.util.match
 import com.sucy.skill.util.math.Vector3
 import com.sucy.skill.util.math.sq
 import com.sucy.skill.util.math.toChunk
 import org.bukkit.Bukkit
 import org.bukkit.Location
+import org.bukkit.inventory.ItemStack
+import org.bukkit.util.Vector
+import xyz.xenondevs.particle.ParticleEffect
+import xyz.xenondevs.particle.data.ParticleData
+import xyz.xenondevs.particle.data.color.NoteColor
+import xyz.xenondevs.particle.data.color.RegularColor
+import xyz.xenondevs.particle.data.texture.BlockTexture
+import xyz.xenondevs.particle.data.texture.ItemTexture
 
 class BukkitWorld(private val world: org.bukkit.World) : World {
     override val name: String
@@ -69,5 +85,40 @@ class BukkitWorld(private val world: org.bukkit.World) : World {
             world.hasStorm() -> Weather.RAINING
             else -> Weather.NONE
         }
+    }
+
+    override fun playParticle(
+            particle: Particle,
+            location: com.sucy.skill.facade.api.data.Location,
+            offsetX: Float,
+            offsetY: Float,
+            offsetZ: Float,
+            speed: Float,
+            amount: Int,
+            data: Any?,
+            players: List<Player>
+    ) {
+        val effect = ParticleEffect::class.match(particle.id, ParticleEffect.CRIT)
+        val effectData: ParticleData? = when (data) {
+            is ItemType -> ItemTexture(ItemStack(BukkitConversion.convertToMaterial(data)))
+            is BlockType -> BlockTexture(BukkitConversion.convertToMaterial(data))
+            is Item -> ItemTexture(data.toBukkit())
+            is Block -> BlockTexture(BukkitConversion.convertToMaterial(data.type))
+            is Color -> if (effect == ParticleEffect.NOTE) {
+                NoteColor(data.red / 10)
+            } else {
+                RegularColor(data.red, data.green, data.blue)
+            }
+            else -> null
+        }
+
+        effect.display(
+                location.toBukkit(),
+                Vector(offsetX, offsetY, offsetZ),
+                speed,
+                amount,
+                effectData,
+                players.map { it.toBukkit() as org.bukkit.entity.Player }
+        )
     }
 }

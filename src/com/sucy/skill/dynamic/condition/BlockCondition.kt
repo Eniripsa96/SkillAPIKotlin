@@ -23,8 +23,6 @@ class BlockCondition : Condition() {
         return when (check) {
             CheckType.IN_BLOCK -> isInBlock(recipient)
             CheckType.ON_BLOCK -> isOnBlock(recipient)
-            CheckType.NOT_IN_BLOCK -> !isInBlock(recipient)
-            CheckType.NOT_ON_BLOCK -> !isOnBlock(recipient)
         }
     }
 
@@ -94,8 +92,6 @@ class BlockCondition : Condition() {
 
     private enum class CheckType {
         IN_BLOCK,
-        ON_BLOCK,
-        NOT_IN_BLOCK,
-        NOT_ON_BLOCK
+        ON_BLOCK
     }
 }

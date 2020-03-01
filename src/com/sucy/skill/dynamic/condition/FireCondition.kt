@@ -10,7 +10,7 @@ class FireCondition : Condition() {
 
     override fun initialize() {
         super.initialize()
-        onFire = metadata.getBoolean("onFire", onFire)
+        onFire = metadata.getBoolean("on-fire", onFire)
     }
 
     override fun matches(context: CastContext, target: Actor, recipient: Actor): Boolean {
