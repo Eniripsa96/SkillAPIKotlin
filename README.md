@@ -27,3 +27,10 @@ This recoded version of SkillAPI brings a number of changes, including (but not 
 - Arrow keys now move the selected effect
 - Added copy/paste functionality for effects, even across skills
 - General look and feel has been redesigned
+
+### Compiling the Project
+The project is set up using Maven but has two local dependencies
+that aren't normally available via Maven repositories. You'll need to get
+the following:
+- CraftBukkit - use BuilderTools from Spigot to build the needed version and put it in "lib/"
+- ParticleLib - [download from GitHub](https://github.com/ByteZ1337/ParticleLib/releases) and place in "lib/"
