@@ -62,11 +62,9 @@
 
         <!-- Plugin Dependencies -->
         <dependency>
-            <groupId>xyz.xenondevs.particle</groupId>
-            <artifactId>particlelib</artifactId>
-            <version>1.3</version>
-            <scope>system</scope>
-            <systemPath>${project.basedir}/lib/ParticleLib-Plugin.jar</systemPath>
+            <groupId>xyz.xenondevs</groupId>
+            <artifactId>particle</artifactId>
+            <version>1.4</version>
         </dependency>
 
         <!-- Test Libraries -->
