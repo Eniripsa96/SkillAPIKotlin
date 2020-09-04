@@ -41,7 +41,7 @@
     "istanbul": "1.0.0-alpha.2",
     "jsdom": "10.1.x",
     "mocha": "^5.2.0",
-    "node-sass": "4.11.x",
+    "node-sass": "4.14.x",
     "react-addons-test-utils": "15.6.x",
     "react-test-renderer": "15.6.x",
     "sass-loader": "6.0.x",
