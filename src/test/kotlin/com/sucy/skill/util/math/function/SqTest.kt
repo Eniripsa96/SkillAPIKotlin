@@ -1,8 +1,8 @@
 package com.sucy.skill.util.math.function
 
-import com.sucy.skill.Assert
 import com.sucy.skill.util.math.TokenTest
 import com.sucy.skill.util.math.formula.function.Sq
+import io.kotlintest.shouldBe
 import org.junit.Test
 
 /**
@@ -11,14 +11,14 @@ import org.junit.Test
 class SqTest : TokenTest() {
     @Test
     fun getToken() {
-        Assert.assertEquals("sq", Sq.token)
+        Sq.token shouldBe "sq"
     }
 
     @Test
     fun apply() {
-        Assert.assertEquals(0.0, test(Sq, 0.0))
-        Assert.assertEquals(1.0, test(Sq, 1.0))
-        Assert.assertEquals(16.0, test(Sq, 4.0))
-        Assert.assertEquals(5.76, test(Sq, 2.4))
+        test(Sq, 0.0) shouldBe 0.0
+        test(Sq, 1.0) shouldBe 1.0
+        test(Sq, 4.0) shouldBe 16.0
+        test(Sq, 2.4) shouldBe 5.76
     }
 }

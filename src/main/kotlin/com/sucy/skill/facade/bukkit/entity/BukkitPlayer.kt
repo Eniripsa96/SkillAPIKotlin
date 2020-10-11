@@ -41,4 +41,6 @@ open class BukkitPlayer(override val entity: Player) : BukkitActor(entity), com.
         }
     override val isCrouching: Boolean
         get() = entity.isSneaking
+    override val isOnline: Boolean
+        get() = entity.isOnline
 }

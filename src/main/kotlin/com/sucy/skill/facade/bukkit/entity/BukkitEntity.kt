@@ -11,6 +11,7 @@ import com.sucy.skill.util.math.Vector3
 import org.bukkit.Bukkit.getWorld
 import org.bukkit.entity.Entity
 import org.bukkit.util.Vector
+import org.bukkit.Location as Loc
 
 /**
  * SkillAPIKotlin © 2018
@@ -31,12 +32,7 @@ open class BukkitEntity(open val entity: Entity) : com.sucy.skill.facade.api.ent
         get() = BukkitLocation(entity.location)
         set(it) {
             val coords = it.coords
-            entity.teleport(org.bukkit.Location(
-                    getWorld(it.world),
-                    coords.x,
-                    coords.y,
-                    coords.z
-            ))
+            entity.teleport(Loc(getWorld(it.world), coords.x, coords.y, coords.z))
         }
 
     override var velocity: Vector3
@@ -53,5 +49,9 @@ open class BukkitEntity(open val entity: Entity) : com.sucy.skill.facade.api.ent
 
     override fun isOnGround(): Boolean {
         return entity.isOnGround
+    }
+
+    override fun moveTo(x: Double, y: Double, z: Double, world: String, yaw: Double, pitch: Double) {
+        entity.teleport(Loc(getWorld(world), x, y, z, yaw.toFloat(), pitch.toFloat()))
     }
 }

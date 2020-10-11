@@ -1,8 +1,9 @@
 package com.sucy.skill.util.math.function
 
-import com.sucy.skill.Assert
 import com.sucy.skill.util.math.TokenTest
 import com.sucy.skill.util.math.formula.function.Sin
+import io.kotlintest.matchers.plusOrMinus
+import io.kotlintest.shouldBe
 import org.junit.Test
 
 /**
@@ -11,14 +12,14 @@ import org.junit.Test
 class SinTest : TokenTest() {
     @Test
     fun getToken() {
-        Assert.assertEquals("sin", Sin.token)
+        Sin.token shouldBe "sin"
     }
 
     @Test
     fun apply() {
-        Assert.assertEquals(0.0, test(Sin, 0.0))
-        Assert.assertEquals(1.0, test(Sin, 90.0))
-        Assert.assertEquals(0.0, test(Sin, 180.0))
-        Assert.assertEquals(-1.0, test(Sin, 270.0))
+        test(Sin, 0.0) shouldBe(0.0).plusOrMinus(EPSILON)
+        test(Sin, 90.0) shouldBe(1.0).plusOrMinus(EPSILON)
+        test(Sin, 180.0) shouldBe(0.0).plusOrMinus(EPSILON)
+        test(Sin, 270.0) shouldBe(-1.0).plusOrMinus(EPSILON)
     }
 }

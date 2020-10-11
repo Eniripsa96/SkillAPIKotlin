@@ -15,6 +15,18 @@ interface Entity {
     val world: World
     var fireTicks: Long
 
-    fun clearFire() { fireTicks = 0 }
+    fun clearFire() {
+        fireTicks = 0
+    }
+
     fun isOnGround(): Boolean
+
+    fun moveTo(
+        x: Double,
+        y: Double,
+        z: Double,
+        world: String = location.world,
+        yaw: Double = location.yaw,
+        pitch: Double = location.pitch
+    )
 }

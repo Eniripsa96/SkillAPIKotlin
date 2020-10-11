@@ -72,4 +72,10 @@ object Targeting {
             else -> true
         }
     }
+
+    fun getOpenLocation(actor: Actor, target: Location, throughWall: Boolean): Location {
+        if (target == actor.location) return target
+        // TODO - implement
+        return target
+    }
 }

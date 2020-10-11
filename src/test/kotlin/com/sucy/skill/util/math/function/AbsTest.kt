@@ -1,8 +1,8 @@
 package com.sucy.skill.util.math.function
 
-import com.sucy.skill.Assert.assertEquals
 import com.sucy.skill.util.math.TokenTest
 import com.sucy.skill.util.math.formula.function.Abs
+import io.kotlintest.shouldBe
 import org.junit.Test
 
 /**
@@ -12,13 +12,13 @@ class AbsTest : TokenTest() {
 
     @Test
     fun getToken() {
-        assertEquals("abs", Abs.token)
+        Abs.token shouldBe "abs"
     }
 
     @Test
     fun apply() {
-        assertEquals(1.0, test(Abs, 1.0))
-        assertEquals(1.0, test(Abs, -1.0))
-        assertEquals(123.45, test(Abs, -123.45))
+        test(Abs, 1.0) shouldBe 1.0
+        test(Abs, -1.0) shouldBe 1.0
+        test(Abs, -123.45) shouldBe 123.45
     }
 }

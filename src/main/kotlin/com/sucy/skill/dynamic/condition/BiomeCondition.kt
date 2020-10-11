@@ -7,12 +7,12 @@ import com.sucy.skill.util.text.enumName
 class BiomeCondition : Condition() {
     override val key = "biome"
 
-    private var biome = "plains"
+    private var biomes = listOf("plains")
 
     override fun initialize() {
         super.initialize()
 
-        biome = metadata.getString("biome", "plains").enumName()
+        biomes = metadata.getStringList("biome", biomes).map { it.enumName() }
     }
 
     override fun matches(context: CastContext, target: Actor, recipient: Actor): Boolean {
@@ -23,6 +23,6 @@ class BiomeCondition : Condition() {
                 loc.z.toInt()
         )
 
-        return biome.enumName() == this.biome
+        return biomes.contains(biome.enumName())
     }
 }

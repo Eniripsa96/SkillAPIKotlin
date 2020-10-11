@@ -1,8 +1,8 @@
 package com.sucy.skill.util.io.parser
 
+import io.kotlintest.shouldBe
 import org.junit.Test
 import java.io.File
-import kotlin.test.assertEquals
 
 /**
  * SkillAPIKotlin © 2018
@@ -29,6 +29,6 @@ class YAMLParserTest {
         out.parentFile.mkdirs()
         out.writeText(restored)
 
-        assertEquals(data.lines(), restored.lines())
+        restored.lines() shouldBe data.lines()
     }
 }

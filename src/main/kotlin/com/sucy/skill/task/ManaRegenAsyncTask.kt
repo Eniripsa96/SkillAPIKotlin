@@ -5,7 +5,7 @@ import com.sucy.skill.facade.api.event.player.ManaSource
 import com.sucy.skill.util.log.Logger
 import com.sucy.skill.util.players
 
-class ManaRegenTask : Task(
+class ManaRegenAsyncTask : AsyncTask(
         interval = SkillAPI.settings.mana.manaRechargeFrequencyInTicks,
         runnable = {
             Logger.debug("Applying mana regen...")

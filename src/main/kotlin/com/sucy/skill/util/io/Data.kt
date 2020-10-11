@@ -154,6 +154,14 @@ class Data internal constructor() {
         }
     }
 
+    fun getDoubleOrNull(key: String): Double? {
+        return try {
+            get(key)?.toString()?.toDouble()
+        } catch (ex: NumberFormatException) {
+            null
+        }
+    }
+
     fun getFormula(key: String, fallback: Double = 0.0): DynamicFormula {
         return formulas.computeIfAbsent(key) { DynamicFormula(getString(key, fallback.toString())) }
     }

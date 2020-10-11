@@ -4,6 +4,7 @@ import com.sucy.skill.facade.api.data.block.Block
 import com.sucy.skill.facade.api.data.Location
 import com.sucy.skill.facade.api.data.Weather
 import com.sucy.skill.facade.api.data.effect.Particle
+import com.sucy.skill.facade.api.data.effect.ParticleData
 import com.sucy.skill.facade.api.entity.Actor
 import com.sucy.skill.facade.api.entity.Player
 import com.sucy.skill.facade.enums.Shape
@@ -24,14 +25,8 @@ interface World {
     fun isLoaded(location: Location): Boolean
 
     fun playParticle(
-        particle: Particle,
+        particleData: ParticleData,
         location: Location,
-        offsetX: Float = 0f,
-        offsetY: Float = 0f,
-        offsetZ: Float = 0f,
-        speed: Float = 1f,
-        amount: Int = 0,
-        data: Any? = null,
         players: List<Player> = emptyList()
     )
 
@@ -61,15 +56,13 @@ interface World {
             Shape.BOX -> iterate(x, y, z, radX, radY, radZ) { i, j, k ->
                 consumer.invoke(getBlock(i, j, k))
             }
-            Shape.SPHERE -> {
-                iterate(x, y, z, radX, radY, radZ) { i, j, k ->
-                    val dx = (x - i) / radX
-                    val dy = (y - j) / radY
-                    val dz = (z - k) / radZ
+            Shape.SPHERE -> iterate(x, y, z, radX, radY, radZ) { i, j, k ->
+                val dx = (x - i) / radX
+                val dy = (y - j) / radY
+                val dz = (z - k) / radZ
 
-                    if (dx * dx + dy * dy + dz * dz < 1) {
-                        consumer.invoke(getBlock(i, j, k))
-                    }
+                if (dx * dx + dy * dy + dz * dz < 1) {
+                    consumer.invoke(getBlock(i, j, k))
                 }
             }
         }

@@ -20,7 +20,16 @@ class PolarShape(val formula: DynamicFormula, val steps: Int, val domain: Double
             for (i in 0 until steps) {
                 val rotation = rotations[i]
                 val t = domain * i
-                val r = formula.evaluate(caster, target, "t" to t, "p" to i.toDouble() / steps, "c" to rotation.x, "s" to rotation.y)
+                val r = formula.evaluate(
+                    caster,
+                    target,
+                    "t" to t,
+                    "p" to i.toDouble() / steps,
+                    "c" to rotation.x,
+                    "s" to rotation.y,
+                    "v" to level.toDouble(),
+                    "n" to i.toDouble()
+                )
                 yield(Vector3(x = r * rotation.x, z = r * rotation.y))
             }
         }

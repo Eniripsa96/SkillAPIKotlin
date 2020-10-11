@@ -7,6 +7,7 @@ import com.sucy.skill.facade.api.data.effect.PotionEffect
 import com.sucy.skill.facade.api.data.effect.PotionType
 import com.sucy.skill.facade.api.entity.Actor
 import com.sucy.skill.facade.api.entity.EntityType
+import com.sucy.skill.facade.internal.data.InternalLocation
 import com.sucy.skill.util.math.Vector3
 import java.util.*
 
@@ -31,6 +32,10 @@ class FakeActor(override var location: Location) : Actor {
     override fun isOnGround(): Boolean = false
     override fun sendMessage(message: String) {}
     override fun hasPermission(permission: String): Boolean = true
+
+    override fun moveTo(x: Double, y: Double, z: Double, world: String, yaw: Double, pitch: Double) {
+        location = InternalLocation(world, Vector3(x, y, z), yaw, pitch)
+    }
 
     companion object {
         private const val NAME = "Fake Entity"

@@ -7,6 +7,8 @@ package com.sucy.skill.util.text
 private val COLOR_REGEX = Regex("&([0-9a-fk-orA-FL-OR])")
 private val STRIP_REGEX = Regex("§.?")
 private val SPLIT_REGEX = Regex("[ _-]")
+private val INT_REGEX = Regex("[+-]?[0-9]+")
+private val NUMBER_REGEX = Regex("[+-]?([0-9]+|[0-9]*[,.][0-9]+)")
 
 /**
  * Uses & characters to color strings using Minecraft formatting
@@ -73,3 +75,7 @@ fun String.camelCase(): String {
 fun String.enumName(): String {
    return this.toUpperCase().replace(' ', '_')
 }
+
+fun String.isInteger(): Boolean = INT_REGEX.matches(this)
+fun String.isNumber(): Boolean = NUMBER_REGEX.matches(this)
+fun String.isBoolean(): Boolean = this == "true" || this == "false"

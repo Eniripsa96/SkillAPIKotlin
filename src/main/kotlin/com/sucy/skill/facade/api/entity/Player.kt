@@ -19,6 +19,7 @@ interface Player : Actor {
     var enchantingLevel: Int
     var enchantingExp: Double
     val isCrouching: Boolean
+    val isOnline: Boolean
 
     override val level: Int
         get() = activeAccount.professionSet.main?.level ?: 0

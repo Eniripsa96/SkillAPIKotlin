@@ -1,8 +1,8 @@
 package com.sucy.skill.util.math.function
 
-import com.sucy.skill.Assert
 import com.sucy.skill.util.math.TokenTest
 import com.sucy.skill.util.math.formula.function.Log
+import io.kotlintest.shouldBe
 import org.junit.Test
 
 /**
@@ -11,14 +11,14 @@ import org.junit.Test
 class LogTest : TokenTest() {
     @Test
     fun getToken() {
-        Assert.assertEquals("log", Log.token)
+        Log.token shouldBe "log"
     }
 
     @Test
     fun apply() {
-        Assert.assertEquals(0.0, test(Log, 0.0))
-        Assert.assertEquals(0.0, test(Log, 1.0))
-        Assert.assertEquals(1.0, test(Log, Math.E))
-        Assert.assertEquals(2.0, test(Log, Math.E * Math.E))
+        test(Log, 0.0) shouldBe 0.0
+        test(Log, 1.0) shouldBe 0.0
+        test(Log, Math.E) shouldBe 1.0
+        test(Log, Math.E * Math.E) shouldBe 2.0
     }
 }

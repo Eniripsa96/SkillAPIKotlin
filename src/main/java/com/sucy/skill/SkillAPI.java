@@ -11,7 +11,7 @@ import com.sucy.skill.facade.api.dependency.Dependency;
 import com.sucy.skill.listener.CombatListener;
 import com.sucy.skill.listener.PlayerListener;
 import com.sucy.skill.listener.SkillAPIListener;
-import com.sucy.skill.task.ManaRegenTask;
+import com.sucy.skill.task.ManaRegenAsyncTask;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -83,7 +83,7 @@ public final class SkillAPI {
     }
 
     private static void registerTasks() {
-        scheduler.runAsync(new ManaRegenTask());
+        scheduler.runAsync(new ManaRegenAsyncTask());
     }
 
     private static void listen(final SkillAPIListener listener, boolean condition) {

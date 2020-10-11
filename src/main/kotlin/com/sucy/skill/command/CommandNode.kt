@@ -1,5 +1,8 @@
 package com.sucy.skill.command
 
+import com.sucy.skill.facade.api.entity.Player
+import com.sucy.skill.util.log.Logger
+
 /**
  * Handles building out relations between commands and handles delegating between them
  */
@@ -28,8 +31,15 @@ class CommandNode {
             command?.let { cmd ->
                 val hasPermission = cmd.permission?.let { sender.hasPermission(it) } ?: true
                 if (cmd.condition(sender) && hasPermission) {
-                    cmd.logic.execute(sender, CommandArguments(args.subList(index, args.size)))
+                    val input = args.subList(index, args.size)
+                    if (cmd.logic.argumentPattern.hasEnoughArguments(input)) {
+                        cmd.logic.execute(sender, cmd.logic.argumentPattern.parse(input))
+                    } else {
+                        // TODO - display usage
+                    }
                     return true
+                } else if (sender is Player) {
+                    Logger.info("${sender.name} cannot execute command ${args.joinToString(" ")}")
                 }
             }
             return false

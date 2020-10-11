@@ -1,8 +1,8 @@
 package com.sucy.skill.util.math.operator
 
-import com.sucy.skill.Assert
 import com.sucy.skill.util.math.TokenTest
 import com.sucy.skill.util.math.formula.operator.Parenthesis
+import io.kotlintest.shouldBe
 import org.junit.Test
 
 /**
@@ -11,7 +11,7 @@ import org.junit.Test
 class ParenthesisTest : TokenTest() {
     @Test
     fun getToken() {
-        Assert.assertEquals('(', Parenthesis.token)
+        Parenthesis.token shouldBe '('
     }
 
     @Test(expected = UnsupportedOperationException::class)

@@ -11,6 +11,8 @@
     <properties>
         <kotlin.version>1.3.70</kotlin.version>
         <kotlin.compiler.incremental>true</kotlin.compiler.incremental>
+        <dokka.version>0.10.1</dokka.version>
+        <kotlintest.version>3.1.2</kotlintest.version>
     </properties>
 
     <repositories>
@@ -20,6 +22,14 @@
             <url>https://repo.spongepowered.org/maven</url>
         </repository>
     </repositories>
+
+    <pluginRepositories>
+        <pluginRepository>
+            <id>jcenter</id>
+            <name>JCenter</name>
+            <url>https://jcenter.bintray.com/</url>
+        </pluginRepository>
+    </pluginRepositories>
 
     <dependencies>
         <!-- Kotlin -->
@@ -83,9 +93,21 @@
             <scope>test</scope>
         </dependency>
         <dependency>
-            <groupId>org.mockito</groupId>
-            <artifactId>mockito-core</artifactId>
-            <version>2.7.11</version>
+            <groupId>io.mockk</groupId>
+            <artifactId>mockk</artifactId>
+            <version>1.10.0</version>
+            <scope>test</scope>
+        </dependency>
+        <dependency>
+            <groupId>io.kotlintest</groupId>
+            <artifactId>kotlintest-core</artifactId>
+            <version>${kotlintest.version}</version>
+            <scope>test</scope>
+        </dependency>
+        <dependency>
+            <groupId>io.kotlintest</groupId>
+            <artifactId>kotlintest-assertions</artifactId>
+            <version>${kotlintest.version}</version>
             <scope>test</scope>
         </dependency>
     </dependencies>
@@ -165,6 +187,21 @@
                         </manifest>
                     </archive>
                 </configuration>
+            </plugin>
+
+            <!-- Documentation -->
+            <plugin>
+                <groupId>org.jetbrains.dokka</groupId>
+                <artifactId>dokka-maven-plugin</artifactId>
+                <version>${dokka.version}</version>
+                <executions>
+                    <execution>
+                        <phase>pre-site</phase>
+                        <goals>
+                            <goal>dokka</goal>
+                        </goals>
+                    </execution>
+                </executions>
             </plugin>
         </plugins>
     </build>

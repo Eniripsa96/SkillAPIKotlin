@@ -1,8 +1,9 @@
 package com.sucy.skill.util.math.operator
 
-import com.sucy.skill.Assert
 import com.sucy.skill.util.math.TokenTest
 import com.sucy.skill.util.math.formula.operator.Mod
+import io.kotlintest.matchers.plusOrMinus
+import io.kotlintest.shouldBe
 import org.junit.Test
 
 /**
@@ -11,14 +12,14 @@ import org.junit.Test
 class ModTest : TokenTest() {
     @Test
     fun getToken() {
-        Assert.assertEquals('%', Mod.token)
+        Mod.token shouldBe '%'
     }
 
     @Test
     fun apply() {
-        Assert.assertEquals(2.0, test(Mod, 2.0, 4.0))
-        Assert.assertEquals(0.0, test(Mod, 4.0, 2.0))
-        Assert.assertEquals(3.0, test(Mod, 7.0, 4.0))
-        Assert.assertEquals(0.23, test(Mod, 1.23, 1.0))
+        test(Mod, 2.0, 4.0) shouldBe(2.0).plusOrMinus(EPSILON)
+        test(Mod, 4.0, 2.0) shouldBe(0.0).plusOrMinus(EPSILON)
+        test(Mod, 7.0, 4.0) shouldBe(3.0).plusOrMinus(EPSILON)
+        test(Mod, 1.23, 1.0) shouldBe(0.23).plusOrMinus(EPSILON)
     }
 }

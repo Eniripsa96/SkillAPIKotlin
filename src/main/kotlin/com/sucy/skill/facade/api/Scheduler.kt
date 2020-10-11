@@ -1,6 +1,6 @@
 package com.sucy.skill.facade.api
 
-import com.sucy.skill.task.Task
+import com.sucy.skill.task.AsyncTask
 import java.util.concurrent.locks.ReentrantLock
 import kotlin.concurrent.withLock
 
@@ -13,19 +13,19 @@ interface Scheduler {
     fun clearTasks()
 
     fun runAsync(task: () -> Unit) {
-        AsyncHandler.register(Task(runnable = task))
+        AsyncHandler.register(AsyncTask(runnable = task))
     }
 
     fun runAsync(delayInTicks: Int, task: () -> Unit) {
-        AsyncHandler.register(Task(delay = delayInTicks, runnable = task))
+        AsyncHandler.register(AsyncTask(delay = delayInTicks, runnable = task))
     }
 
     fun runAsync(delayInTicks: Int, intervalInTicks: Int, task: () -> Unit) {
-        AsyncHandler.register(Task(delay = delayInTicks, interval = intervalInTicks, runnable = task))
+        AsyncHandler.register(AsyncTask(delay = delayInTicks, interval = intervalInTicks, runnable = task))
     }
 
-    fun runAsync(task: Task) {
-        AsyncHandler.register(task)
+    fun runAsync(asyncTask: AsyncTask) {
+        AsyncHandler.register(asyncTask)
     }
 
     fun initialize() {
@@ -45,11 +45,11 @@ interface Scheduler {
         private val lock = ReentrantLock()
         private var time = System.currentTimeMillis()
         private var enabled = false
-        private val tasks = mutableListOf<Task>()
+        private val tasks = mutableListOf<AsyncTask>()
         private var thread: Thread? = null
 
-        fun register(task: Task) {
-            tasks += task
+        fun register(asyncTask: AsyncTask) {
+            tasks += asyncTask
         }
 
         /**

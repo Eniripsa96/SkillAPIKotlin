@@ -1,9 +1,11 @@
 package com.sucy.skill.util.math.function
 
-import com.sucy.skill.Assert
 import com.sucy.skill.util.math.TokenTest
 import com.sucy.skill.util.math.formula.function.Tan
+import io.kotlintest.matchers.plusOrMinus
+import io.kotlintest.shouldBe
 import org.junit.Test
+import kotlin.math.sqrt
 
 /**
  * SkillAPIKotlin © 2018
@@ -11,14 +13,14 @@ import org.junit.Test
 class TanTest : TokenTest() {
     @Test
     fun getToken() {
-        Assert.assertEquals("tan", Tan.token)
+        Tan.token shouldBe "tan"
     }
 
     @Test
     fun apply() {
-        Assert.assertEquals(0.0, test(Tan, 0.0))
-        Assert.assertEquals(1.0, test(Tan, 45.0))
-        Assert.assertEquals(Math.sqrt(3.0), test(Tan, 60.0))
-        Assert.assertEquals(-1.0, test(Tan, 135.0))
+        test(Tan, 0.0) shouldBe(0.0).plusOrMinus(EPSILON)
+        test(Tan, 45.0) shouldBe(1.0).plusOrMinus(EPSILON)
+        test(Tan, 60.0) shouldBe(sqrt(3.0)).plusOrMinus(EPSILON)
+        test(Tan, 135.0) shouldBe(-1.0).plusOrMinus(EPSILON)
     }
 }

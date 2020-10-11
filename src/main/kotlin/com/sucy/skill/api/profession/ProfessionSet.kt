@@ -56,11 +56,9 @@ class ProfessionSet : Iterable<ProfessionProgress> {
 
     fun giveExp(player: Player, amount: Double, group: String, overrides: Map<String, Double> = emptyMap()) {
         // TODO - level up events
-        professions[group]?.let {
-            if (it.forceGiveExp(amount, overrides)) {
-                updateStats(player)
-            }
-        }
+        var leveledUp = false
+        professions[group]?.let { leveledUp = it.forceGiveExp(amount, overrides) || leveledUp }
+        if (leveledUp) updateStats(player)
     }
 
     private fun setClassForGroup(player: Player, profession: Profession?, group: String): Boolean {

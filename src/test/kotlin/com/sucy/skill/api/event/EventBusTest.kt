@@ -8,7 +8,7 @@ import com.sucy.skill.facade.api.event.player.AsyncPlayerLoginEvent
 import com.sucy.skill.facade.api.event.player.PlayerJoinEvent
 import com.sucy.skill.facade.internal.data.InternalLocation
 import com.sucy.skill.util.math.Vector3
-import io.kotlintest.matchers.shouldEqual
+import io.kotlintest.shouldBe
 import org.junit.Before
 import org.junit.Test
 import org.junit.runner.RunWith
@@ -82,7 +82,7 @@ class EventBusTest {
         var count = 0
         val listener = SampleListener()
         subject.getAnnotations(listener) { _, _ -> count++ }
-        count shouldEqual 2
+        count shouldBe 2
     }
 
     @Test
@@ -90,7 +90,7 @@ class EventBusTest {
         var count = 0
         val listener = JavaListener()
         subject.getAnnotations(listener) { _, _ -> count++ }
-        count shouldEqual 2
+        count shouldBe 2
     }
 
     open class SampleListener {

@@ -5,7 +5,6 @@ import com.sucy.skill.facade.api.data.Weather
 import com.sucy.skill.facade.api.data.block.Block
 import com.sucy.skill.facade.api.data.block.BlockType
 import com.sucy.skill.facade.api.data.effect.Color
-import com.sucy.skill.facade.api.data.effect.Particle
 import com.sucy.skill.facade.api.data.inventory.Item
 import com.sucy.skill.facade.api.data.inventory.ItemType
 import com.sucy.skill.facade.api.entity.Actor
@@ -19,13 +18,14 @@ import com.sucy.skill.util.math.toChunk
 import org.bukkit.Bukkit
 import org.bukkit.Location
 import org.bukkit.inventory.ItemStack
-import org.bukkit.util.Vector
 import xyz.xenondevs.particle.ParticleEffect
 import xyz.xenondevs.particle.data.ParticleData
 import xyz.xenondevs.particle.data.color.NoteColor
 import xyz.xenondevs.particle.data.color.RegularColor
 import xyz.xenondevs.particle.data.texture.BlockTexture
 import xyz.xenondevs.particle.data.texture.ItemTexture
+import com.sucy.skill.facade.api.data.Location as ILocation
+import com.sucy.skill.facade.api.data.effect.ParticleData as IParticleData
 
 class BukkitWorld(private val world: org.bukkit.World) : World {
     override val name: String
@@ -36,12 +36,14 @@ class BukkitWorld(private val world: org.bukkit.World) : World {
             world.time = value
         }
 
-    override fun isLoaded(location: com.sucy.skill.facade.api.data.Location): Boolean {
+    override fun isLoaded(location: ILocation): Boolean {
         val coords = location.coords
         return Bukkit.getWorld(location.world).isChunkLoaded(coords.x.toChunk(), coords.z.toChunk())
     }
 
     override fun getActorsInRadius(center: Vector3, radius: Double): List<Actor> {
+        if (radius <= 0) return emptyList()
+
         val rSq = sq(radius)
         val result = mutableListOf<Actor>()
         forEachChunkPos(center, radius) { i, j ->
@@ -88,18 +90,12 @@ class BukkitWorld(private val world: org.bukkit.World) : World {
     }
 
     override fun playParticle(
-            particle: Particle,
-            location: com.sucy.skill.facade.api.data.Location,
-            offsetX: Float,
-            offsetY: Float,
-            offsetZ: Float,
-            speed: Float,
-            amount: Int,
-            data: Any?,
+            particleData: IParticleData,
+            location: ILocation,
             players: List<Player>
     ) {
-        val effect = ParticleEffect::class.match(particle.id, ParticleEffect.CRIT)
-        val effectData: ParticleData? = when (data) {
+        val effect = ParticleEffect::class.match(particleData.particle.id, ParticleEffect.CRIT)
+        val effectData: ParticleData? = when (val data = particleData.data) {
             is ItemType -> ItemTexture(ItemStack(BukkitConversion.convertToMaterial(data)))
             is BlockType -> BlockTexture(BukkitConversion.convertToMaterial(data))
             is Item -> ItemTexture(data.toBukkit())
@@ -114,9 +110,9 @@ class BukkitWorld(private val world: org.bukkit.World) : World {
 
         effect.display(
                 location.toBukkit(),
-                Vector(offsetX, offsetY, offsetZ),
-                speed,
-                amount,
+                particleData.offset.toBukkit(),
+                particleData.speed,
+                particleData.amount,
                 effectData,
                 players.map { it.toBukkit() as org.bukkit.entity.Player }
         )

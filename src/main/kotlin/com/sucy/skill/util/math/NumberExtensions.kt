@@ -2,6 +2,9 @@ package com.sucy.skill.util.math
 
 import kotlin.math.PI
 
+private const val DEGREES_TO_RADIANS = PI / 180
+private const val RADIANS_TO_DEGREES = 180 / PI
+
 /**
  * Assumes [this] is a time measured in seconds and converts [this]
  * to ticks (1/20 of a second)
@@ -26,9 +29,9 @@ fun Double.toChunk(): Int {
 }
 
 fun Double.toRadians(): Double {
-    return this * PI / 180
+    return this * DEGREES_TO_RADIANS
 }
 
 fun Double.toDegrees(): Double {
-    return this * 180 / PI
+    return this * RADIANS_TO_DEGREES
 }

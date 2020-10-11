@@ -7,8 +7,8 @@ import com.sucy.skill.dynamic.Effect
 import com.sucy.skill.dynamic.EffectType
 import com.sucy.skill.facade.api.entity.Actor
 import com.sucy.skill.loadConfig
-import io.kotlintest.matchers.shouldEqual
-import io.kotlintest.matchers.shouldNotBe
+import io.kotlintest.shouldBe
+import io.kotlintest.shouldNotBe
 import org.junit.Before
 import org.junit.Test
 import org.junit.runner.RunWith
@@ -46,20 +46,20 @@ class AttributeDefinitionsTest {
     @Test
     fun forStat() {
         val result = subject.forStat("physical-damage")
-        result.stat shouldEqual "physical-damage"
+        result.stat shouldBe "physical-damage"
 
         valueSet["strength"].addBase(10.0, "test")
         val scaled = result.apply(actor, 5.0)
-        scaled shouldEqual 6.25
+        scaled shouldBe 6.25
     }
 
     @Test
     fun forStatEmpty() {
         val result = subject.forStat("junk")
-        result.stat shouldEqual "empty"
+        result.stat shouldBe "empty"
 
         val scaled = result.apply(actor, 5.0)
-        scaled shouldEqual 5.0
+        scaled shouldBe 5.0
     }
 
     @Test
@@ -68,11 +68,11 @@ class AttributeDefinitionsTest {
         doReturn("damage").`when`(effect).key
 
         val result = subject.forEffect(effect, "value")
-        result.key shouldEqual "damage-value"
+        result.key shouldBe "damage-value"
 
         valueSet["intelligence"].addBase(10.0, "test")
         val scaled = result.apply(actor, effect, 5.0)
-        scaled shouldEqual 6.25
+        scaled shouldBe 6.25
     }
 
     @Test
@@ -81,19 +81,19 @@ class AttributeDefinitionsTest {
         doReturn("damage").`when`(effect).key
 
         val result = subject.forEffect(effect, "junk")
-        result.key shouldEqual "empty"
+        result.key shouldBe "empty"
 
         val scaled = result.apply(actor, effect, 5.0)
-        scaled shouldEqual 5.0
+        scaled shouldBe 5.0
     }
 
     @Test
     fun toKey() {
-        subject.toKey("SPIRIT") shouldEqual "spirit"
+        subject.toKey("SPIRIT") shouldBe "spirit"
     }
 
     @Test
     fun toKeyNotfound() {
-        subject.toKey("JUNK") shouldEqual "junk"
+        subject.toKey("JUNK") shouldBe "junk"
     }
 }

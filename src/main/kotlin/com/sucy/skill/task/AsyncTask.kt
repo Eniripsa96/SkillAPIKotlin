@@ -3,7 +3,7 @@ package com.sucy.skill.task
 import com.sucy.skill.util.log.Logger
 import java.lang.Exception
 
-open class Task(
+open class AsyncTask(
         delay: Int = 0,
         private val interval: Int = -1,
         private val runnable: () -> Unit

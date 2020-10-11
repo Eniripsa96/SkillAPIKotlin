@@ -14,4 +14,8 @@ open class TokenTest {
         token.apply(stack, DoubleArray(0))
         return stack.pop()
     }
+
+    companion object {
+        const val EPSILON = 1e-10
+    }
 }

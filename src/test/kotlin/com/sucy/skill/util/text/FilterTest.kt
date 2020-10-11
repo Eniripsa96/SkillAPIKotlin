@@ -1,7 +1,7 @@
 package com.sucy.skill.util.text
 
+import io.kotlintest.shouldBe
 import org.junit.Test
-import kotlin.test.assertEquals
 
 /**
  * SkillAPIKotlin © 2018
@@ -13,32 +13,32 @@ class FilterTest {
     @Test
     fun applyNoOp() {
         val str = "test text without filters being unchanged"
-        assertEquals(str, subject.apply(str, filters))
+        subject.apply(str, filters) shouldBe str
     }
 
     @Test
     fun applyNoOpWithBraces() {
         val str = "test text {with} no {matching} filters leaving unchanged"
-        assertEquals(str, subject.apply(str, filters))
+        subject.apply(str, filters) shouldBe str
     }
 
     @Test
     fun applyOneApply() {
-        assertEquals("As expected!", subject.apply("As {test}!", filters))
+        subject.apply("As {test}!", filters) shouldBe "As expected!"
     }
 
     @Test
     fun applyTwoApply() {
-        assertEquals("As expected, expected!", subject.apply("As {test}, {test}!", filters))
+        subject.apply("As {test}, {test}!", filters) shouldBe "As expected, expected!"
     }
 
     @Test
     fun applyAtStart() {
-        assertEquals("expected replacement", subject.apply("{test} replacement", filters))
+        subject.apply("{test} replacement", filters) shouldBe "expected replacement"
     }
 
     @Test
     fun applyAtEnd() {
-        assertEquals("Replacement expected", subject.apply("Replacement {test}", filters))
+        subject.apply("Replacement {test}", filters) shouldBe "Replacement expected"
     }
 }

@@ -1,8 +1,8 @@
 package com.sucy.skill.util.math.operator
 
-import com.sucy.skill.Assert
 import com.sucy.skill.util.math.TokenTest
 import com.sucy.skill.util.math.formula.operator.Minus
+import io.kotlintest.shouldBe
 import org.junit.Test
 
 /**
@@ -11,14 +11,14 @@ import org.junit.Test
 class MinusTest : TokenTest() {
     @Test
     fun getToken() {
-        Assert.assertEquals('-', Minus.token)
+        Minus.token shouldBe '-'
     }
 
     @Test
     fun apply() {
-        Assert.assertEquals(-2.0, test(Minus, 2.0, 4.0))
-        Assert.assertEquals(2.0, test(Minus, 4.0, 2.0))
-        Assert.assertEquals(3.0, test(Minus, 7.0, 4.0))
-        Assert.assertEquals(-123.0, test(Minus, 123.0, 246.0))
+        test(Minus, 2.0, 4.0) shouldBe -2.0
+        test(Minus, 4.0, 2.0) shouldBe 2.0
+        test(Minus, 7.0, 4.0) shouldBe 3.0
+        test(Minus, 123.0, 246.0) shouldBe -123.0
     }
 }
